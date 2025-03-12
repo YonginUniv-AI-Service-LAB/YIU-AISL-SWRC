@@ -11,10 +11,18 @@
                     <th>패스 성공률</th>
                     <th>활동량</th>
                     <th>볼 터치 수</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(record, index) in records" :key="index" @click="selectRecord(index + 1)" class="clickable-row">
+                <tr
+                    v-for="(record, index) in records"
+                    :key="index"
+                    class="clickable-row"
+                    @mouseover="hoverIndex = index"
+                    @mouseleave="hoverIndex = null"
+                    @click="selectRecord(index + 1)"
+                >
                     <td class="gray-text">{{ record.sport }}</td>
                     <td class="bold-text">{{ record.name }}</td>
                     <td>{{ record.height }}</td>
@@ -23,6 +31,12 @@
                     <td>{{ record.passSuccess }}</td>
                     <td>{{ record.activity }}</td>
                     <td>{{ record.ballTouches }}</td>
+                    <!-- 호버된 행에만 나타나는 '자세히 보기' -->
+                    <td class="last-cell">
+                        <span :style="{ visibility: hoverIndex === index ? 'visible' : 'hidden' }">
+                        자세히보기  &gt;
+                        </span>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -31,10 +45,8 @@
 
 <script setup>
 import { ref, defineEmits } from 'vue';
-// import { useRouter } from 'vue-router';
 
 const emits = defineEmits(['select-record']); // ✅ 부모 컴포넌트로 이벤트 전달
-// const router = useRouter();
 
 const records = ref([
   { sport: '축구', name: '김태훈', height: 178, weight: 72, passSuccess: '82%', activity: '90%', ballTouches: '65' },
@@ -43,6 +55,9 @@ const records = ref([
   { sport: '축구', name: '정민수', height: 180, weight: 74, passSuccess: '88%', activity: '83%', ballTouches: '62' },
   { sport: '축구', name: '오승환', height: 177, weight: 70, passSuccess: '81%', activity: '85%', ballTouches: '55' },
 ]);
+
+// 마우스가 올라간 행 인덱스
+const hoverIndex = ref(null);
 
 // ✅ 클릭 시 부모에게 ID 전달
 const selectRecord = (recordId) => {
@@ -54,18 +69,24 @@ const selectRecord = (recordId) => {
 <style scoped>
 .player-performance-list {
   width: 100%;
+  min-width: 100%;
   margin-top: 20px;
 }
 
 /* 호버 효과 추가 */
 .clickable-row {
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.1s;
 }
 
 .clickable-row:hover {
-  background-color: #E1F9FF !important;
-  color: #005871 !important;
+  background-color: #E1F9FF;
+}
+
+.clickable-row:hover td,
+.clickable-row:hover td.bold-text,
+.clickable-row:hover td.gray-text {
+    color: #005871;
 }
 
 table {
@@ -88,6 +109,13 @@ td {
   border-bottom: 2px solid #ECECEC;
   font-size: 0.9rem;
   color: #262626;
+}
+
+.last-cell {
+    text-align: right;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding-right: 2rem; /* 필요에 따라 조절 */
 }
 
 tbody tr:nth-child(odd) {

@@ -22,14 +22,14 @@ import TabNavigation from './TabNavigation.vue';
     height: 38%;
     border-radius: 0px 0px 40px 40px;
     overflow: hidden;
-    z-index: 0; /* 헤더보다 뒤로 배치 */
+    z-index: 1; /* 헤더보다 뒤로 배치 */
 }
 
 .header-banner img {
     width: 100%;
     height: 100%;
     object-fit: cover; /* 이미지가 비율을 유지하면서 꽉 차도록 설정 */
-    z-index: 1; /* 배경 이미지 위에 배치 */
+    z-index: 3; /* 배경 이미지 위에 배치 */
 }
 
 .overlay {
@@ -41,7 +41,7 @@ import TabNavigation from './TabNavigation.vue';
     /* top: 9.7%; header 높이 9.7% 바로 아래에서 시작 */
     background: rgba(89, 58, 47, 0.9); /* #593A2F + opacity 0.9 */
     border-radius: 0px 0px 40px 40px;
-    z-index: 2; /* 배경 이미지 위에 배치 */
+    z-index: 4; /* 배경 이미지 위에 배치 */
 }
 
 .overlay-text {
@@ -60,6 +60,6 @@ import TabNavigation from './TabNavigation.vue';
     letter-spacing: -0.011em; /* 글자 간격 조정 */
     
     color: #FFFFFF;
-    z-index: 3; /* 오버레이 위에 배치 */
+    z-index: 5; /* 오버레이 위에 배치 */
 }
 </style>

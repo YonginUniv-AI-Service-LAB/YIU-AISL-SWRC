@@ -3,10 +3,10 @@
         <div class="content-wrapper">
 
             <UserProfile 
-                userName="홍길동 (남자)"
+                userName="김태훈 (남자)"
                 sport="축구"
-                height="180"
-                weight="80" 
+                height="178"
+                weight="72" 
             />
 
             <div class="main-section">
@@ -15,9 +15,9 @@
                 </div>
 
                 <div class="main-content">
-                    <button @click="$emit('go-back')" class="back-button">목록으로 돌아가기</button>
                     <div class="content-area">
-                        <MatchRecordList :recordId="recordId" />
+                        <PerformanceCharts v-if="activeTab === 0" :recordId="recordId" />
+                        <MatchRecordList v-else-if="activeTab === 1" :recordId="recordId" />
                     </div>
                 </div>
             </div>
@@ -27,18 +27,9 @@
 
 <script setup>
 import { computed, defineProps} from 'vue';
-// import { useRoute, useRouter } from 'vue-router';
 import UserProfile from './UserProfile.vue';
 import MatchRecordList from './MatchRecordList.vue';
-
-// const route = useRoute();
-// const router = useRouter();
-// const recordId = route.params.section; URL에서 ID 가져오기
-
-// 뒤로 가기 함수
-// const goBack = () => {
-//     router.push('/elite-manager');
-// };
+import PerformanceCharts from './PerformanceCharts.vue';
 
 const props = defineProps({
     activeTab: Number,
@@ -54,7 +45,7 @@ const pageTitle = computed(() => pageTitles[props.activeTab]);
 .elite-detail-content {
     /* position: absolute; */
     width: 100%;
-    height: 160vh;
+    height: 170vh;
     min-height: 100vh;
     top: 40vh;
     left: 0;
@@ -68,7 +59,6 @@ const pageTitle = computed(() => pageTitles[props.activeTab]);
     display: flex;
     gap: 2vw;
     width: 81%;
-    /* max-width: 1300px; */
     margin-left: 10vw;
 }
 

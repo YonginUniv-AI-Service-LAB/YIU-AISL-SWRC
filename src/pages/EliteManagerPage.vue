@@ -11,6 +11,7 @@
                 :activeTab="activeTab" 
                 :recordId="selectedRecordId"
                 @go-back="selectedRecordId = null"
+                @select-record="handleRecordClick"
             />
         </div>
         <MainFooter />
@@ -28,10 +29,13 @@ import MainFooter from '../components/layout/MainFooter.vue';
 
 // ✅ Composition API 방식으로 activeTab 상태 관리
 const activeTab = ref(0);
-const selectedRecordId = ref(null); // 선택된 기록 ID (없으면 null)
+// 선택된 기록 ID (없으면 null)
+const selectedRecordId = ref(null);
 
-// ✅ 컴포넌트를 동적으로 바꾸기 위해 shallowRef 사용
-// const contentComponent = shallowRef(EliteManagerContent);
+// PlayerRecordList (또는 EliteManagerContent 내부에서 발생한) select-record 이벤트를 처리
+const handleRecordClick = (recordId) => {
+    selectedRecordId.value = recordId;
+};
 
 </script>
 
@@ -41,7 +45,7 @@ const selectedRecordId = ref(null); // 선택된 기록 ID (없으면 null)
 .elite-manager-page {
     display: flex;
     flex-direction: column; /* 세로 정렬 */
-    min-height: 100vh;
+    min-height: 100%;
 }
 
 /* 콘텐츠 영역 */

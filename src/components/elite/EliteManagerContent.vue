@@ -1,5 +1,5 @@
 <template>
-    <div class="elite-content">
+    <div class="elite-manager-content">
         <div class="content-wrapper">
             <div class="main-section">
                 <div class="main-title">
@@ -8,8 +8,8 @@
 
                 <div class="main-content">
                     <div class="content-area">
-                        <PlayerPerformanceList v-if="activeTab === 0" />
-                        <PlayerRecordList v-else-if="activeTab === 1" @select-record="handleRecordClick" />
+                        <PlayerPerformanceList v-if="activeTab === 0" @select-record="$emit('select-record', $event)" />
+                        <PlayerRecordList v-else-if="activeTab === 1" @select-record="$emit('select-record', $event)" />
                         <p v-else>현재 입력된 기록이 없습니다. 내 기록 추가를 통해 몸 상태를 기록해 보세요!</p>
                     </div>
                 </div>
@@ -20,11 +20,9 @@
 
 <script setup>
 import { computed, defineProps } from 'vue';
-import { useRouter } from 'vue-router';
 import PlayerRecordList from './PlayerRecordList.vue';
 import PlayerPerformanceList from './PlayerPerformanceList.vue';
 
-const router = useRouter();
 const props = defineProps({
     activeTab: Number,
 });
@@ -32,15 +30,10 @@ const props = defineProps({
 const pageTitles = ['체력측정분석', '경기기록'];
 const pageTitle = computed(() => pageTitles[props.activeTab]);
 
-// ✅ 리스트에서 클릭된 항목을 받아서 상세 페이지로 이동
-const handleRecordClick = (recordId) => {
-    router.push(`/detail/${recordId}`);
-};
-
 </script>
 
 <style scoped>
-.elite-content {
+.elite-manager-content {
     /* position: absolute; */
     width: 100%;
     height: 160vh;
@@ -49,7 +42,7 @@ const handleRecordClick = (recordId) => {
     left: 0;
     background: #F4F4F4;
     overflow: hidden; /* 내용이 넘칠 경우 스크롤바 표시 */
-    z-index: -1;
+    z-index: 0;
 }
 
 /* 프로필과 메인 컨텐츠를 감싸는 레이아웃 */

@@ -52,8 +52,8 @@ export default {
             // 메뉴와 해당 페이지 경로 매핑
             subMenuOptions: {
                 '스포츠·웰니스연구센터 소개': [
-                    { title: '인사말', path: '/' },
-                    { title: '주요사업', path: '/' },
+                    { title: '인사말', path: '/detail/hello' },
+                    { title: '주요사업', path: '/detail/business' },
                     { title: '기관연혁', path: '/detail/history' },
                     { title: '조직도 위원회', path: '/detail/organization' },
                     { title: '위치 및 연락처', path: '/detail/location' },
