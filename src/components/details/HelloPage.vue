@@ -28,7 +28,7 @@ export default {
 .hello-title {
   font-size: 1.7rem;
   font-weight: 500;
-  margin-bottom: 4vh;
+  margin-bottom: -8vh;
   margin-right: 66.5%;
   color: #3f3f3f;
 }
