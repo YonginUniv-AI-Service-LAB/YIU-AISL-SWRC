@@ -72,10 +72,9 @@
           <button type="submit" class="change-btn">비밀번호 변경</button>
         </form>
       </div>
-  
-      <!-- 푸터 -->
-      <MainFooter />
+   
     </div>
+    <MainFooter />
   </template>
   
   <script>

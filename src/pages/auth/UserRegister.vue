@@ -126,9 +126,8 @@
       </div>
     </div>
 
-    <!-- 푸터 -->
-    <MainFooter />
   </div>
+  <MainFooter />
 </template>
 
 
