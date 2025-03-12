@@ -4,7 +4,7 @@
     <a class="health">HEALTH</a>
   </div>
   <div class="content">
-    <h2>웰니스 연구센터란?</h2>
+    <h2>스포츠·웰니스연구센터</h2>
     <p>스포츠 데이터 기반 선수들의 경기력 향상과 대국민 건강증진의 싱크탱크</p>
   </div>
 
@@ -17,7 +17,7 @@
     <a class="pictures_menu2">개인의 체력</a>
   <div class="pictures_menu3">
     <div class="first_row">국민 체력</div>
-    <div class="second_row">건강 증진</div>
+    <div>건강 증진</div>
   </div>
   </div>
 </div>
@@ -33,7 +33,7 @@ export default {
 <style scoped>
 .SportsAndHealth{
   color:#F3F3F3;
-  font-size: 9rem;
+  font-size: 10.3rem;
   font-weight: 200;
   display: flex;
   justify-content: space-between;
@@ -44,7 +44,8 @@ export default {
   transform: translate(0,-25%);
 }
 .health{
-  transform:translate(0,286%) ;
+  
+  transform:translate(0,248%) ;
 }
 
 .content{
@@ -62,6 +63,7 @@ export default {
 .content p{
   font-size: 1rem;
   font-weight:bold;
+  color: #3F3F3F;
   margin-top: -1vh;
 }
 
@@ -70,11 +72,12 @@ export default {
   display: flex;
   justify-content: center;
   margin-bottom: 20vh;
-  gap: 30px;
+  
+  gap: 2%;
 }
 
 .mainPicture {
-  width: 30%; /* 원하는 크기로 설정 */
+  max-width: 450px; /* 원하는 크기로 설정 */
   height: auto; /* 비율 유지 */
 }
 
@@ -84,49 +87,45 @@ export default {
   top:85%;
   position: absolute;
   font-weight: bold;
+  font-size: 1.1rem;
 }
 
 .pictures_menu1{
-  transform: translateX(-540px);
+  transform: translateX(-560px);
 }
 .pictures_menu1::before{
   content: "";
   position: absolute;
   top: 0; /* 텍스트 위쪽에 위치 */
   margin-top: -15px;
-  margin-left: 3px;
-  width: 25px; /* 원하는 길이 */
+  width: 28px; /* 원하는 길이 */
   height: 2px; /* 선 두께 */
-  background-color: white;
+  background-color:#FFFFFF;
 }
 .pictures_menu2{
-  transform: translateX(-130px); 
+  transform: translateX(-160px); 
 }
 .pictures_menu2::before{
   content: "";
   position: absolute;
   top: 0; /* 텍스트 위쪽에 위치 */
   margin-top: -15px;
-  margin-left: 3px;
-  width: 25px; /* 원하는 길이 */
+  width: 28px; /* 원하는 길이 */
   height: 2px; /* 선 두께 */
-  background-color: white;
+  background-color: #FFFFFF;
 }
 .pictures_menu3{
-  transform: translate(280px,-25px)
+  transform: translate(250px,-25px)
 }
-.second_row{
-  margin-top: 5px;
-}
+
 .pictures_menu3::before{
   content: "";
   position: absolute;
   top: 0; /* 텍스트 위쪽에 위치 */
   margin-top: -15px;
-  margin-left: 3px;
-  width: 25px; /* 원하는 길이 */
+  width: 28px; /* 원하는 길이 */
   height: 2px; /* 선 두께 */
-  background-color: white;
+  background-color: #FFFFFF;
 }
 
 </style>
