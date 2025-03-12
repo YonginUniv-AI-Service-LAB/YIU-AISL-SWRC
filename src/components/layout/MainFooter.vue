@@ -1,110 +1,83 @@
 <template>
-  <div class="page-container">
-    <div class="content">
-      
-    </div>
-    <footer class="footer">
-      <div class="footer-container">
-        <div class="location">
-          <h3>Location</h3>
-          <p>경기도 용인시 처인구 용인대학교로 134</p>
-          <p>용인대학교 무도대학 6층</p>
-        </div>
-        <div class="contact">
-          <h3>Contact</h3>
-          <p>TEL. 031-8020-2653</p>
-        </div>
-        <div class="copyright">
-          <p>© 2025. Yong In University. All rights reserved.</p>
-        </div>
+  <footer class="footer">
+    <div class="footer-content">
+      <nav class="footer-nav">
+        <span>주요사업</span> |
+        <span>위치 및 연락처</span> |
+        <span>국민체력100</span> |
+        <span>체력측정분석</span> |
+        <span>경기기록</span>
+      </nav>
+      <div class="footer2">
+        <p>경기도 용인시 처인구 용인대학로 134 용인대학교 무도대학 6층</p>
+        <p>TEL. 031-8020-2653</p>
+        <p>COPYRIGHT(c) YONG IN UNIVERSITY, ALL RIGHTS RESERVED.</p>
       </div>
-    </footer>
-  </div>
+    </div>
+
+    <!-- SNS 링크 버튼 -->
+    <div class="link">
+      <img src="@/assets/images/youtube.png" alt="youtube" @click="goToLink('https://www.youtube.com')" />
+      <img src="@/assets/images/instagram.png" alt="instagram" @click="goToLink('https://www.instagram.com')" />
+      <img src="@/assets/images/blog.png" alt="blog" @click="goToLink('https://blog.naver.com')" />
+      <img src="@/assets/images/facebook.png" alt="facebook" @click="goToLink('https://www.facebook.com')" />
+    </div>
+  </footer>
 </template>
 
 <script>
 export default {
-  name: 'AppFooter',
+  methods: {
+    goToLink(url) {
+      window.open(url, "_blank", "noopener,noreferrer"); // 새 탭에서 열기
+    },
+  },
 };
 </script>
 
 <style scoped>
-
-/* 페이지 전체 레이아웃 */
-.page-container {
-  display: flex;
-  flex-direction: column; 
-  width: 100%;
-  min-height: 18vh; /* 화면 전체 높이 */
-  
-}
-
-/* 콘텐츠 영역 */
-.content {
-  flex: 1; /* 나머지 공간을 콘텐츠가 차지 */
-}
-
-/* 푸터 스타일 */
+/* Footer 기본 스타일 */
 .footer {
-  background-color: #262626; /* 푸터 배경 어두운 회색 */
-  color: #fff; /* 텍스트 흰색 */
-  padding: 3vh ;
-  margin:0;
-}
-
-.footer-container {
-  display: flex;
-  justify-content: space-between; /* 각 섹션 간격 균등 배분 */
-  align-items: flex-start;
-  flex-wrap: wrap; /* 화면 크기에 따라 줄바꿈 */
-  width: 100%;
-  max-width: 1000px; /* 중앙 정렬을 위한 최대 너비 */
-  margin: 0 auto; /* 가운데 정렬 */
-  left: 0;
-  right: 0;
-}
-
-.footer-container div {
-  flex: 1; /* 각 섹션이 동일한 크기를 차지 */
-  
-}
-
-.location,
-.contact {
+  background-color:#262626;
+  text-align: left;
+  padding: 30px;
+  font-weight: 500;
   position: relative;
-  transform: translate(-50%, -10%); 
 }
 
-.location h3,
-.contact h3 {
-  font-size: 15px;
-  font-weight: bold;
-  margin-bottom: 10px;
+/* Footer 내부 컨텐츠 정렬 */
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1;
+  position: relative;
+  right: 15%;
 }
-
-.location p,
-.contact p {
-  margin: 5px 0;
-  font-size: 13px;
+.footer-nav{
+  margin-top: 2vh;
+  position: relative;
+  right: 0.7vh;
+  margin-bottom: 3vh;
+  font-size:1rem;
+  color: #FFFFFF;
 }
-
-.location::after {
-  content: '';
+/* 메뉴 스타일 */
+.footer-nav span {
+  margin: 0 0.8vh;
+}
+.footer2{
+  font-size: 0.8rem;
+  color: #BBBBBB;
+}
+/* SNS 링크 버튼 */
+.link {
+  display: flex;
   position: absolute;
-  top: 17%;
-  right: 0; /* 구분선이 오른쪽 끝에 위치하도록 설정 */
-  width: 0.5px;
-  height: 75%;
-  background-color: #fff; /* 세로 구분선 색상 */
-  margin-right: 15%; /* 구분선을 왼쪽으로 이동시키기 위해 margin-right 사용 */
-}
-
-.copyright {
-  flex-basis: 100%; /* 한 줄 전체를 차지 */
-  text-align: right;
-  margin-top: 25px;
-  font-size: 12px;
-  padding-top: 10px;
-  transform: translate(30%, -8%);
+  bottom: 25%;
+  right: 18%;
+  gap: 65%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 }
 </style>
