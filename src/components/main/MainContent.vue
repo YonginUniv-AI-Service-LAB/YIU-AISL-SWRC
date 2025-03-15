@@ -44,8 +44,7 @@ export default {
   transform: translate(0,-25%);
 }
 .health{
-  
-  transform:translate(0,248%) ;
+  transform:translate(0,256%) ;
 }
 
 .content{

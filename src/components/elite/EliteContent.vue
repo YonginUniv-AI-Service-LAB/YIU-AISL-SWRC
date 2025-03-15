@@ -3,7 +3,8 @@
         <div class="content-wrapper">
 
             <UserProfile 
-                userName="김태훈 (남자)"
+                userName="김태훈"
+                gender="남자"
                 sport="축구"
                 height="178"
                 weight="72" 
