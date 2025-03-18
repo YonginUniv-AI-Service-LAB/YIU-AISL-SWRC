@@ -3,7 +3,8 @@
         <div class="content-wrapper">
 
             <UserProfile 
-                userName="김태훈 (남자)"
+                userName="김태훈"
+                gender="남자"
                 sport="축구"
                 height="178"
                 weight="72" 
@@ -51,7 +52,7 @@ const pageTitle = computed(() => pageTitles[props.activeTab]);
     left: 0;
     background: #F4F4F4;
     overflow: hidden; /* 내용이 넘칠 경우 스크롤바 표시 */
-    z-index: -1;
+    z-index: 0;
 }
 
 /* 프로필과 메인 컨텐츠를 감싸는 레이아웃 */
