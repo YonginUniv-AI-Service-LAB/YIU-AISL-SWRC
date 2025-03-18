@@ -89,10 +89,6 @@ export default {
         },
     },
 
-    // created() {
-    //     this.currentSubMenuOptions = this.subMenuOptions[this.selectedMainMenu.title] || [];
-    //     this.selectedSubMenu = this.currentSubMenuOptions.length > 0 ? this.currentSubMenuOptions[0] : {};
-    // },
     
     methods: {
         goHome() {
@@ -104,6 +100,14 @@ export default {
         selectMenu(menu) {
             this.selectedMainMenu = { title: menu }; // 첫 번째 드롭다운 항목 변경
             this.currentSubMenuOptions = this.subMenuOptions[menu] || []; // 두 번째 드롭다운 항목 변경
+
+            // 국민체력100인 경우
+            if (menu === '국민체력100') {
+                window.open('https://nfa.kspo.or.kr/main.kspo', '_blank');
+                this.toggleDropdown('main');
+                return;
+            }
+
             this.selectedSubMenu = this.currentSubMenuOptions.length > 0 ? this.currentSubMenuOptions[0] : {}; // 두 번째 드롭다운 첫 번째 항목 선택
             this.toggleDropdown('main');
 

@@ -7,7 +7,7 @@
             <ul>
                 <MainDropdown title="스포츠ㆍ웰니스연구센터 소개" :items="labIntroItems" @navigate="navigateToPage" />
                 <MainDropdown title="스포츠ㆍ웰니스연구센터 연구실" :items="labEquipmentItems" @navigate="navigateToPage" />
-                <MainDropdown title="국민체력100" :items="fitnessItems" @navigate="navigateToPage" />
+                <li class="nav-item" @click="goToKspo">국민체력100</li>
                 <MainDropdown title="엘리트 선수 관리 시스템" :items="eliteItems" @navigate="navigateToPage" />
             </ul>
         </nav>
@@ -41,9 +41,15 @@ export default {
             }
         };
 
+        // 국민체력100 클릭 시 외부 사이트로 이동 (새 탭)
+        const goToKspo = () => {
+        window.open('https://nfa.kspo.or.kr/main.kspo', '_blank')
+        }
+
         return {
             goToHome, // 메인 페이지 이동 함수
             navigateToPage,
+            goToKspo,
 
             labIntroItems: [
                 { title: '인사말', path: '/detail/hello' },
@@ -94,10 +100,12 @@ header {
             list-style: none;
             margin: 0;
             padding: 0;
-            padding-right: 20rem; /* 왼쪽으로 이동 */
+            gap: 2rem;
+            padding-right: 20rem;
         }
 
         li {
+            font-size: 15px;
             color: #ffffff; /* 기본 색상 흰색 */
 
             &:hover {
@@ -105,5 +113,11 @@ header {
             }
         }
     }
+}
+
+.nav-item {
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
 }
 </style>
