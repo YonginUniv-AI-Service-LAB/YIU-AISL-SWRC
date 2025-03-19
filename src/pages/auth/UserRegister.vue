@@ -31,22 +31,32 @@
       <form @submit.prevent="handleRegister" class="register-form">
 
       <!-- 이메일 입력 + 인증번호 받기 버튼 -->
-  <div class="form-group email-group">
-    <label for="email">이메일</label>
-    <div class="input-group">
-      <input
-        id="email"
-        type="email"
-        v-model="formData.email"
-        placeholder="이메일을 입력해주세요."
-        required
-        class="email-input"
-      />
-      <button type="button" class="check-btn" @click="checkEmailAvailability">
-        인증번호 받기
-      </button>
-    </div>
-  </div>
+      <div class="form-group email-group">
+        <label for="email">이메일</label>
+        <div class="input-group">
+          <input
+            id="email"
+            type="email"
+            v-model="formData.email"
+            placeholder="이메일을 입력해주세요."
+            required
+            class="email-input"
+          />
+          <button type="button" class="check-btn" @click="checkEmailAvailability">
+            인증번호 받기
+          </button>
+        </div>
+      </div>
+        <div class="form-group">
+          <input
+              type="text"
+              id="verificationCode"
+              v-model="formData.verificationCode"
+              placeholder="인증번호를 입력해주세요."
+              class="verificationCode-input"
+            />
+        </div>
+      
         <!-- 비밀번호 입력 -->
         <div class="form-group">
           <label for="password">비밀번호</label>
@@ -168,10 +178,10 @@ export default {
         this.formData.sport = ""; // 학생 선택 시 종목 필드 초기화
       }
     },
-    checkEmailAvailability() {
-      console.log("이메일 중복 확인 실행:", this.formData.email);
-      alert("이메일 중복 확인 기능입니다.");
-    },
+    // checkEmailAvailability() {
+    //   console.log("이메일 중복 확인 실행:", this.formData.email);
+    //   alert("이메일 중복 확인 기능입니다.");
+    // }, 
   },
 };
 </script>
@@ -189,6 +199,7 @@ export default {
   min-height: 100vh;
   background: white;
   position: relative;
+  overflow: hidden;
 }
 
 /* 배경 컨테이너 */
@@ -237,7 +248,7 @@ export default {
   text-align: center;
   padding: 2rem;
   background: white;
-  border-radius: 12px;
+  border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 
   width: 60%;
@@ -246,6 +257,12 @@ export default {
   height: auto;
   min-height: 400px;
   max-height: none;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #000000;
 }
 
 /* 이메일 입력 그룹 스타일 */
@@ -265,7 +282,7 @@ export default {
   border-radius: 8px;
   font-size: 1rem;
   text-align: left;
-  box-sizing: border-box; /* padding과 border를 높이에 포함 */
+  box-sizing: border-box;
   height: 48px; /* 높이 고정 */
   line-height: 24px; /* 텍스트 수직 중앙 정렬 */
 

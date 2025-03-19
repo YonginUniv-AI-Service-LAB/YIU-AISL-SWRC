@@ -167,7 +167,7 @@ export default {
   text-align: center;
   padding: 2rem;
   background: white;
-  border-radius: 12px;
+  border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 
   /* 고정 크기 대신 유동적인 크기 적용 */

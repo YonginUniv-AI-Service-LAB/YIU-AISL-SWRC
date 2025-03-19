@@ -86,6 +86,7 @@ header {
     top: 0;
     left: 0;
     right: 0;
+    white-space: nowrap;
     z-index: 10;
 
     .logo img{
