@@ -292,12 +292,12 @@ export default {
 .check-btn {
   padding: 12px 24px; /* 버튼 크기 조정 */
   font-size: 14px;
-  border: 2px solid #737373; /* 평소 색상: 회색 */
+  border: 2px solid #ECECEC;
   border-radius: 6px;
-  background: white;
+  background: #ECECEC;
   color: #737373; /* 평소 색상: 회색 */
   cursor: pointer;
-  transition: all 0.3s ease; /* 색상 변경 애니메이션 */
+  transition: all 0.2s ease; /* 색상 변경 애니메이션 */
   height: 48px; /* 높이 고정 */
   line-height: 24px; /* 텍스트 수직 중앙 정렬 */
   white-space: nowrap; /* 버튼 텍스트 줄바꿈 방지 */
