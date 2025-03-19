@@ -16,12 +16,12 @@
       <form class="login-form">
         <!-- 아이디 입력 필드 -->
         <div class="form-group">
-          <label for="username">아이디</label>
+          <label for="username">이메일</label>
           <input 
             type="text" 
             id="username" 
             v-model="formData.username" 
-            placeholder="아이디를 입력해주세요." 
+            placeholder="" 
           />
         </div>
 
@@ -33,7 +33,7 @@
               :type="showPassword ? 'text' : 'password'"
               id="password"
               v-model="formData.password"
-              placeholder="비밀번호를 입력해주세요."
+              placeholder=""
               class="password-input"
             />
             <img
@@ -118,12 +118,13 @@ export default {
   min-height: 100vh; /* 최소 높이를 100vh로 설정 */
   background: white;
   position: relative;
+  overflow: hidden;
 }
 
 /* 배경 컨테이너 */
 .background-container {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 130vh;
   position: relative;
   display: flex;
   justify-content: center;
@@ -155,9 +156,9 @@ export default {
 /* 로그인 박스 */
 .login-box {
   position: absolute;
-  top: 50%;
+  top: 15%;
   left: 50%;
-  transform: translate(-50%, -50%); /* 정확한 중앙 정렬 */
+  transform: translate(-50%); /* 수평 가운데 정렬 */
   
   display: flex;
   flex-direction: column;
@@ -201,6 +202,21 @@ export default {
   }
 }
 
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 0;
+}
+
+.subtitle {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #737373;
+  margin-top: 0.3rem;
+  /* margin-bottom: 1.5rem; */
+}
+
 /* 로그인 폼 */
 .login-form {
   display: flex;
@@ -208,28 +224,32 @@ export default {
   align-items: center;
   width: 90%;
   max-width: 400px;
-  padding: 2rem;
+  padding: 0.7rem;
 }
 
 /* 로그인 버튼 */
 .login-btn {
   width: 100%;
   max-width: 400px;
-  padding: 12px;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  padding: 0.8rem;
   border-radius: 8px; /* 둥근 모서리 */
-  border: 2px solid #e6e6e6; /* 테두리 색상 */
-  background: #e6e6e6; /* 배경색 */
-  font-size: 20px;
+  border: 2px solid #ECECEC; /* 테두리 색상 */
+  background: #ECECEC; /* 배경색 */
+  font-size: 1rem;
   font-weight: 600;
   color: #737373; /* 글자 색상 */
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
   text-align: center;
 }
 
 /* 호버 효과 */
 .login-btn:hover {
-  background: #d4d4d4; /* 마우스 호버 시 버튼 색상 변경 */
+  background: #005871; /* 마우스 호버 시 버튼 색상 변경 */
+  color: #ECECEC; /* 글자 색상 변경 */
+  border: 2px solid #005871; /* 테두리 색상 변경 */
 }
 
 /* 안내 문구 스타일 */
@@ -300,13 +320,11 @@ export default {
   width: 24px;
   height: 24px;
   cursor: pointer;
-  opacity: 0.6;
+  /* opacity: 0.6; */
+  color: #737373;
   transition: opacity 0.2s ease-in-out;
 }
 
-.eye-icon:hover {
-  opacity: 1;
-}
 
 /* 체크박스 그룹 */
 .checkbox-group {
@@ -315,8 +333,9 @@ export default {
   gap: 8px;
   width: 100%;
   font-size: 1rem;
-  color: #3f3f3f;
-  margin-top: -20px;
+  font-weight: 500;
+  color: #737373;
+  margin-top: -0.3rem;
 }
 
 /* "또는" 구분선 */
@@ -327,10 +346,9 @@ export default {
   width: 100%;
   max-width: 400px;
   margin: 20px 0;
-  font-size: 18px;
+  font-size: 0.8rem;
   font-weight: 500;
-  color: #737373;
-  font-family: KoPubWorldDotum;
+  color: #262626;
   text-align: center;
   margin-top: -10px;
 }
@@ -341,7 +359,7 @@ export default {
   content: "";
   flex-grow: 1;
   height: 1px;
-  background: #ccc;
+  background: #262626;
 }
 
 /* 구분선 가운데 텍스트 */
@@ -363,20 +381,19 @@ export default {
   background: #FFF;
   color: var(--main01, #005871);
   text-align: center;
-  font-family: KoPubWorldDotum;
-  font-size: 16px;
-  font-style: normal;
+  font-size: 1rem;
   font-weight: 700;
   line-height: 150%; /* 30px */
   cursor: pointer;
   text-decoration: none;
   transition: all 0.2s ease-in-out;
-  margin-top: 10px;
+  margin-top: 0.7rem;
 }
 
 /* 회원가입 하러가기 버튼 호버 효과 */
 .register-link:hover {
-  background: #f0f0f0;
+  background: #005871;
+  color: #ECECEC;
 }
 
 /* 비밀번호 찾기(변경) 텍스트 */
@@ -386,16 +403,12 @@ export default {
   align-items: center;
   width: 100%;
   max-width: 380px;
-  margin-top: 10px;
-  font-size: 14px;
-  font-weight: 500;
+  margin-top: 1.2rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
   color: #737373; /* 회색 텍스트 */
   cursor: pointer;
   transition: color 0.2s ease-in-out;
-}
-
-/* 비밀번호 찾기(변경) 텍스트 호버 효과 */
-.reset-password-text:hover {
-  color: #005871; /* 호버 시 색상 변경 */
 }
 </style>

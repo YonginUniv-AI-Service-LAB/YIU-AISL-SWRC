@@ -194,7 +194,7 @@ export default {
 /* 배경 컨테이너 */
 .background-container {
   width: 100vw;
-  height: 150vh;
+  height: 165vh;
   position: relative;
   display: flex;
   justify-content: center;
@@ -226,9 +226,10 @@ export default {
 /* 회원가입 박스 */
 .register-box {
   position: absolute;
-  top: 10%;
+  top: 12%;
   left: 50%;
   transform: translateX(-50%);
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -238,6 +239,7 @@ export default {
   background: white;
   border-radius: 12px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+
   width: 60%;
   max-width: 1190px;
   min-width: 320px;
