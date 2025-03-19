@@ -59,8 +59,9 @@ const openAddRecordModal = () => {
 
 <style scoped>
 .user-profile {
-    /* position: relative; */
+    position: relative;
     width: 15vw;
+    min-height: 33vh;
     background: #FFFFFF;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
