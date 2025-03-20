@@ -162,7 +162,7 @@ export default {
         sport: "", // 관리자용 종목 입력 필드
       },
       userRole: null, // 'student' 또는 'admin' 저장
-      sports: ["축구", "유도", "태권도"], // 선택 가능한 종목 리스트
+      sports: ["축구", "야구", "태권도", "검도", "복싱"], // 선택 가능한 종목 리스트
     };
   },
   methods: {
@@ -285,13 +285,26 @@ export default {
   box-sizing: border-box;
   height: 48px; /* 높이 고정 */
   line-height: 24px; /* 텍스트 수직 중앙 정렬 */
+}
 
+.verificationCode-input {
+  margin-top: -25px;
+  flex: 1; /* 남은 공간을 모두 차지 */
+  padding: 12px 24px;
+  border: 2px solid #737373;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-align: left;
+  box-sizing: border-box;
+  height: 48px; /* 높이 고정 */
+  line-height: 24px; /* 텍스트 수직 중앙 정렬 */
 }
 
 /* 인증번호 받기 버튼 스타일 */
 .check-btn {
   padding: 12px 24px; /* 버튼 크기 조정 */
-  font-size: 14px;
+  font-size: 0.9rem;
+  font-weight: 700;
   border: 2px solid #ECECEC;
   border-radius: 6px;
   background: #ECECEC;
@@ -348,7 +361,7 @@ export default {
 /* 라벨 스타일 */
 .form-group label {
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   color: #3f3f3f;
   margin-bottom: 8px;
   text-align: left;
@@ -367,7 +380,6 @@ export default {
   box-sizing: border-box;
   background-color: white;
   appearance: none;
-  cursor: pointer;
 }
 
 /* 드롭다운 화살표 커스텀 */
@@ -393,7 +405,7 @@ export default {
   width: 100%;
   max-width: 400px;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 0.5rem;
 }
 
 /* 버튼 스타일 */
@@ -401,13 +413,16 @@ export default {
   flex: 1;
   padding: 12px;
   font-size: 14px;
-  border: 2px solid #737373;
+  border: 2px solid #ECECEC;
   border-radius: 6px;
-  background: white;
+  background: #ECECEC;
   color: #737373;
   cursor: pointer;
   text-align: center;
   transition: 0.3s;
+  font-weight: 700;
+  font-size: 1rem;
+
 }
 
 /* 선택된 버튼 */
@@ -518,6 +533,7 @@ export default {
 /* 가입하기 버튼 */
 .register-btn {
   margin-top: 30px; /* 개인정보 동의 체크박스와 가입하기 버튼 사이 간격 */
+  margin-bottom: 1rem;
 }
 
 /* 가입 버튼 (로그인 버튼과 동일한 크기 적용) */
@@ -528,7 +544,7 @@ export default {
   background: #e6e6e6;
   border: 2px solid #e6e6e6;
   border-radius: 8px;
-  font-size: 20px;
+  font-size: 1rem;
   font-weight: 600;
   color: #737373;
   cursor: pointer;
@@ -573,10 +589,10 @@ export default {
 /* 로그인 링크 (회원가입 박스 오른쪽 상단 배치) */
 .login-link {
   position: absolute;
-  top: 20px; /* 회원가입 박스 상단에서 간격 */
-  right: 20px; /* 회원가입 박스 오른쪽에서 간격 */
-  font-size: 16px;
-  font-weight: 600;
+  top: 30px; /* 회원가입 박스 상단에서 간격 */
+  right: 30px; /* 회원가입 박스 오른쪽에서 간격 */
+  font-size: 1rem;
+  font-weight: 700;
   color: var(--Gr-02, #737373); /* 새로운 색상 적용 */
   cursor: pointer;
   text-decoration: none;
@@ -586,11 +602,6 @@ export default {
 /* 호버 효과 */
 .login-link:hover {
   color: #505050; /* 조금 더 어두운 색상으로 변경 */
-}
-
-
-.login-link:hover {
-  background: #f0f0f0;
 }
 
 
@@ -627,12 +638,8 @@ export default {
   }
 
   .register-btn {
-    font-size: 18px;
+    font-size: 1rem;
     padding: 10px;
-  }
-
-  .login-link {
-    font-size: 18px;
   }
 }
 </style>
