@@ -97,9 +97,10 @@
         </div>
       </div>
   
-      <!-- 푸터 -->
-      <MainFooter />
+     
     </div>
+     <!-- 푸터 -->
+     <MainFooter />
   </template>
   
   <script>
