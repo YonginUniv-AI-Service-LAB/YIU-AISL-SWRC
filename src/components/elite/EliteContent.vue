@@ -19,6 +19,7 @@
                     <div class="content-area">
                         <!-- 🔹 activeTab이 1이면 MatchRecordList 보여주기 -->
                         <MatchRecordList v-if="activeTab === 1" />
+                        
                         <p v-else>현재 입력된 기록이 없습니다. 내 기록 추가를 통해 몸 상태를 기록해 보세요!</p>
                     </div>
                 </div>
@@ -51,7 +52,7 @@ const pageTitle = computed(() => pageTitles[props.activeTab]);
     left: 0;
     background: #F4F4F4;
     overflow: hidden; /* 내용이 넘칠 경우 스크롤바 표시 */
-    z-index: -1;
+
 }
 
 /* 프로필과 메인 컨텐츠를 감싸는 레이아웃 */
