@@ -69,6 +69,7 @@ const openAddRecordModal = () => {
     flex-direction: column;
     align-items: center;
     padding: 3.5vh 1vw;
+    white-space: nowrap;
 }
 
 .profile-image {

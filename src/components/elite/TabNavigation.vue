@@ -41,6 +41,7 @@ const selectTab = (index) => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    white-space: nowrap;
 
     z-index: 5;
 }
