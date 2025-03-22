@@ -2,11 +2,11 @@
   <footer class="footer">
     <div class="footer-content">
       <nav class="footer-nav">
-        <span>주요사업</span> |
-        <span>위치 및 연락처</span> |
-        <span>국민체력100</span> |
-        <span>체력측정분석</span> |
-        <span>경기기록</span>
+        <span @click="goToLink('/detail/business')">주요사업</span> |
+        <span @click="goToLink('/detail/location')">위치 및 연락처</span> |
+        <span @click="openExternalLink('https://nfa.kspo.or.kr/main.kspo')">국민체력100</span> |
+        <span @click="goToLink('/elite-player')">체력측정분석</span> |
+        <span @click="goToLink('/elite-manager')">경기기록</span>
       </nav>
       <div class="footer2">
         <p>경기도 용인시 처인구 용인대학로 134 용인대학교 무도대학 6층</p>
@@ -17,10 +17,10 @@
 
     <!-- SNS 링크 버튼 -->
     <div class="link">
-      <img src="@/assets/images/youtube.png" alt="youtube" @click="goToLink('https://www.youtube.com')" />
-      <img src="@/assets/images/instagram.png" alt="instagram" @click="goToLink('https://www.instagram.com')" />
-      <img src="@/assets/images/blog.png" alt="blog" @click="goToLink('https://blog.naver.com')" />
-      <img src="@/assets/images/facebook.png" alt="facebook" @click="goToLink('https://www.facebook.com')" />
+      <img src="@/assets/images/youtube.png" alt="youtube" @click="openExternalLink('https://www.youtube.com')" />
+      <img src="@/assets/images/instagram.png" alt="instagram" @click="openExternalLink('https://www.instagram.com')" />
+      <img src="@/assets/images/blog.png" alt="blog" @click="openExternalLink('https://blog.naver.com')" />
+      <img src="@/assets/images/facebook.png" alt="facebook" @click="openExternalLink('https://www.facebook.com')" />
     </div>
   </footer>
 </template>
@@ -28,9 +28,12 @@
 <script>
 export default {
   methods: {
-    goToLink(url) {
-      window.open(url, "_blank", "noopener,noreferrer"); // 새 탭에서 열기
+    goToLink(path) {
+      this.$router.push(path); // 같은 페이지 내에서 해당 path로 이동
     },
+    openExternalLink(url) {
+      window.open(url, "_blank", "noopener,noreferrer"); // 새 창에서 외부 사이트 열기
+    }
   },
 };
 </script>
@@ -60,6 +63,7 @@ export default {
   margin-bottom: 3vh;
   font-size:1rem;
   color: #FFFFFF;
+  cursor: pointer;
 }
 /* 메뉴 스타일 */
 .footer-nav span {
