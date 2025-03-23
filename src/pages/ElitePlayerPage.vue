@@ -1,13 +1,13 @@
 <template>
-    <div class="elite-player-page">
-        <MainHeader />
-        <div class="content-wrapper">
-            <EliteBanner />
-            <TabNavigation v-model:activeTab="activeTab" />
-            <EliteContent :activeTab="activeTab" />           
-        </div>
-        <MainFooter />
+  <div class="elite-player-page">
+    <MainHeader />
+    <div class="content-wrapper">
+      <EliteBanner />
+      <TabNavigation v-model:activeTab="activeTab" />
+      <EliteContent :active-tab="activeTab" />           
     </div>
+    <MainFooter />
+  </div>
 </template>
 
 <script setup>

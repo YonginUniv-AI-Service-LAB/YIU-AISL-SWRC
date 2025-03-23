@@ -1,16 +1,23 @@
 <template>
-    <li class="dropdown">
-        <a @click="$emit('navigate', title, '/')">{{ title }}</a>
+  <li class="dropdown">
+    <a @click="$emit('navigate', title, '/')">{{ title }}</a>
 
-        <div class="dropdown-content">
-            <ul>
-                <li v-for="(item, index) in items" :key="index" @click="$emit('navigate', title, item.path)">
-                    {{ item.title }}
-                    <div v-if="index !== items.length - 1" class="divider"></div>
-                </li>
-            </ul>
-        </div>
-    </li>
+    <div class="dropdown-content">
+      <ul>
+        <li
+          v-for="(item, index) in items"
+          :key="index"
+          @click="$emit('navigate', title, item.path)"
+        >
+          {{ item.title }}
+          <div
+            v-if="index !== items.length - 1"
+            class="divider"
+          />
+        </li>
+      </ul>
+    </div>
+  </li>
 </template>
 
 <script>

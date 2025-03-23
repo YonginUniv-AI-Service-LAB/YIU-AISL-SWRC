@@ -1,7 +1,12 @@
 <template>
   <div class="exercisephysiology-content">
-    <h1 class="exercisephysiology-title">운동생리학 & 생화학</h1>
-    <img src="@/assets/images/exercise-physiology.png" alt="exercise-physiology"  />
+    <h1 class="exercisephysiology-title">
+      운동생리학 & 생화학
+    </h1>
+    <img
+      src="@/assets/images/exercise-physiology.png"
+      alt="exercise-physiology"
+    >
   </div>
 </template>
 

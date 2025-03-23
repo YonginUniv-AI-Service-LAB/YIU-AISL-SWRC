@@ -1,81 +1,103 @@
 <template>
-    <div class="password-change-container">
-      <!-- 헤더 -->
-      <MainHeader />
+  <div class="password-change-container">
+    <!-- 헤더 -->
+    <MainHeader />
   
-      <!-- 배경 이미지 -->
-      <div class="background-container">
-        <img src="@/assets/images/image5.svg" alt="Password Change Background" class="background-image" />
+    <!-- 배경 이미지 -->
+    <div class="background-container">
+      <img
+        src="@/assets/images/image5.svg"
+        alt="Password Change Background"
+        class="background-image"
+      >
+    </div>
+  
+    <!-- 비밀번호 변경 박스 -->
+    <div class="password-change-box">
+      <!-- 로그인 하러가기 링크 -->
+      <div class="login-link">
+        <span @click="goToLogin">로그인 하러가기 -></span>
       </div>
   
-      <!-- 비밀번호 변경 박스 -->
-      <div class="password-change-box">
-        <!-- 로그인 하러가기 링크 -->
-        <div class="login-link">
-          <span @click="goToLogin">로그인 하러가기 -></span>
+      <h2 class="title">
+        비밀번호 변경
+      </h2>
+  
+      <!-- 폼 영역 -->
+      <form class="password-change-form">
+        <!-- 이메일 입력 필드와 인증번호 받기 버튼 -->
+        <div class="form-group email-group">
+          <label
+            for="email"
+            class="left-align"
+          >이메일</label>
+          <div class="email-wrapper">
+            <input
+              id="email"
+              v-model="formData.email"
+              type="email"
+              placeholder="이메일을 입력해주세요."
+              class="email-input"
+            >
+            <button
+              type="button"
+              class="auth-btn"
+              @click="sendVerificationCode"
+            >
+              인증번호 받기
+            </button>
+          </div>
         </div>
   
-        <h2 class="title">비밀번호 변경</h2>
+        <!-- 인증번호 입력 필드 -->
+        <div class="form-group">
+          <input
+            id="verificationCode"
+            v-model="formData.verificationCode"
+            type="text"
+            placeholder="인증번호를 입력해주세요."
+            class="password-input"
+          >
+        </div>
   
-        <!-- 폼 영역 -->
-        <form class="password-change-form">
-          <!-- 이메일 입력 필드와 인증번호 받기 버튼 -->
-          <div class="form-group email-group">
-            <label for="email" class="left-align">이메일</label>
-            <div class="email-wrapper">
-              <input
-                type="email"
-                id="email"
-                v-model="formData.email"
-                placeholder="이메일을 입력해주세요."
-                class="email-input"
-              />
-              <button type="button" class="auth-btn" @click="sendVerificationCode">인증번호 받기</button>
-            </div>
-          </div>
+        <!-- 새 비밀번호 입력 필드 -->
+        <div class="form-group password-group">
+          <label
+            for="newPassword"
+            class="left-align"
+          >새 비밀번호 입력</label>
+          <input
+            id="newPassword"
+            v-model="formData.newPassword"
+            type="password"
+            placeholder="비밀번호를 입력해주세요."
+            class="password-input"
+          >
+        </div>
   
-          <!-- 인증번호 입력 필드 -->
-          <div class="form-group">
-            <input
-              type="text"
-              id="verificationCode"
-              v-model="formData.verificationCode"
-              placeholder="인증번호를 입력해주세요."
-              class="password-input"
-            />
-          </div>
+        <!-- 비밀번호 확인 입력 필드 -->
+        <div class="form-group password-group">
+          <input
+            id="confirmPassword"
+            v-model="formData.confirmPassword"
+            type="password"
+            placeholder="비밀번호 확인"
+            class="password-input"
+          >
+        </div>
   
-          <!-- 새 비밀번호 입력 필드 -->
-          <div class="form-group password-group">
-            <label for="newPassword" class="left-align">새 비밀번호 입력</label>
-            <input
-              type="password"
-              id="newPassword"
-              v-model="formData.newPassword"
-              placeholder="비밀번호를 입력해주세요."
-              class="password-input"
-            />
-          </div>
-  
-          <!-- 비밀번호 확인 입력 필드 -->
-          <div class="form-group password-group">
-            <input
-              type="password"
-              id="confirmPassword"
-              v-model="formData.confirmPassword"
-              placeholder="비밀번호 확인"
-              class="password-input"
-            />
-          </div>
-  
-          <!-- 비밀번호 변경 버튼 -->
-          <button type="submit" class="change-btn">비밀번호 변경</button>
-        </form>
-      </div>
-   
+        <!-- 비밀번호 변경 버튼 -->
+        <button
+          type="submit"
+          class="change-btn"
+        >
+          비밀번호 변경
+        </button>
+      </form>
     </div>
-    <MainFooter />
-  </template>
+  </div>
+  <MainFooter />
+</template>
   
   <script>
   import MainHeader from "@/components/layout/MainHeader.vue";

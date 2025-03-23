@@ -1,7 +1,12 @@
 <template>
   <div class="kinetics-content">
-    <h1 class="kinetics-title">운동역학</h1>
-    <img src="@/assets/images/kinetics.png" alt="kinetics"  />
+    <h1 class="kinetics-title">
+      운동역학
+    </h1>
+    <img
+      src="@/assets/images/kinetics.png"
+      alt="kinetics"
+    >
   </div>
 </template>
 

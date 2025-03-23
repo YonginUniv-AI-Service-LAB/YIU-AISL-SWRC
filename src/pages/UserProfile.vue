@@ -1,107 +1,152 @@
 <template>
-    <div class="profile-container">
-      <!-- 헤더 -->
-      <MainHeader />
+  <div class="profile-container">
+    <!-- 헤더 -->
+    <MainHeader />
   
-      <!-- 배경 이미지 -->
-      <div class="background-container">
-        <img src="@/assets/images/image5.svg" alt="Profile Background" class="background-image" />
-      </div>
-  
-      <!-- 프로필 작성 박스 -->
-      <div class="profile-box">
-        <h2 class="title">어서오세요!</h2>
-        <p class="subtitle">
-          첫 설정 시 프로필을 작성해주세요. 프로필은 엘리트 선수 기록 관리 시스템에서 언제든 수정 가능해요.
-        </p>
-  
-        <!-- 프로필 사진 선택 -->
-        <div class="profile-picture">
-          <div class="profile-circle">
-            <img
-              v-if="profileImage"
-              :src="profileImage"
-              alt="Profile Picture"
-              class="profile-image"
-            />
-            <span v-else class="upload-text">사진 업로드</span>
-            <input
-              type="file"
-              accept="image/*"
-              class="file-input"
-              @change="handleImageUpload"
-            />
-          </div>
-        </div>
-  
-        <!-- 인적사항 -->
-        <div class="section">
-          <h3 class="section-title">인적사항</h3>
-          <div class="input-group">
-            <div class="form-group">
-              <input
-                type="text"
-                v-model="formData.name"
-                placeholder="이름"
-              />
-            </div>
-            <div class="form-group">
-              <input
-                type="date"
-                v-model="formData.birthdate"
-              />
-            </div>
-            <div class="form-group">
-              <select v-model="formData.gender">
-                <option value="" disabled selected>성별</option>
-                <option value="male">남성</option>
-                <option value="female">여성</option>
-              </select>
-            </div>
-          </div>
-        </div>
-  
-        <!-- 신체 정보 -->
-        <div class="section">
-          <h3 class="section-title">신체 정보</h3>
-          <div class="input-group">
-            <div class="form-group">
-              <input
-                type="number"
-                v-model="formData.height"
-                placeholder="키 (cm)"
-              />
-            </div>
-            <div class="form-group">
-              <input
-                type="number"
-                v-model="formData.weight"
-                placeholder="몸무게 (kg)"
-              />
-            </div>
-            <div class="form-group">
-              <select v-model="formData.sport">
-                <option value="" disabled selected>종목</option>
-                <option value="축구">축구</option>
-                <option value="유도">유도</option>
-                <option value="태권도">태권도</option>
-              </select>
-            </div>
-          </div>
-        </div>
-  
-        <!-- 버튼 그룹 -->
-        <div class="button-group">
-          <button type="button" class="back-btn" @click="goBack">뒤로가기</button>
-          <button type="submit" class="save-btn" @click="saveProfile">프로필 저장</button>
-        </div>
-      </div>
-  
-     
+    <!-- 배경 이미지 -->
+    <div class="background-container">
+      <img
+        src="@/assets/images/image5.svg"
+        alt="Profile Background"
+        class="background-image"
+      >
     </div>
-     <!-- 푸터 -->
-     <MainFooter />
-  </template>
+  
+    <!-- 프로필 작성 박스 -->
+    <div class="profile-box">
+      <h2 class="title">
+        어서오세요!
+      </h2>
+      <p class="subtitle">
+        첫 설정 시 프로필을 작성해주세요. 프로필은 엘리트 선수 기록 관리 시스템에서 언제든 수정 가능해요.
+      </p>
+  
+      <!-- 프로필 사진 선택 -->
+      <div class="profile-picture">
+        <div class="profile-circle">
+          <img
+            v-if="profileImage"
+            :src="profileImage"
+            alt="Profile Picture"
+            class="profile-image"
+          >
+          <span
+            v-else
+            class="upload-text"
+          >사진 업로드</span>
+          <input
+            type="file"
+            accept="image/*"
+            class="file-input"
+            @change="handleImageUpload"
+          >
+        </div>
+      </div>
+  
+      <!-- 인적사항 -->
+      <div class="section">
+        <h3 class="section-title">
+          인적사항
+        </h3>
+        <div class="input-group">
+          <div class="form-group">
+            <input
+              v-model="formData.name"
+              type="text"
+              placeholder="이름"
+            >
+          </div>
+          <div class="form-group">
+            <input
+              v-model="formData.birthdate"
+              type="date"
+            >
+          </div>
+          <div class="form-group">
+            <select v-model="formData.gender">
+              <option
+                value=""
+                disabled
+                selected
+              >
+                성별
+              </option>
+              <option value="male">
+                남성
+              </option>
+              <option value="female">
+                여성
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+  
+      <!-- 신체 정보 -->
+      <div class="section">
+        <h3 class="section-title">
+          신체 정보
+        </h3>
+        <div class="input-group">
+          <div class="form-group">
+            <input
+              v-model="formData.height"
+              type="number"
+              placeholder="키 (cm)"
+            >
+          </div>
+          <div class="form-group">
+            <input
+              v-model="formData.weight"
+              type="number"
+              placeholder="몸무게 (kg)"
+            >
+          </div>
+          <div class="form-group">
+            <select v-model="formData.sport">
+              <option
+                value=""
+                disabled
+                selected
+              >
+                종목
+              </option>
+              <option value="축구">
+                축구
+              </option>
+              <option value="유도">
+                유도
+              </option>
+              <option value="태권도">
+                태권도
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+  
+      <!-- 버튼 그룹 -->
+      <div class="button-group">
+        <button
+          type="button"
+          class="back-btn"
+          @click="goBack"
+        >
+          뒤로가기
+        </button>
+        <button
+          type="submit"
+          class="save-btn"
+          @click="saveProfile"
+        >
+          프로필 저장
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- 푸터 -->
+  <MainFooter />
+</template>
   
   <script>
   import MainHeader from "@/components/layout/MainHeader.vue";

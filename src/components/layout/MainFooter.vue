@@ -17,10 +17,26 @@
 
     <!-- SNS 링크 버튼 -->
     <div class="link">
-      <img src="@/assets/images/youtube.png" alt="youtube" @click="openExternalLink('https://www.youtube.com')" />
-      <img src="@/assets/images/instagram.png" alt="instagram" @click="openExternalLink('https://www.instagram.com')" />
-      <img src="@/assets/images/blog.png" alt="blog" @click="openExternalLink('https://blog.naver.com')" />
-      <img src="@/assets/images/facebook.png" alt="facebook" @click="openExternalLink('https://www.facebook.com')" />
+      <img
+        src="@/assets/images/youtube.png"
+        alt="youtube"
+        @click="openExternalLink('https://www.youtube.com')"
+      >
+      <img
+        src="@/assets/images/instagram.png"
+        alt="instagram"
+        @click="openExternalLink('https://www.instagram.com')"
+      >
+      <img
+        src="@/assets/images/blog.png"
+        alt="blog"
+        @click="openExternalLink('https://blog.naver.com')"
+      >
+      <img
+        src="@/assets/images/facebook.png"
+        alt="facebook"
+        @click="openExternalLink('https://www.facebook.com')"
+      >
     </div>
   </footer>
 </template>

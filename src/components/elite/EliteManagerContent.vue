@@ -1,21 +1,29 @@
 <template>
-    <div class="elite-manager-content">
-        <div class="content-wrapper">
-            <div class="main-section">
-                <div class="main-title">
-                    <h2>{{ pageTitle }}</h2>
-                </div>
-
-                <div class="main-content">
-                    <div class="content-area">
-                        <PlayerPerformanceList v-if="activeTab === 0" @select-record="$emit('select-record', $event)" />
-                        <PlayerRecordList v-else-if="activeTab === 1" @select-record="$emit('select-record', $event)" />
-                        <p v-else>현재 입력된 기록이 없습니다. 내 기록 추가를 통해 몸 상태를 기록해 보세요!</p>
-                    </div>
-                </div>
-            </div>
+  <div class="elite-manager-content">
+    <div class="content-wrapper">
+      <div class="main-section">
+        <div class="main-title">
+          <h2>{{ pageTitle }}</h2>
         </div>
+
+        <div class="main-content">
+          <div class="content-area">
+            <PlayerPerformanceList
+              v-if="activeTab === 0"
+              @select-record="$emit('select-record', $event)"
+            />
+            <PlayerRecordList
+              v-else-if="activeTab === 1"
+              @select-record="$emit('select-record', $event)"
+            />
+            <p v-else>
+              현재 입력된 기록이 없습니다. 내 기록 추가를 통해 몸 상태를 기록해 보세요!
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script setup>

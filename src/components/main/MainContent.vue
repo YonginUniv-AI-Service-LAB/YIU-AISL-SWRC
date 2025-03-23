@@ -8,20 +8,33 @@
     <p>스포츠 데이터 기반 선수들의 경기력 향상과 대국민 건강증진의 싱크탱크</p>
   </div>
 
-<div class="pictures">
-    <img src="@/assets/images/mainimage1.png" alt="Yongin Image" class="mainPicture" />
-    <img src="@/assets/images/mainimage2.png" alt="Yongin Image" class="mainPicture" />
-    <img src="@/assets/images/mainimage3.png" alt="Yongin Image" class="mainPicture" />
-  <div class="pictures_menu">
-    <a class="pictures_menu1">경기력 향상</a>
-    <a class="pictures_menu2">개인의 체력</a>
-  <div class="pictures_menu3">
-    <div class="first_row">국민 체력</div>
-    <div>건강 증진</div>
+  <div class="pictures">
+    <img
+      src="@/assets/images/mainimage1.png"
+      alt="Yongin Image"
+      class="mainPicture"
+    >
+    <img
+      src="@/assets/images/mainimage2.png"
+      alt="Yongin Image"
+      class="mainPicture"
+    >
+    <img
+      src="@/assets/images/mainimage3.png"
+      alt="Yongin Image"
+      class="mainPicture"
+    >
+    <div class="pictures_menu">
+      <a class="pictures_menu1">경기력 향상</a>
+      <a class="pictures_menu2">개인의 체력</a>
+      <div class="pictures_menu3">
+        <div class="first_row">
+          국민 체력
+        </div>
+        <div>건강 증진</div>
+      </div>
+    </div>
   </div>
-  </div>
-</div>
-
 </template>
 
 <script>

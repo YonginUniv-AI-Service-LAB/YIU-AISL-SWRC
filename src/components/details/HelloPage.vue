@@ -1,7 +1,12 @@
 <template>
   <div class="hello-content">
-    <h2 class="hello-title">인사말</h2>
-    <img src="../../assets/images/hello.png" alt="hello" />
+    <h2 class="hello-title">
+      인사말
+    </h2>
+    <img
+      src="../../assets/images/hello.png"
+      alt="hello"
+    >
   </div>
 </template>
 

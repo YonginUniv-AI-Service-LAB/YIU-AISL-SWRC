@@ -1,13 +1,26 @@
 <template>
-  <div class = "history-content">
+  <div class="history-content">
     <div class="yongin-university">
-    <img src="../../assets/images/history-logo1.png" class="logo1" alt="yongin-logo1">
-    <img src="../../assets/images/history-logo2.png" class="logo2" alt="yongin-logo2">
+      <img
+        src="../../assets/images/history-logo1.png"
+        class="logo1"
+        alt="yongin-logo1"
+      >
+      <img
+        src="../../assets/images/history-logo2.png"
+        class="logo2"
+        alt="yongin-logo2"
+      >
+    </div>
+    <h2 class="history-title">
+      기관 연혁
+    </h2>
+    <img
+      src="../../assets/images/history.png"
+      class="history-picture"
+      alt="history"
+    >
   </div>
-      <h2 class="history-title">기관 연혁</h2>
-      <img src = "../../assets/images/history.png" class="history-picture" alt = "history">
-  </div>
- 
 </template>
 
 <script>

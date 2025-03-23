@@ -1,8 +1,13 @@
 <template>
-    <div class = "organization-content">
-        <h2 class="organization-title">조직도</h2>
-        <img src = "../../assets/images/organization.png" alt = "organization">
-    </div>
+  <div class="organization-content">
+    <h2 class="organization-title">
+      조직도
+    </h2>
+    <img
+      src="../../assets/images/organization.png"
+      alt="organization"
+    >
+  </div>
 </template>
 
 <script>

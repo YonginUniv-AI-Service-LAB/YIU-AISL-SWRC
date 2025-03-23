@@ -5,24 +5,32 @@
 
     <!-- 배경 이미지 -->
     <div class="background-container">
-      <img src="@/assets/images/image5.svg" alt="Login Background" class="background-image" />
+      <img
+        src="@/assets/images/image5.svg"
+        alt="Login Background"
+        class="background-image"
+      >
     </div>
 
     <!-- 로그인 박스 -->
     <div class="login-box">
-      <h2 class="title">로그인</h2>
-      <p class="subtitle">엘리트 선수 기록 관리 시스템은 로그인 후 이용 가능합니다.</p>
+      <h2 class="title">
+        로그인
+      </h2>
+      <p class="subtitle">
+        엘리트 선수 기록 관리 시스템은 로그인 후 이용 가능합니다.
+      </p>
 
       <form class="login-form">
         <!-- 아이디 입력 필드 -->
         <div class="form-group">
           <label for="username">이메일</label>
           <input 
-            type="text" 
             id="username" 
             v-model="formData.username" 
+            type="text" 
             placeholder="" 
-          />
+          >
         </div>
 
         <!-- 비밀번호 입력 필드 -->
@@ -30,33 +38,44 @@
           <label for="password">비밀번호</label>
           <div class="password-wrapper">
             <input
-              :type="showPassword ? 'text' : 'password'"
               id="password"
               v-model="formData.password"
+              :type="showPassword ? 'text' : 'password'"
               placeholder=""
               class="password-input"
-            />
+            >
             <img
               src="@/assets/images/eye.svg"
               alt="Toggle Password Visibility"
               class="eye-icon"
               @click="togglePassword"
-            />
+            >
           </div>
         </div>
 
         <!-- 로그인 유지 체크박스 -->
         <div class="checkbox-group">
-          <input type="checkbox" id="rememberMe" v-model="formData.rememberMe" />
+          <input
+            id="rememberMe"
+            v-model="formData.rememberMe"
+            type="checkbox"
+          >
           <label for="rememberMe">로그인 유지</label>
         </div>
 
         <!-- 로그인 버튼 -->
-        <button type="submit" class="login-btn">로그인</button>
+        <button
+          type="submit"
+          class="login-btn"
+        >
+          로그인
+        </button>
       </form>
 
       <!-- 또는 구분선 -->
-      <div class="divider"><span>또는</span></div>
+      <div class="divider">
+        <span>또는</span>
+      </div>
 
       <!-- 회원가입 하러가기 버튼 -->
       <div class="register-link">
@@ -68,8 +87,6 @@
         <span @click="goToResetPassword">비밀번호 찾기(변경)</span>
       </div>
     </div>
-
-    
   </div>
   <MainFooter />
 </template>

@@ -1,21 +1,21 @@
 <template>
-    <div class="elite-manager-page">
-        <MainHeader />
-        <div class="content-wrapper">
-            <EliteManagerBanner />
-            <TabNavigation v-model:activeTab="activeTab" />
+  <div class="elite-manager-page">
+    <MainHeader />
+    <div class="content-wrapper">
+      <EliteManagerBanner />
+      <TabNavigation v-model:activeTab="activeTab" />
 
-            <!-- ✅ 선택한 기록이 없으면 EliteManagerContent, 있으면 ManagerDetailContent -->
-            <component 
-                :is="selectedRecordId ? ManagerDetailContent : EliteManagerContent" 
-                :activeTab="activeTab" 
-                :recordId="selectedRecordId"
-                @go-back="selectedRecordId = null"
-                @select-record="handleRecordClick"
-            />
-        </div>
-        <MainFooter />
+      <!-- ✅ 선택한 기록이 없으면 EliteManagerContent, 있으면 ManagerDetailContent -->
+      <component 
+        :is="selectedRecordId ? ManagerDetailContent : EliteManagerContent" 
+        :active-tab="activeTab" 
+        :record-id="selectedRecordId"
+        @go-back="selectedRecordId = null"
+        @select-record="handleRecordClick"
+      />
     </div>
+    <MainFooter />
+  </div>
 </template>
 
 <script setup>

@@ -1,56 +1,69 @@
 <template>
-    <div class="match-records">
-        <table class="match-table">
-            <thead>
-                <tr>
-                    <th>날짜</th>
-                    <th>대회명</th>
-                    <th>상대</th>
-                    <th>승패</th>
-                    <th>경기 기록</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <template v-for="(group, index) in groupedRecordsArray" :key="index">
-                    <tr class="year-header">
-                        <td colspan="6">{{ group.year }}</td> <!-- ✅ 연도 헤더 -->
-                    </tr>
-                    <tr 
-                        v-for="(record, idx) in group.records" 
-                        :key="idx" 
-                        class="record-row"
-                        @mouseenter="hoveredRow = `${group.year}-${idx}`"
-                        @mouseleave="hoveredRow = null"
-                    >
-                        <td class="date-cell">{{ record.date }}</td>
-                        <td class="tournament-cell">{{ record.tournament }}</td>
-                        <td class="opponent-cell">{{ record.opponent }}</td>
-                        <td :class="['result-cell', getResultClass(record.result)]">
-                            {{ record.result }}
-                        </td>
-                        <td class="notes-cell">{{ record.notes || '-' }}</td>
-                        <td class="action-cell">
-                            <img 
-                                v-if="hoveredRow === `${group.year}-${idx}`" 
-                                src="@/assets/images/edit.png" 
-                                alt="수정" 
-                                class="icon-button"
-                                @click="editRecord(record)" 
-                            />
-                            <img 
-                                v-if="hoveredRow === `${group.year}-${idx}`" 
-                                src="@/assets/images/delete.png" 
-                                alt="삭제" 
-                                class="icon-button"
-                                @click="deleteRecord(record)" 
-                            />
-                        </td>
-                    </tr>
-                </template>
-            </tbody>
-        </table>
-    </div>
+  <div class="match-records">
+    <table class="match-table">
+      <thead>
+        <tr>
+          <th>날짜</th>
+          <th>대회명</th>
+          <th>상대</th>
+          <th>승패</th>
+          <th>경기 기록</th>
+          <th />
+        </tr>
+      </thead>
+      <tbody>
+        <template
+          v-for="(group, index) in groupedRecordsArray"
+          :key="index"
+        >
+          <tr class="year-header">
+            <td colspan="6">
+              {{ group.year }}
+            </td> <!-- ✅ 연도 헤더 -->
+          </tr>
+          <tr 
+            v-for="(record, idx) in group.records" 
+            :key="idx" 
+            class="record-row"
+            @mouseenter="hoveredRow = `${group.year}-${idx}`"
+            @mouseleave="hoveredRow = null"
+          >
+            <td class="date-cell">
+              {{ record.date }}
+            </td>
+            <td class="tournament-cell">
+              {{ record.tournament }}
+            </td>
+            <td class="opponent-cell">
+              {{ record.opponent }}
+            </td>
+            <td :class="['result-cell', getResultClass(record.result)]">
+              {{ record.result }}
+            </td>
+            <td class="notes-cell">
+              {{ record.notes || '-' }}
+            </td>
+            <td class="action-cell">
+              <img 
+                v-if="hoveredRow === `${group.year}-${idx}`" 
+                src="@/assets/images/edit.png" 
+                alt="수정" 
+                class="icon-button"
+                @click="editRecord(record)" 
+              >
+              <img 
+                v-if="hoveredRow === `${group.year}-${idx}`" 
+                src="@/assets/images/delete.png" 
+                alt="삭제" 
+                class="icon-button"
+                @click="deleteRecord(record)" 
+              >
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script setup>

@@ -5,12 +5,18 @@
 
     <!-- 배경 이미지 -->
     <div class="background-container">
-      <img src="@/assets/images/image5.svg" alt="Register Background" class="background-image" />
+      <img
+        src="@/assets/images/image5.svg"
+        alt="Register Background"
+        class="background-image"
+      >
     </div>
 
     <!-- 회원가입 박스 -->
     <div class="register-box">
-      <h2 class="title">회원가입</h2>
+      <h2 class="title">
+        회원가입
+      </h2>
 
       <!-- 학생 / 관리자 선택 버튼 -->
       <div class="role-selection">
@@ -28,33 +34,39 @@
         </button>
       </div>
 
-      <form @submit.prevent="handleRegister" class="register-form">
-
-      <!-- 이메일 입력 + 인증번호 받기 버튼 -->
-      <div class="form-group email-group">
-        <label for="email">이메일</label>
-        <div class="input-group">
-          <input
-            id="email"
-            type="email"
-            v-model="formData.email"
-            placeholder="이메일을 입력해주세요."
-            required
-            class="email-input"
-          />
-          <button type="button" class="check-btn" @click="checkEmailAvailability">
-            인증번호 받기
-          </button>
+      <form
+        class="register-form"
+        @submit.prevent="handleRegister"
+      >
+        <!-- 이메일 입력 + 인증번호 받기 버튼 -->
+        <div class="form-group email-group">
+          <label for="email">이메일</label>
+          <div class="input-group">
+            <input
+              id="email"
+              v-model="formData.email"
+              type="email"
+              placeholder="이메일을 입력해주세요."
+              required
+              class="email-input"
+            >
+            <button
+              type="button"
+              class="check-btn"
+              @click="checkEmailAvailability"
+            >
+              인증번호 받기
+            </button>
+          </div>
         </div>
-      </div>
         <div class="form-group">
           <input
-              type="text"
-              id="verificationCode"
-              v-model="formData.verificationCode"
-              placeholder="인증번호를 입력해주세요."
-              class="verificationCode-input"
-            />
+            id="verificationCode"
+            v-model="formData.verificationCode"
+            type="text"
+            placeholder="인증번호를 입력해주세요."
+            class="verificationCode-input"
+          >
         </div>
       
         <!-- 비밀번호 입력 -->
@@ -62,22 +74,22 @@
           <label for="password">비밀번호</label>
           <input
             id="password"
-            type="password"
             v-model="formData.password"
+            type="password"
             placeholder="비밀번호를 입력해주세요."
             required
-          />
+          >
         </div>
 
         <!-- 비밀번호 확인 (라벨 제거하고, placeholder로 표시) -->
         <div class="form-group">
           <input
             id="passwordConfirm"
-            type="password"
             v-model="formData.passwordConfirm"
+            type="password"
             placeholder="비밀번호 확인"
             required
-          />
+          >
         </div>
 
         <!-- 이름 입력 -->
@@ -85,11 +97,11 @@
           <label for="name">이름</label>
           <input
             id="name"
-            type="text"
             v-model="formData.name"
+            type="text"
             placeholder="이름을 입력해주세요."
             required
-          />
+          >
         </div>
 
         <!-- 전화번호 입력 -->
@@ -97,15 +109,18 @@
           <label for="phone">전화번호</label>
           <input
             id="phone"
-            type="text"
             v-model="formData.phone"
+            type="text"
             placeholder="전화번호를 입력해주세요."
             required
-          />
+          >
         </div>
 
         <!-- 관리자 선택 시 종목 입력 필드 추가 -->
-        <div class="form-group" v-if="userRole === 'admin'">
+        <div
+          v-if="userRole === 'admin'"
+          class="form-group"
+        >
           <label for="sport">종목</label>
           <select
             id="sport"
@@ -113,8 +128,18 @@
             required
             class="sport-select"
           >
-            <option value="" disabled selected>종목을 선택해주세요.</option>
-            <option v-for="sport in sports" :key="sport" :value="sport">
+            <option
+              value=""
+              disabled
+              selected
+            >
+              종목을 선택해주세요.
+            </option>
+            <option
+              v-for="sport in sports"
+              :key="sport"
+              :value="sport"
+            >
               {{ sport }}
             </option>
           </select>
@@ -122,12 +147,22 @@
 
         <!-- 개인정보 동의 체크박스 -->
         <div class="checkbox-group">
-          <input type="checkbox" id="privacy" v-model="formData.agree" required />
+          <input
+            id="privacy"
+            v-model="formData.agree"
+            type="checkbox"
+            required
+          >
           <label for="privacy">(필수) 개인정보 수집이용 동의</label>
         </div>
 
         <!-- 가입 버튼 -->
-        <button type="submit" class="register-btn">가입하기</button>
+        <button
+          type="submit"
+          class="register-btn"
+        >
+          가입하기
+        </button>
       </form>
 
       <!-- 로그인 페이지 이동 -->
@@ -135,7 +170,6 @@
         <span @click="goToLogin">로그인 하러가기  →</span>
       </div>
     </div>
-
   </div>
   <MainFooter />
 </template>

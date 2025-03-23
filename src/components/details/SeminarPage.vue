@@ -1,7 +1,12 @@
 <template>
   <div class="seminar-content">
-    <h1 class="seminar-title">세미나실 & 스터디룸</h1>
-    <img src="@/assets/images/seminar-study.png" alt="Yongin Image"  />
+    <h1 class="seminar-title">
+      세미나실 & 스터디룸
+    </h1>
+    <img
+      src="@/assets/images/seminar-study.png"
+      alt="Yongin Image"
+    >
     <div class="contact">
       <h3>연락처</h3>
       <p>031-8020-2653</p>

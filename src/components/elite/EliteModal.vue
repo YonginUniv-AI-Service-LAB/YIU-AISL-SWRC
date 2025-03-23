@@ -1,81 +1,111 @@
 <template>
   <teleport to="body">
-    <div v-if="show" class="overlay">
+    <div
+      v-if="show"
+      class="overlay"
+    >
       <div class="modal">
         <!-- 상단 영역 -->
         <div class="upper">
           <p>내 기록 추가</p>
           <div class="buttons">
-            <button class="delete" @click="closeModal">닫기</button>
-            <button class="delete-record">기록 삭제</button>
-            <button class="add">저장 및 추가</button>
+            <button
+              class="delete"
+              @click="closeModal"
+            >
+              닫기
+            </button>
+            <button class="delete-record">
+              기록 삭제
+            </button>
+            <button class="add">
+              저장 및 추가
+            </button>
           </div>
         </div>
-        <hr class="line" />
+        <hr class="line">
 
         <!-- 기본 사항 -->
-        <p class="option1">기본 사항</p>
+        <p class="option1">
+          기본 사항
+        </p>
         <EliteSelect style="margin-top: 27px;" />
 
-        <hr class="line2" />
+        <hr class="line2">
 
         <div class="record-section">
-        <!-- 왼쪽 텍스트 영역 -->
-        <div class="record-text">
-          <p class="option2">내 기록</p>
-          <p class="description">
-            순서는 자동으로 <br />
-            정렬됩니다.
-          </p>
+          <!-- 왼쪽 텍스트 영역 -->
+          <div class="record-text">
+            <p class="option2">
+              내 기록
+            </p>
+            <p class="description">
+              순서는 자동으로 <br>
+              정렬됩니다.
+            </p>
+          </div>
+          <!-- 오른쪽 테이블 영역 -->
+          <div class="record-table-container">
+            <table class="record-table">
+              <thead>
+                <tr>
+                  <th>날짜</th>
+                  <th>기록</th>
+                  <th>특이사항 (선택사항)</th>
+                  <th /> <!-- X 버튼 열 -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="(record, index) in myRecords"
+                  :key="index"
+                >
+                  <td>
+                    <input
+                      v-model="record.date"
+                      placeholder="날짜를 입력해주세요"
+                      type="text"
+                    >
+                  </td>
+                  <td>
+                    <input
+                      v-model="record.record"
+                      placeholder="기록을 입력해주세요"
+                      type="text"
+                    >
+                  </td>
+                  <td>
+                    <input
+                      v-model="record.notes"
+                      placeholder="특이사항이 있다면 입력해주세요"
+                      type="text"
+                    >
+                  </td>
+                  <td>
+                    <button
+                      class="close-button"
+                      @click="removeRecord(index)"
+                    >
+                      <img
+                        src="@/assets/images/close.png"
+                        alt="삭제"
+                      >
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <!-- 오른쪽 테이블 영역 -->
-        <div class="record-table-container">
-          <table class="record-table">
-            <thead>
-              <tr>
-                <th>날짜</th>
-                <th>기록</th>
-                <th>특이사항 (선택사항)</th>
-                <th></th> <!-- X 버튼 열 -->
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(record, index) in myRecords" :key="index">
-                <td>
-                  <input
-                    v-model="record.date"
-                    placeholder="날짜를 입력해주세요"
-                    type="text"
-                  />
-                </td>
-                <td>
-                  <input
-                    v-model="record.record"
-                    placeholder="기록을 입력해주세요"
-                    type="text"
-                  />
-                </td>
-                <td>
-                  <input
-                    v-model="record.notes"
-                    placeholder="특이사항이 있다면 입력해주세요"
-                    type="text"
-                  />
-                </td>
-                <td>
-                  <button class="close-button" @click="removeRecord(index)">
-                    <img src="@/assets/images/close.png" alt="삭제" />
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
         <!-- <hr class="line3" /> -->
 
         <!-- 새로운 행(기록) 추가 -->
-        <div class="add-record" @click="addRecord">기록 추가 +</div>
+        <div
+          class="add-record"
+          @click="addRecord"
+        >
+          기록 추가 +
+        </div>
       </div>
     </div>
   </teleport>

@@ -2,10 +2,9 @@
   <div class="main-container">
     <MainHeader />
     <MainBanner />
-    <MainContent   />
+    <MainContent />
     <MainPopup />
     <MainFooter />
-    
   </div>
 </template>
 

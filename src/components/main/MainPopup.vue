@@ -1,12 +1,24 @@
 <template>
-    <div v-if="isVisible" class="popup-overlay">
-        <div class="popup">
-            <button class="close-btn" @click="closePopup">
-                <img src="@/assets/images/popupclose.png" alt="닫기 버튼" />
-            </button>
-            <img src="@/assets/images/popup-image.png" alt="국민체력100 팝업" />
-        </div>
+  <div
+    v-if="isVisible"
+    class="popup-overlay"
+  >
+    <div class="popup">
+      <button
+        class="close-btn"
+        @click="closePopup"
+      >
+        <img
+          src="@/assets/images/popupclose.png"
+          alt="닫기 버튼"
+        >
+      </button>
+      <img
+        src="@/assets/images/popup-image.png"
+        alt="국민체력100 팝업"
+      >
     </div>
+  </div>
 </template>
 
 <script>

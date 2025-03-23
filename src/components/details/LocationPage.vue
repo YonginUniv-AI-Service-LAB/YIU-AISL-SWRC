@@ -1,8 +1,13 @@
 <template>
-    <div class = "location-content">
-        <h2 class="location-title">위치 및 연락처</h2>
-        <img src = "../../assets/images/map.png" alt = "location">
-    </div>
+  <div class="location-content">
+    <h2 class="location-title">
+      위치 및 연락처
+    </h2>
+    <img
+      src="../../assets/images/map.png"
+      alt="location"
+    >
+  </div>
 </template>
 
 <script>

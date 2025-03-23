@@ -1,17 +1,40 @@
 <template>
-    <header>
-        <div class="logo" @click="goToHome"> 
-            <img src="@/assets/images/yiu.png" alt="Logo" />
-        </div>
-        <nav>
-            <ul>
-                <MainDropdown title="스포츠ㆍ웰니스연구센터 소개" :items="labIntroItems" @navigate="navigateToPage" />
-                <MainDropdown title="스포츠ㆍ웰니스연구센터 연구실" :items="labEquipmentItems" @navigate="navigateToPage" />
-                <li class="nav-item" @click="goToKspo">국민체력100</li>
-                <MainDropdown title="엘리트 선수 관리 시스템" :items="eliteItems" @navigate="navigateToPage" />
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <div
+      class="logo"
+      @click="goToHome"
+    > 
+      <img
+        src="@/assets/images/yiu.png"
+        alt="Logo"
+      >
+    </div>
+    <nav>
+      <ul>
+        <MainDropdown
+          title="스포츠ㆍ웰니스연구센터 소개"
+          :items="labIntroItems"
+          @navigate="navigateToPage"
+        />
+        <MainDropdown
+          title="스포츠ㆍ웰니스연구센터 연구실"
+          :items="labEquipmentItems"
+          @navigate="navigateToPage"
+        />
+        <li
+          class="nav-item"
+          @click="goToKspo"
+        >
+          국민체력100
+        </li>
+        <MainDropdown
+          title="엘리트 선수 관리 시스템"
+          :items="eliteItems"
+          @navigate="navigateToPage"
+        />
+      </ul>
+    </nav>
+  </header>
 </template>
 
 <script>

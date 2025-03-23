@@ -1,43 +1,77 @@
 <template>
-    <nav class="breadcrumb-container">
-        <!-- 홈 버튼 -->
-        <button class="home-btn" @click="goHome">
-            <div class="icon">
-                <img src="@/assets/images/home.png" alt="home" />
-            </div>
-            <span class="sr-only">홈</span>
-        </button>
+  <nav class="breadcrumb-container">
+    <!-- 홈 버튼 -->
+    <button
+      class="home-btn"
+      @click="goHome"
+    >
+      <div class="icon">
+        <img
+          src="@/assets/images/home.png"
+          alt="home"
+        >
+      </div>
+      <span class="sr-only">홈</span>
+    </button>
 
-        <!-- 첫 번째 드롭다운 -->
-        <div class="dropdown">
-            <button class="dropdown-btn1" @click="toggleDropdown('main')">
-                <span class="active-main-text">{{ selectedMainMenu.title }}</span>
-                <span :class="{ 'rotate-180': dropdowns.main }">
-                    <img src="@/assets/images/arrow.png" alt="arrow" class="dropdown-arrow" />
-                </span>
-            </button>
-            <ul v-if="dropdowns.main" class="dropdown-menu">
-                <li v-for="menu in Object.keys(subMenuOptions)" :key="menu" @click="selectMenu(menu)">
-                    {{ menu }}
-                </li>
-            </ul>
-        </div>
+    <!-- 첫 번째 드롭다운 -->
+    <div class="dropdown">
+      <button
+        class="dropdown-btn1"
+        @click="toggleDropdown('main')"
+      >
+        <span class="active-main-text">{{ selectedMainMenu.title }}</span>
+        <span :class="{ 'rotate-180': dropdowns.main }">
+          <img
+            src="@/assets/images/arrow.png"
+            alt="arrow"
+            class="dropdown-arrow"
+          >
+        </span>
+      </button>
+      <ul
+        v-if="dropdowns.main"
+        class="dropdown-menu"
+      >
+        <li
+          v-for="menu in Object.keys(subMenuOptions)"
+          :key="menu"
+          @click="selectMenu(menu)"
+        >
+          {{ menu }}
+        </li>
+      </ul>
+    </div>
 
-        <!-- 두 번째 드롭다운 -->
-        <div class="dropdown">
-            <button class="dropdown-btn2" @click="toggleDropdown('sub')">
-                <span class="active-text">{{ selectedSubMenu.title }}</span>
-                <span :class="{ 'rotate-180': dropdowns.sub }">
-                    <img src="@/assets/images/arrow.png" alt="arrow" class="dropdown-arrow" />
-                </span>
-            </button>
-            <ul v-if="dropdowns.sub" class="dropdown-menu">
-                <li v-for="item in currentSubMenuOptions" :key="item.title" @click="selectSubMenu(item)">
-                    {{ item.title }}
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <!-- 두 번째 드롭다운 -->
+    <div class="dropdown">
+      <button
+        class="dropdown-btn2"
+        @click="toggleDropdown('sub')"
+      >
+        <span class="active-text">{{ selectedSubMenu.title }}</span>
+        <span :class="{ 'rotate-180': dropdowns.sub }">
+          <img
+            src="@/assets/images/arrow.png"
+            alt="arrow"
+            class="dropdown-arrow"
+          >
+        </span>
+      </button>
+      <ul
+        v-if="dropdowns.sub"
+        class="dropdown-menu"
+      >
+        <li
+          v-for="item in currentSubMenuOptions"
+          :key="item.title"
+          @click="selectSubMenu(item)"
+        >
+          {{ item.title }}
+        </li>
+      </ul>
+    </div>
+  </nav>
 </template>
 
 <script>
@@ -76,17 +110,17 @@ export default {
         };
     },
 
-    created() {
-        // 경로별 매핑 객체 초기화
-        this.generatePathToMenuMap();
-        this.updateBreadcrumbFromRoute();
-    },
-
     watch: {
         // 라우트 변경 감지 -> 브레드크럼 업데이트
         '$route.path'() {
             this.updateBreadcrumbFromRoute();
         },
+    },
+
+    created() {
+        // 경로별 매핑 객체 초기화
+        this.generatePathToMenuMap();
+        this.updateBreadcrumbFromRoute();
     },
 
     

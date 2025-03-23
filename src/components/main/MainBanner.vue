@@ -1,14 +1,17 @@
 <template>
-    <div class="header-wrapper">
-        <div class="header-banner">
-            <img src="@/assets/images/yonginUniversity.png" alt="메인 페이지 배경" />
-        </div>
-        <div class="overlay"></div>
-        <div class="overlay-text">
-            <h1>스포츠와 우리를 함께 연결시키는</h1>
-            <p>스포츠·웰니스연구센터</p>
-        </div>
+  <div class="header-wrapper">
+    <div class="header-banner">
+      <img
+        src="@/assets/images/yonginUniversity.png"
+        alt="메인 페이지 배경"
+      >
     </div>
+    <div class="overlay" />
+    <div class="overlay-text">
+      <h1>스포츠와 우리를 함께 연결시키는</h1>
+      <p>스포츠·웰니스연구센터</p>
+    </div>
+  </div>
 </template>
 
 <script setup>

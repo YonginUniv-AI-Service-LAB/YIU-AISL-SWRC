@@ -1,29 +1,41 @@
 <template>
-    <div class="chart-container">
-        <!-- 지구력 -->
-        <div class="chart-box">
-            <h2>지구력 변화</h2>
-            <Line :data="staminaData" :options="commonOptions" />
-        </div>
-
-        <!-- 근력 -->
-        <div class="chart-box">
-            <h2>근력 변화</h2>
-            <Line :data="muscleData" :options="commonOptions" />
-        </div>
-
-        <!-- 점프력 -->
-        <div class="chart-box">
-            <h2>점프력 변화</h2>
-            <Line :data="jumpData" :options="commonOptions" />
-        </div>
-
-        <!-- 순발력 -->
-        <div class="chart-box">
-            <h2>순발력 변화</h2>
-            <Line :data="quicknessData" :options="commonOptions" />
-        </div>
+  <div class="chart-container">
+    <!-- 지구력 -->
+    <div class="chart-box">
+      <h2>지구력 변화</h2>
+      <Line
+        :data="staminaData"
+        :options="commonOptions"
+      />
     </div>
+
+    <!-- 근력 -->
+    <div class="chart-box">
+      <h2>근력 변화</h2>
+      <Line
+        :data="muscleData"
+        :options="commonOptions"
+      />
+    </div>
+
+    <!-- 점프력 -->
+    <div class="chart-box">
+      <h2>점프력 변화</h2>
+      <Line
+        :data="jumpData"
+        :options="commonOptions"
+      />
+    </div>
+
+    <!-- 순발력 -->
+    <div class="chart-box">
+      <h2>순발력 변화</h2>
+      <Line
+        :data="quicknessData"
+        :options="commonOptions"
+      />
+    </div>
+  </div>
 </template>
 
 <script>

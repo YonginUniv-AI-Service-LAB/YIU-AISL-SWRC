@@ -1,46 +1,50 @@
 <template>
-    <div class="player-performance-list">
-        <table>
-            <thead>
-                <tr>
-                    <th>종목</th>
-                    <th>이름</th>
-                    <th>키</th>
-                    <th>몸무게</th>
-                    <th>|</th>
-                    <th>패스 성공률</th>
-                    <th>활동량</th>
-                    <th>볼 터치 수</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr
-                    v-for="(record, index) in records"
-                    :key="index"
-                    class="clickable-row"
-                    @mouseover="hoverIndex = index"
-                    @mouseleave="hoverIndex = null"
-                    @click="selectRecord(index + 1)"
-                >
-                    <td class="gray-text">{{ record.sport }}</td>
-                    <td class="bold-text">{{ record.name }}</td>
-                    <td>{{ record.height }}</td>
-                    <td>{{ record.weight }}</td>
-                    <td>|</td>
-                    <td>{{ record.passSuccess }}</td>
-                    <td>{{ record.activity }}</td>
-                    <td>{{ record.ballTouches }}</td>
-                    <!-- 호버된 행에만 나타나는 '자세히 보기' -->
-                    <td class="last-cell">
-                        <span :style="{ visibility: hoverIndex === index ? 'visible' : 'hidden' }">
-                        자세히보기  &gt;
-                        </span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+  <div class="player-performance-list">
+    <table>
+      <thead>
+        <tr>
+          <th>종목</th>
+          <th>이름</th>
+          <th>키</th>
+          <th>몸무게</th>
+          <th>|</th>
+          <th>패스 성공률</th>
+          <th>활동량</th>
+          <th>볼 터치 수</th>
+          <th />
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="(record, index) in records"
+          :key="index"
+          class="clickable-row"
+          @mouseover="hoverIndex = index"
+          @mouseleave="hoverIndex = null"
+          @click="selectRecord(index + 1)"
+        >
+          <td class="gray-text">
+            {{ record.sport }}
+          </td>
+          <td class="bold-text">
+            {{ record.name }}
+          </td>
+          <td>{{ record.height }}</td>
+          <td>{{ record.weight }}</td>
+          <td>|</td>
+          <td>{{ record.passSuccess }}</td>
+          <td>{{ record.activity }}</td>
+          <td>{{ record.ballTouches }}</td>
+          <!-- 호버된 행에만 나타나는 '자세히 보기' -->
+          <td class="last-cell">
+            <span :style="{ visibility: hoverIndex === index ? 'visible' : 'hidden' }">
+              자세히보기  &gt;
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script setup>

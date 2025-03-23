@@ -1,7 +1,12 @@
 <template>
   <div class="business-content">
-    <h2 class="business-title">주요 사업</h2>
-    <img src="../../assets/images/business.png" alt="business" />
+    <h2 class="business-title">
+      주요 사업
+    </h2>
+    <img
+      src="../../assets/images/business.png"
+      alt="business"
+    >
   </div>
 </template>
 

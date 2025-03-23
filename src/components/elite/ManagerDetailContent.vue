@@ -1,29 +1,36 @@
 <template>
-    <div class="elite-detail-content">
-        <div class="content-wrapper">
+  <div class="elite-detail-content">
+    <div class="content-wrapper">
+      <UserProfile 
+        user-name="김태훈"
+        gender="남자"
+        sport="축구"
+        height="178"
+        weight="72"
+        :show-edit-button="false"
+        :show-add-record-button="true"  
+      />
 
-            <UserProfile 
-                userName="김태훈"
-                gender="남자"
-                sport="축구"
-                height="178"
-                weight="72" 
-            />
-
-            <div class="main-section">
-                <div class="main-title">
-                    <h2>{{ pageTitle }}</h2>
-                </div>
-
-                <div class="main-content">
-                    <div class="content-area">
-                        <PerformanceCharts v-if="activeTab === 0" :recordId="recordId" />
-                        <MatchRecordList v-else-if="activeTab === 1" :recordId="recordId" />
-                    </div>
-                </div>
-            </div>
+      <div class="main-section">
+        <div class="main-title">
+          <h2>{{ pageTitle }}</h2>
         </div>
+
+        <div class="main-content">
+          <div class="content-area">
+            <PerformanceCharts
+              v-if="activeTab === 0"
+              :record-id="recordId"
+            />
+            <MatchRecordList
+              v-else-if="activeTab === 1"
+              :record-id="recordId"
+            />
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script setup>

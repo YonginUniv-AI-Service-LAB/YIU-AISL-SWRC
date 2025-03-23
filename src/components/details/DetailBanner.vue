@@ -1,13 +1,16 @@
 <template>
-    <div class="header-wrapper">
-        <div class="header-banner">
-            <img src="@/assets/images/yonginUniversity.png" alt="상세 페이지 배경" />
-        </div>
-        <div class="overlay"></div>
-        <div class="overlay-text">
-            <h1>{{ selectedMainMenu }}</h1>
-        </div>
+  <div class="header-wrapper">
+    <div class="header-banner">
+      <img
+        src="@/assets/images/yonginUniversity.png"
+        alt="상세 페이지 배경"
+      >
     </div>
+    <div class="overlay" />
+    <div class="overlay-text">
+      <h1>{{ selectedMainMenu }}</h1>
+    </div>
+  </div>
 </template>
 
 <script>

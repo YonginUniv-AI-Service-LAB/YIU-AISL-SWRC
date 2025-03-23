@@ -1,15 +1,19 @@
 <template>
-    <div class="tab-navigation">
-        <template v-for="(tab, index) in tabs" :key="index">
-            <button 
-                :class="{ active: activeTab === index }" 
-                @click="selectTab(index)">
-                {{ tab }}
-                <!-- 마지막 버튼에는 구분선이 나타나지 않도록 설정 -->
-                <!-- <span v-if="index !== tabs.length - 1" class="divider"></span> -->
-            </button>
-        </template>
-    </div>
+  <div class="tab-navigation">
+    <template
+      v-for="(tab, index) in tabs"
+      :key="index"
+    >
+      <button 
+        :class="{ active: activeTab === index }" 
+        @click="selectTab(index)"
+      >
+        {{ tab }}
+        <!-- 마지막 버튼에는 구분선이 나타나지 않도록 설정 -->
+        <!-- <span v-if="index !== tabs.length - 1" class="divider"></span> -->
+      </button>
+    </template>
+  </div>
 </template>
 
 <script setup>

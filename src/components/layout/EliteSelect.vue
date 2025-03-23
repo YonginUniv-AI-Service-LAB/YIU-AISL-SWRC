@@ -2,9 +2,16 @@
   <div class="select-box">
     <div class="select-box-position">
       <div class="select-box1">
-        <div class="title">분야 </div>
+        <div class="title">
+          분야
+        </div>
         <select v-model="selectedField">
-          <option disabled value="">지구력</option>
+          <option
+            disabled
+            value=""
+          >
+            지구력
+          </option>
           <option>가</option>
           <option>나</option>
           <option>다</option>
@@ -12,9 +19,16 @@
       </div>
 
       <div class="select-box2">
-        <div class="title">단위 </div>
+        <div class="title">
+          단위
+        </div>
         <select v-model="selectedUnit">
-          <option disabled value="">분</option>
+          <option
+            disabled
+            value=""
+          >
+            분
+          </option>
           <option>가</option>
           <option>나</option>
           <option>다</option>

@@ -1,31 +1,34 @@
 <template>
-    <div class="elite-content">
-        <div class="content-wrapper">
+  <div class="elite-content">
+    <div class="content-wrapper">
+      <UserProfile 
+        user-name="김태훈"
+        gender="남자"
+        sport="축구"
+        height="178"
+        weight="72"
+        :show-edit-button="true"
+        :show-add-record-button="true" 
+      />
 
-            <UserProfile 
-                userName="김태훈"
-                gender="남자"
-                sport="축구"
-                height="178"
-                weight="72" 
-            />
-
-            <div class="main-section">
-                <div class="main-title">
-                    <h2>{{ pageTitle }}</h2>
-                </div>
-
-                <div class="main-content">
-                    <div class="content-area">
-                        <!-- 🔹 activeTab이 1이면 MatchRecordList 보여주기 -->
-                        <MatchRecordList v-if="activeTab === 1" />
-                        
-                        <p v-else>현재 입력된 기록이 없습니다. 내 기록 추가를 통해 몸 상태를 기록해 보세요!</p>
-                    </div>
-                </div>
-            </div>
+      <div class="main-section">
+        <div class="main-title">
+          <h2>{{ pageTitle }}</h2>
         </div>
+
+        <div class="main-content">
+          <div class="content-area">
+            <!-- 🔹 activeTab이 1이면 MatchRecordList 보여주기 -->
+            <MatchRecordList v-if="activeTab === 1" />
+                        
+            <p v-else>
+              현재 입력된 기록이 없습니다. 내 기록 추가를 통해 몸 상태를 기록해 보세요!
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script setup>

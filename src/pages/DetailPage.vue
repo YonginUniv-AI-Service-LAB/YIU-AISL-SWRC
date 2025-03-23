@@ -1,11 +1,11 @@
 <template>
-    <div class="detail-container">
-        <MainHeader @update:selectedMainMenu="selectedMainMenu = $event" />
-        <DetailBanner :selectedMainMenu="selectedMainMenu" />
-        <BreadcrumbDropdown :selectedMainMenu="selectedMainMenu" />
-        <component :is="currentComponent" />
-        <MainFooter />
-    </div>
+  <div class="detail-container">
+    <MainHeader @update:selectedMainMenu="selectedMainMenu = $event" />
+    <DetailBanner :selected-main-menu="selectedMainMenu" />
+    <BreadcrumbDropdown :selected-main-menu="selectedMainMenu" />
+    <component :is="currentComponent" />
+    <MainFooter />
+  </div>
 </template>
 
 <script>

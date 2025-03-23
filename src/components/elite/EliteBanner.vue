@@ -1,12 +1,17 @@
 <template>
-    <div class="header-wrapper">
-        <div class="header-banner">
-            <img src="@/assets/images/elitepage.jpg" alt="엘리트 선수 배경" />
-        </div>
-        <div class="overlay"></div>
-        <h1 class="overlay-text">엘리트 선수 기록 관리 시스템</h1>
-        <TabNavigation />
+  <div class="header-wrapper">
+    <div class="header-banner">
+      <img
+        src="@/assets/images/elitepage.jpg"
+        alt="엘리트 선수 배경"
+      >
     </div>
+    <div class="overlay" />
+    <h1 class="overlay-text">
+      엘리트 선수 기록 관리 시스템
+    </h1>
+    <TabNavigation />
+  </div>
 </template>
 
 <script setup>
