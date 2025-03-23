@@ -8,7 +8,8 @@
         height="178"
         weight="72"
         :show-edit-button="true"
-        :show-add-record-button="true" 
+        :show-add-record-button="true"
+        :page-title="pageTitle"
       />
 
       <div class="main-section">

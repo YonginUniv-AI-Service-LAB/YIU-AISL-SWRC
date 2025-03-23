@@ -9,6 +9,7 @@
         weight="72"
         :show-edit-button="false"
         :show-add-record-button="true"  
+        :page-title="pageTitle"
       />
 
       <div class="main-section">

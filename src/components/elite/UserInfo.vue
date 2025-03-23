@@ -44,6 +44,12 @@ defineProps({
 </script>
 
 <style scoped>
+.user-info {
+  flex-shrink: 0;   /* ✅ 다른 요소 때문에 줄어들지 않도록 */
+  text-align: center;
+}
+
+
 .profile-image {
     width: 7vw;
     height: 7vw;

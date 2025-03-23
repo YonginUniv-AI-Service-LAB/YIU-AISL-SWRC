@@ -134,6 +134,7 @@ const getResultClass = (result) => {
 .match-table {
     width: 100%;
     overflow-x: hidden;
+    white-space: nowrap;
     border-collapse: collapse;
     background: #FFFFFF;
 }

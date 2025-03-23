@@ -11,6 +11,7 @@
     <ProfileActions
       :show-edit-button="showEditButton"
       :show-add-record-button="showAddRecordButton"
+      :page-title="pageTitle"
     />
   </div>
 </template>
@@ -26,7 +27,8 @@ defineProps({
   height: Number,
   weight: Number,
   showEditButton: { type: Boolean, default: true },
-  showAddRecordButton: { type: Boolean, default: true }
+  showAddRecordButton: { type: Boolean, default: true },
+  pageTitle: { type: String, default: '' }
 });
 </script>
 
@@ -34,6 +36,8 @@ defineProps({
 .user-profile {
   position: relative;
   width: 15vw;
+  /* max-width: 180px; */
+  min-width: 160px;
   min-height: 33vh;
   background: #FFFFFF;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
@@ -42,6 +46,5 @@ defineProps({
   flex-direction: column;
   align-items: center;
   padding: 3.5vh 1vw;
-  white-space: nowrap;
 }
 </style>

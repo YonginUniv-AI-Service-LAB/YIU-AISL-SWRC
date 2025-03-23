@@ -12,7 +12,7 @@
       class="btn-add-record" 
       @click="openAddRecordModal"
     >
-      기록 추가
+      {{ recordButtonText }}
       <img
         src="@/assets/images/plus.png"
         alt="plus"
@@ -27,19 +27,25 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import EliteModal from './EliteModal.vue';
 
-defineProps({
-    showEditButton: { type: Boolean, default: true },
-    showAddRecordButton: { type: Boolean, default: true }
+const props = defineProps({
+  showEditButton: { type: Boolean, default: true },
+  showAddRecordButton: { type: Boolean, default: true },
+  pageTitle: { type: String, default: '' }
 });
 
 const showAddRecordModal = ref(false);
 
 const openAddRecordModal = () => {
-    showAddRecordModal.value = true;
+  showAddRecordModal.value = true;
 };
+
+const recordButtonText = computed(() => {
+  return props.pageTitle === '경기기록' ? '경기 기록 추가' : '기록 추가';
+});
+
 </script>
 
 <style scoped>
@@ -74,6 +80,7 @@ button {
 
 /* 기록 추가 버튼 */
 .btn-add-record {
+  white-space: nowrap;
   background-color: #005871;
   color: white;
   font-size: 1rem;
