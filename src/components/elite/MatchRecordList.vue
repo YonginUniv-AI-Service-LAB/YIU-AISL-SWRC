@@ -8,14 +8,21 @@
                     <th>상대</th>
                     <th>승패</th>
                     <th>경기 기록</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <template v-for="(group, index) in groupedRecordsArray" :key="index">
                     <tr class="year-header">
-                        <td colspan="5">{{ group.year }}</td> <!-- ✅ 연도 헤더 -->
+                        <td colspan="6">{{ group.year }}</td> <!-- ✅ 연도 헤더 -->
                     </tr>
-                    <tr v-for="(record, idx) in group.records" :key="idx">
+                    <tr 
+                        v-for="(record, idx) in group.records" 
+                        :key="idx" 
+                        class="record-row"
+                        @mouseenter="hoveredRow = `${group.year}-${idx}`"
+                        @mouseleave="hoveredRow = null"
+                    >
                         <td class="date-cell">{{ record.date }}</td>
                         <td class="tournament-cell">{{ record.tournament }}</td>
                         <td class="opponent-cell">{{ record.opponent }}</td>
@@ -23,6 +30,22 @@
                             {{ record.result }}
                         </td>
                         <td class="notes-cell">{{ record.notes || '-' }}</td>
+                        <td class="action-cell">
+                            <img 
+                                v-if="hoveredRow === `${group.year}-${idx}`" 
+                                src="@/assets/images/edit.png" 
+                                alt="수정" 
+                                class="icon-button"
+                                @click="editRecord(record)" 
+                            />
+                            <img 
+                                v-if="hoveredRow === `${group.year}-${idx}`" 
+                                src="@/assets/images/delete.png" 
+                                alt="삭제" 
+                                class="icon-button"
+                                @click="deleteRecord(record)" 
+                            />
+                        </td>
                     </tr>
                 </template>
             </tbody>
@@ -32,6 +55,21 @@
 
 <script setup>
 import { computed, ref } from 'vue';
+
+const hoveredRow = ref(null);
+
+const editRecord = (record) => {
+    console.log('수정할 기록:', record);
+};
+
+const deleteRecord = (recordToDelete) => {
+    if (confirm('경기 기록을 삭제하시겠습니까?')) {
+        matchRecords.value = matchRecords.value.filter(
+        record => record !== recordToDelete
+        );
+        console.log('삭제됨:', recordToDelete);
+    }
+};
 
 // ✅ 날짜 내림차순 정렬 (문자열을 Date 객체로 변환 후 비교)
 const sortByDateDesc = (records) => {
@@ -82,6 +120,7 @@ const getResultClass = (result) => {
 <style scoped>
 .match-table {
     width: 100%;
+    overflow-x: hidden;
     border-collapse: collapse;
     background: #FFFFFF;
 }
@@ -147,4 +186,20 @@ const getResultClass = (result) => {
     color: #737373;
     font-weight: 500;
 }
+
+.match-table td.action-cell {
+    width: 75px;
+    padding: 0.5rem;
+    text-align: right;
+    vertical-align: middle;
+}
+
+.icon-button {
+    width: 20px;
+    height: 20px;
+    margin-left: 8px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
 </style>
