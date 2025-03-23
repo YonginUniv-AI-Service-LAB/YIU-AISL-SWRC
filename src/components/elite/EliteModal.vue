@@ -97,7 +97,6 @@
             </table>
           </div>
         </div>
-        <!-- <hr class="line3" /> -->
 
         <!-- 새로운 행(기록) 추가 -->
         <div

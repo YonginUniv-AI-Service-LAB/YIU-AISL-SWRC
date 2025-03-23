@@ -19,9 +19,15 @@
       >
     </button>
 
+    <!-- 조건에 따라 해당 모달 렌더링 -->
     <EliteModal
-      v-if="showAddRecordButton"
-      v-model:show="showAddRecordModal"
+      v-if="showEliteModal"
+      v-model:show="showEliteModal"
+    />
+    
+    <MatchRecordModal
+      v-if="showMatchModal"
+      v-model:show="showMatchModal"
     />
   </div>
 </template>
@@ -29,6 +35,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import EliteModal from './EliteModal.vue';
+import MatchRecordModal from './MatchRecordModal.vue';
 
 const props = defineProps({
   showEditButton: { type: Boolean, default: true },
@@ -36,12 +43,20 @@ const props = defineProps({
   pageTitle: { type: String, default: '' }
 });
 
-const showAddRecordModal = ref(false);
+// 각각 모달 표시 여부
+const showEliteModal = ref(false);
+const showMatchModal = ref(false);
 
+// 버튼 클릭 시 모달 분기
 const openAddRecordModal = () => {
-  showAddRecordModal.value = true;
+  if (props.pageTitle === '경기기록') {
+    showMatchModal.value = true;
+  } else {
+    showEliteModal.value = true;
+  }
 };
 
+// 버튼 텍스트 변경
 const recordButtonText = computed(() => {
   return props.pageTitle === '경기기록' ? '경기 기록 추가' : '기록 추가';
 });
