@@ -14,6 +14,10 @@
       <div class="main-section">
         <div class="main-title">
           <h2>{{ pageTitle }}</h2>
+          <button class="back-button" @click="$emit('go-back')">
+            <img src="@/assets/images/back.png" alt="돌아가기" class="back-button" />
+            목록으로 돌아가기
+          </button>
         </div>
 
         <div class="main-content">
@@ -89,6 +93,10 @@ const pageTitle = computed(() => pageTitles[props.activeTab]);
 .main-title {
     margin-top: 10vh;
     border-bottom: 1px solid #3f3f3f; /* 구분선 추가 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
 /* h2에 유동적인 밑줄 적용 */
@@ -110,6 +118,23 @@ const pageTitle = computed(() => pageTitles[props.activeTab]);
     width: 100%; /* 글자 길이에 맞게 */
     height: 4.3px; /* 굵은 밑줄 두께 */
     background-color: #3F3F3F; /* 굵은 밑줄 색상 */
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: #005871;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.9rem;
+  gap: 0.4rem;
+  margin-top: 14px
+}
+
+.back-button img {
+  object-fit: contain;
+  width: 0.8rem;
+  height: 0.8rem;
 }
 
 /* 메인 컨텐츠 (오른쪽 배치) */
