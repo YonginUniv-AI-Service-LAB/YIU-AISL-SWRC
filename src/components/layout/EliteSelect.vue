@@ -12,9 +12,9 @@
           >
             지구력
           </option>
-          <option>가</option>
-          <option>나</option>
-          <option>다</option>
+          <option>근력</option>
+          <option>점프력</option>
+          <option>순발력</option>
         </select>
       </div>
 
@@ -29,9 +29,9 @@
           >
             분
           </option>
-          <option>가</option>
-          <option>나</option>
-          <option>다</option>
+          <option>kg</option>
+          <option>cm</option>
+          <option>s</option>
         </select>
       </div>
     </div>

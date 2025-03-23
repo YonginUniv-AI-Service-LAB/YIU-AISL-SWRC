@@ -293,7 +293,6 @@ export default defineComponent({
   text-align: left;
   padding: 12px 0;
   vertical-align: middle;
-  border-bottom: 1px solid #ccc;
 }
 
 /* ---------- 입력창 스타일 ---------- */
