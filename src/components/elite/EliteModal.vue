@@ -74,7 +74,7 @@
                       type="text"
                     >
                   </td>
-                  <td>
+                  <td class="detail">
                     <input
                       v-model="record.notes"
                       placeholder="특이사항이 있다면 입력해주세요"
@@ -99,6 +99,7 @@
         </div>
 
         <!-- 새로운 행(기록) 추가 -->
+        <hr class="line3">
         <div
           class="add-record"
           @click="addRecord"
@@ -187,7 +188,7 @@ export default defineComponent({
   display: flex;
   justify-content: space-around;
   align-items: center;
-  gap: 52%;
+  gap: 58%;
   margin-left: 3%;
   margin-right: 3%;
 }
@@ -225,11 +226,10 @@ export default defineComponent({
 }
 
 /* ---------- 구분선 ---------- */
-.line,
-.line3 {
+.line{
   width: 93%;
   margin: 0 auto;
-  margin-top: 10px;
+margin-bottom: 20px;
   border: none;
   border-top: 1px solid #ccc;
 }
@@ -237,8 +237,15 @@ export default defineComponent({
 .line2 {
   width: 93%;
   margin: 0 auto;
-  margin-top: 4rem; /* 기존보다 margin-top을 증가시킴 */
+  margin-top: 5.5rem; /* 기존보다 margin-top을 증가시킴 */
   border: none;
+  border-top: 1px solid #ccc;
+}
+.line3 { 
+  max-width: 84%;
+  margin: 0 auto;
+  border: none;
+  margin-left: 13%;
   border-top: 1px solid #ccc;
 }
 
@@ -298,22 +305,27 @@ export default defineComponent({
 .record-table input {
   width: 100%;
   box-sizing: border-box;
-  padding: 10px 12px;
+  padding: 15px 15px;
   font-size: 14px;
   color: #595959;
   border: 1px solid #595959;
   background-color: #f8f8f8;
 }
+.detail input{
 
+  width: 185%;
+}
 /* ---------- X 버튼 ---------- */
 .close-button {
   background-color: #595959;
   border: 1px solid #595959;
   cursor: pointer;
-  padding: 8px;
+  padding: 13px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 85%;
+
 }
 .close-button img {
   width: 21px;
@@ -325,7 +337,7 @@ export default defineComponent({
   cursor: pointer;
   display: flex;
   justify-content: center;
-  margin-top: 3.5%;
+  margin-top: 1%;
   color: #737373;
 }
 </style>
