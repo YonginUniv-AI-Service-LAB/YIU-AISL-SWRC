@@ -1,9 +1,6 @@
 <template>
     <teleport to="body">
-        <div
-            v-if="show"
-            class="modal-overlay"
-        >
+        <div v-if="show" class="modal-overlay">
             <div class="modal-container">
                 <!-- 상단 제목 + 버튼 -->
                 <div class="modal-header">
@@ -13,35 +10,35 @@
                         <button class="btn-save">저장 및 추가</button>
                     </div>
                 </div>
-
                 <hr class="divider" />
-
+                
                 <!-- 세부 입력 폼 -->
                 <div class="modal-body">
                     <h3 class="section-title">세부기록</h3>
                     <div class="form-grid">
-                        <div class="form-group">
+                        <div class="form-group1">
                             <label>날짜</label>
                             <input type="text" placeholder="날짜를 입력해주세요." />
                         </div>
-                        <div class="form-group">
+                        <div class="form-group2">
                             <label>대회이름</label>
                             <input type="text" placeholder="대회이름을 입력해주세요." />
                         </div>
-                        <div class="form-group">
+                        <div class="form-group3">
                             <label>상대</label>
                             <input type="text" placeholder="상대를 입력해주세요." />
                         </div>
-                        <div class="form-group">
+                        <div class="form-group4">
                             <label>추가사항</label>
                             <input type="text" placeholder="추가사항을 입력해주세요." />
                         </div>
-                        <div class="form-group">
+                        <div class="form-group5">
                             <label>승패</label>
-                            <select>
-                            <option>승</option>
-                            <option>무</option>
-                            <option>패</option>
+                            <select v-model="selectedField">
+                                <option disabled value="">승</option>
+                                <option>승</option>
+                                <option>무</option>
+                                <option>패</option>
                             </select>
                         </div>
                     </div>
@@ -52,23 +49,17 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
     name: "MatchRecordModal",
-    props: {
-        show: Boolean,
-    },
+    props: { show: Boolean },
     emits: ["update:show"],
     setup(props, { emit }) {
-        const closeModal = () => {
-        emit("update:show", false);
-        };
-
-        return {
-        closeModal,
-        };
-    },
+        const selectedField = ref("");
+        const closeModal = () => emit("update:show", false);
+        return { closeModal, selectedField };
+    }
 });
 </script>
 
@@ -88,10 +79,10 @@ export default defineComponent({
 
 .modal-container {
     background: white;
-    width: 60%;
-    max-width: 900px;
+    width: 65%;
+    max-width: 1200px;
     border-radius: 8px;
-    padding: 2rem;
+    padding: 1.8rem;
 }
 
 .modal-header {
@@ -101,7 +92,7 @@ export default defineComponent({
 }
 
 .modal-header h2 {
-    font-size: 1.8rem;
+    font-size: 2.3rem;
     color: #3F3F3F;
     font-weight: bold;
 }
@@ -109,13 +100,18 @@ export default defineComponent({
 .modal-actions {
     display: flex;
     gap: 0.8rem;
+    font-size: 2rem;
+}
+
+.btn-cancel, .btn-save {
+    font-size: 1rem;
 }
 
 .btn-cancel {
     background: #ececec;
     color: #737373;
     font-weight: 700;
-    padding: 1rem 2rem;
+    padding: 1rem 3.2rem;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -147,27 +143,49 @@ export default defineComponent({
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.2rem 2rem;
+    grid-gap: 1.5rem 1rem;
+    width: 80%;
+    margin-left: 20%;
+    position: relative;
+    top: -40px;
 }
 
-.form-group {
+.form-group1, .form-group2, .form-group3, .form-group4, .form-group5 {
     display: flex;
     flex-direction: column;
+    transform: translateX(-10%);
 }
 
-.form-group label {
+.form-group1 label, .form-group2 label, .form-group3 label, .form-group4 label, .form-group5 label {
     font-size: 0.95rem;
     color: #737373;
     margin-bottom: 0.3rem;
     font-weight: 700;
 }
 
-input,
-select {
-    padding: 0.8rem;
+.form-group2, .form-group4 {
+    width: 180%;
+    transform: translateX(-25%);
+}
+
+input, select {
+    width: 55%;
+    max-width: 380px;
+    padding: 1rem;
     border: 1px solid #595959;
-    border-radius: 1px;
     background: #f8f8f8;
     font-size: 0.95rem;
-    }
+}
+
+select {
+    background-image: url("@/assets/images/Polygon 3.png");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    border-radius: 8px;
+    width: 62%;
+    cursor: pointer;
+    appearance: none;
+    border: 2px solid #737373;
+}
 </style>
