@@ -57,7 +57,11 @@ export default {
 .select-box {
   position: absolute;
   top: 17%;
+<<<<<<< HEAD
   left: 195px;
+=======
+  left: 14%;
+>>>>>>> origin/jiyoung
 }
 .title {
   color: #737373;

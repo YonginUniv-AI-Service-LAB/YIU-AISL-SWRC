@@ -45,6 +45,12 @@ const routes = [
         name: 'UserProfile', // 라우트 이름
         component: () => import('@/pages/UserProfile.vue'), // 컴포넌트 경로
     },
+      // 최고관리자 
+    {
+        path: '/admin', // 경로 설정
+        name: 'AdminPage', // 라우트 이름
+        component: () => import('@/pages/AdminPage.vue'), // 컴포넌트 경로
+    },
 ];
 
 const router = createRouter({

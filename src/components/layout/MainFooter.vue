@@ -20,22 +20,22 @@
       <img
         src="@/assets/images/youtube.png"
         alt="youtube"
-        @click="openExternalLink('https://www.youtube.com')"
+        @click="openExternalLink('https://www.youtube.com/@YongInUniversity')"
       >
       <img
         src="@/assets/images/instagram.png"
         alt="instagram"
-        @click="openExternalLink('https://www.instagram.com')"
+        @click="openExternalLink('https://www.instagram.com/yongin_university/')"
       >
       <img
         src="@/assets/images/blog.png"
         alt="blog"
-        @click="openExternalLink('https://blog.naver.com')"
+        @click="openExternalLink('https://blog.naver.com/yonginuni0')"
       >
       <img
         src="@/assets/images/facebook.png"
         alt="facebook"
-        @click="openExternalLink('https://www.facebook.com')"
+        @click="openExternalLink('https://www.facebook.com/yonginuni/')"
       >
     </div>
   </footer>
