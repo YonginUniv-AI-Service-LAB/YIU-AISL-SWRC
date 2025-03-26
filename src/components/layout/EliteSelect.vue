@@ -52,17 +52,18 @@ export default {
 <style lang="scss" scoped>
 .select-box div {
   padding-bottom: 2%;
+  
 }
 .select-box {
   position: absolute;
   top: 17%;
-  left: 14%;
+  left: 195px;
 }
 .title {
   color: #737373;
 }
 .select-box select {
-  width: 190px;
+  width: 210px;
   padding: 12px;
   border-radius: 5px;
   border: 2px solid #737373;
@@ -85,6 +86,6 @@ export default {
 }
 .select-box-position {
   display: flex;
-  gap: 10%;
+  gap: 15%;
 }
 </style>
