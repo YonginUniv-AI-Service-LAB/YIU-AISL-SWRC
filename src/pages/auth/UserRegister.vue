@@ -242,22 +242,21 @@ export default {
     // 인증번호 확인
     async validateVerificationCode() {
       try {
-        const response = await axios.get("http://localhost:8080/api/auth/verify-code", {
+        const response = await axios.get("http://localhost:8080/api/auth/email/verify", {
           params: {
             email: this.formData.email,
-            code: this.formData.verificationCode
+            verificationCode: this.formData.verificationCode
           }
         });
-
-        if (response.data === true) {
-          console.log("✅ 인증 성공");
-        } else {
-          console.log("❌ 인증 실패");
-        }
+        console.log(response);
+        // ✅ 인증 성공 알림
+        alert("인증 성공! 이메일이 확인되었습니다.");
       } catch (error) {
-        console.error("❌ 인증 확인 중 오류 발생:", error);
+        // ❌ 인증 실패 알림
+        alert("인증 실패: 인증번호가 올바르지 않습니다.");
       }
     },
+
 
     // 회원가입 처리
     async handleRegister() {
