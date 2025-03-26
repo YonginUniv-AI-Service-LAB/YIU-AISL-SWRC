@@ -91,6 +91,11 @@ export default {
                 { title: '경기 기록', path: '/elite-manager' },
             ],
             isLoggedIn,  // 로그인 상태
+            admin:[
+                {
+                    title: '관리자 페이지', path: '/detail/admin'
+                }
+            ]
         };
     },
 }

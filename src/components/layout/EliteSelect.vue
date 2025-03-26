@@ -55,8 +55,8 @@ export default {
 }
 .select-box {
   position: absolute;
-  top: 22%;
-  left: 15%;
+  top: 17%;
+  left: 14%;
 }
 .title {
   color: #737373;

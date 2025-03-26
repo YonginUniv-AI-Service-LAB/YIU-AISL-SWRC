@@ -94,7 +94,7 @@ const sortByDateDesc = (records) => {
 };
 
 const matchRecords = ref([
-    { date: '2024.05.02', tournament: 'U리그', opponent: '경희대학교', result: '승', year: '2024', notes: '리그 1위 수성, 3-0 완승' },
+    { date: '2024.05.02', tournament: 'U리그', opponent: '경희대학교', result: '승', year: '2024', notes: '3-0 승리' },
     { date: '2024.04.15', tournament: '전국 대학축구 선수권 대회', opponent: '단국대학교', result: '무', year: '2024', notes: '8강전, 승부차기 패배 (3-4)' },
     { date: '2024.04.05', tournament: '전국 대학축구 선수권 대회', opponent: '울산대학교', result: '승', year: '2024', notes: '16강전, 연장전 3-2 승리' },
     { date: '2024.03.17', tournament: 'KUSF 대학리그', opponent: '연세대학교', result: '패', year: '2024', notes: '라이벌전, 후반 85분 결승골 허용' },
@@ -182,12 +182,12 @@ const getResultClass = (result) => {
 }
 
 .match-table td.win {
-    color: #FF4545;
+    color: #458FFF;
     font-weight: bold;
 }
 
 .match-table td.lose {
-    color: #458FFF;
+    color: #FF4545;
     font-weight: bold;
 }
 
