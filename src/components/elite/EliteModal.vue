@@ -26,10 +26,10 @@
         <hr class="line">
 
         <!-- 기본 사항 -->
-        <p class="option1">
-          기본 사항
-        </p>
-        <EliteSelect style="margin-top: 27px;" />
+        <div class="basic-section">
+          <p class="option1">기본 사항</p>
+          <EliteSelect />
+        </div>
 
         <hr class="line2">
 
@@ -174,7 +174,7 @@ export default defineComponent({
 .modal {
   background: white;
   width: 80%;
-  height: 65%;
+  height: 70%;
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   position: relative;
@@ -186,20 +186,21 @@ export default defineComponent({
 /* ---------- 상단 영역 ---------- */
 .upper {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  gap: 58%;
-  margin-left: 3%;
-  margin-right: 3%;
+  margin-left: 3rem;
+  margin-right: 3rem;
 }
 .upper p {
   font-weight: bold;
   font-size: 2rem;
   color: #3f3f3f;
+  white-space: nowrap;
 }
 .buttons {
   display: flex;
   gap: 10px;
+  white-space: nowrap;
 }
 
 /* 버튼 스타일 */
@@ -251,8 +252,16 @@ margin-bottom: 20px;
 
 /* ---------- 섹션 제목 ---------- */
 .option1 {
-  margin-left: 3.5%;
-  margin-top: 0.5%;
+  color: #3F3F3F;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.basic-section {
+  margin: 1rem 3.5% 3rem 3.5%; // 상하 간격 일정하게
+  display: flex;
+  flex-direction: column;
+  gap: 20px; // 요소 간 거리 일정
 }
 
 /* ---------- record-section: 텍스트와 테이블을 가로로 정렬 ---------- */
@@ -297,7 +306,7 @@ margin-bottom: 20px;
 .record-table th,
 .record-table td {
   text-align: left;
-  padding: 12px 0;
+  padding: 3px 0;
   vertical-align: middle;
 }
 

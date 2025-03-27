@@ -56,9 +56,13 @@ export default {
 }
 .select-box {
   position: absolute;
+<<<<<<< HEAD
   top: 17%;
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+  top: 9.5rem;
+>>>>>>> origin/jiyoung
   left: 195px;
 =======
   left: 14%;
@@ -69,6 +73,7 @@ export default {
 }
 .title {
   color: #737373;
+  font-weight: 700;
 }
 .select-box select {
   width: 210px;
