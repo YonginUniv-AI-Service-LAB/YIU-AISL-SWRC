@@ -21,7 +21,7 @@
         엘리트 선수 기록 관리 시스템은 로그인 후 이용 가능합니다.
       </p>
 
-      <form class="login-form">
+      <form class="login-form" @submit.prevent="handleLogin">
         <!-- 아이디 입력 필드 -->
         <div class="form-group">
           <label for="username">이메일</label>
@@ -94,6 +94,7 @@
 <script>
 import MainHeader from "@/components/layout/MainHeader.vue";
 import MainFooter from "@/components/layout/MainFooter.vue";
+import axios from "axios";
 
 export default {
   components: {
@@ -115,13 +116,29 @@ export default {
       this.$router.push("/register");
     },
     goToResetPassword() {
-      this.$router.push("/reset-password"); // 비밀번호 찾기(변경) 페이지로 이동
+      this.$router.push("/reset-password");
     },
     togglePassword() {
       this.showPassword = !this.showPassword;
     },
-  },
-};
+    async handleLogin() {
+      try {
+        const response = await axios.post("http://localhost:8080/api/auth/login", null, {
+          params: {
+            email: this.formData.username,
+            password: this.formData.password
+          }
+        });
+        console.log("✅ 로그인 성공:", response.data);
+        alert("로그인 성공!");
+        // 여기서 토큰 저장 후 이동할 수 있음
+      } catch (error) {
+        console.error("❌ 로그인 실패:", error.response?.data || error);
+        alert("로그인 실패. 이메일과 비밀번호를 확인해주세요.");
+      }
+    },
+  }
+}
 </script>
 
 <style scoped>

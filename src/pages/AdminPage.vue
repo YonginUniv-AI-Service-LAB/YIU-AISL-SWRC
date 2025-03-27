@@ -13,7 +13,7 @@
         @remove="removeUser"
       />
     </div>
-    <MainFooter/>
+    <MainFooter />
   </template>
   
   <script>

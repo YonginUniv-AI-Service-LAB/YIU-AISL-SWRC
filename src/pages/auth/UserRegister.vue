@@ -59,16 +59,28 @@
             </button>
           </div>
         </div>
-        <div class="form-group">
-          <input
-            id="verificationCode"
-            v-model="formData.verificationCode"
-            type="text"
-            placeholder="인증번호를 입력해주세요."
-            class="verificationCode-input"
-          >
+
+        <!-- 인증번호 입력 + 확인 버튼 -->
+        <div class="form-group verificationCode-group">
+          <label for="verificationCode">인증번호</label>
+          <div class="input-group">
+            <input
+              id="verificationCode"
+              v-model="formData.verificationCode"
+              type="text"
+              placeholder="인증번호를 입력해주세요."
+              class="verificationCode-input"
+            >
+            <button
+              type="button"
+              class="check-btn"
+              @click="validateVerificationCode"
+            >
+              인증번호 확인
+            </button>
+          </div>
         </div>
-      
+
         <!-- 비밀번호 입력 -->
         <div class="form-group">
           <label for="password">비밀번호</label>
@@ -176,6 +188,7 @@
 
 
 <script>
+import axios from "axios";
 import MainHeader from "@/components/layout/MainHeader.vue";
 import MainFooter from "@/components/layout/MainFooter.vue";
 
@@ -192,6 +205,7 @@ export default {
         passwordConfirm: "",
         name: "",
         phone: "",
+        verificationCode: "",
         agree: false,
         sport: "", // 관리자용 종목 입력 필드
       },
@@ -200,22 +214,98 @@ export default {
     };
   },
   methods: {
-    handleRegister() {
-      console.log("회원가입 시도:", this.formData);
-    },
-    goToLogin() {
-      this.$router.push("/login");
-    },
+    // 역할 선택
     selectRole(role) {
       this.userRole = role;
       if (role === "student") {
-        this.formData.sport = ""; // 학생 선택 시 종목 필드 초기화
+        this.formData.sport = "";
       }
     },
-    // checkEmailAvailability() {
-    //   console.log("이메일 중복 확인 실행:", this.formData.email);
-    //   alert("이메일 중복 확인 기능입니다.");
-    // }, 
+
+    // 이메일 인증 요청
+    async checkEmailAvailability() {
+      if (!this.formData.email) {
+        alert("이메일을 입력해주세요.");
+        return;
+      }
+      try {
+        await axios.get("http://localhost:8080/api/auth/send-verification", {
+          params: { email: this.formData.email }
+        });
+        alert("인증 코드가 이메일로 전송되었습니다.");
+      } catch (error) {
+        console.error("이메일 인증 오류:", error);
+        alert("이메일 인증 중 오류가 발생했습니다.");
+      }
+    },
+
+    // 인증번호 확인
+    async validateVerificationCode() {
+      try {
+        const response = await axios.get("http://localhost:8080/api/auth/email/verify", {
+          params: {
+            email: this.formData.email,
+            verificationCode: this.formData.verificationCode
+          }
+        });
+        console.log(response);
+        // ✅ 인증 성공 알림
+        alert("인증 성공! 이메일이 확인되었습니다.");
+      } catch (error) {
+        // ❌ 인증 실패 알림
+        alert("인증 실패: 인증번호가 올바르지 않습니다.");
+      }
+    },
+
+
+    // 회원가입 처리
+    async handleRegister() {
+      if (!this.userRole) {
+        alert("학생 또는 관리자를 선택해주세요.");
+        return;
+      }
+
+      if (this.formData.password !== this.formData.passwordConfirm) {
+        alert("비밀번호가 일치하지 않습니다.");
+        return;
+      }
+
+      if (!this.formData.agree) {
+        alert("개인정보 수집 이용에 동의해주세요.");
+        return;
+      }
+
+      const endpoint = this.userRole === "student"
+        ? "http://localhost:8080/api/auth/signup"
+        : "http://localhost:8080/api/auth/signup/admin";
+
+      const requestBody = {
+        email: this.formData.email,
+        password: this.formData.password,
+        name: this.formData.name,
+        phoneNumber: this.formData.phone,
+        verificationCode: this.formData.verificationCode,
+      };
+
+      if (this.userRole === "admin") {
+        requestBody.sportType = this.formData.sport;
+      }
+
+      try {
+        const response = await axios.post(endpoint, requestBody);
+        console.log("회원가입 성공:", response.data);
+        alert("회원가입 성공!");
+        this.$router.push("/login");
+      } catch (error) {
+        console.error("회원가입 실패:", error.response?.data || error);
+        alert("회원가입 실패: " + (error.response?.data?.message || "오류가 발생했습니다."));
+      }
+    },
+
+    // 로그인 페이지로 이동
+    goToLogin() {
+      this.$router.push("/login");
+    },
   },
 };
 </script>
@@ -302,8 +392,14 @@ export default {
 /* 이메일 입력 그룹 스타일 */
 .email-group .input-group {
   display: flex;
-
   gap: 10px; /* 요소 사이 간격 */
+  width: 100%;
+  max-width: 400px;
+}
+
+.verificationCode-group .input-group {
+  display: flex;
+  gap: 10px;
   width: 100%;
   max-width: 400px;
 }
@@ -322,7 +418,6 @@ export default {
 }
 
 .verificationCode-input {
-  margin-top: -25px;
   flex: 1; /* 남은 공간을 모두 차지 */
   padding: 12px 24px;
   border: 2px solid #737373;

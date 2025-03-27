@@ -58,9 +58,13 @@ export default {
   position: absolute;
   top: 17%;
 <<<<<<< HEAD
+<<<<<<< HEAD
   left: 195px;
 =======
   left: 14%;
+>>>>>>> origin/jiyoung
+=======
+  left: 195px;
 >>>>>>> origin/jiyoung
 }
 .title {
