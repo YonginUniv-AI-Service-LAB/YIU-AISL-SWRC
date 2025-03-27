@@ -56,11 +56,12 @@ export default {
 }
 .select-box {
   position: absolute;
-  top: 17%;
+  top: 9.5rem;
   left: 195px;
 }
 .title {
   color: #737373;
+  font-weight: 700;
 }
 .select-box select {
   width: 210px;
