@@ -63,6 +63,7 @@
                   <td>
                     <input
                       v-model="record.date"
+                      @input="formatDate(index)" 
                       placeholder="날짜를 입력해주세요"
                       type="text"
                     >
@@ -125,10 +126,20 @@ export default defineComponent({
   setup(props, { emit }) {
     // 기록 배열
     const myRecords = ref([
-      // 예시로 초기값 하나 넣어둠. 실제로는 빈 배열이어도 무방
       { date: "2024.07.01", record: "80", notes: "-" },
       { date: "", record: "", notes: "" },
     ]);
+
+    // 날짜 형식 자동 적용
+    const formatDate = (index) => {
+      let formattedDate = myRecords.value[index].date.replace(/[^\d]/g, ''); // 숫자만 남기고, 점은 포함되지 않음
+      if (formattedDate.length > 4 && formattedDate.length <= 6) {
+        formattedDate = formattedDate.slice(0, 4) + '.' + formattedDate.slice(4, 6); // yyyy.mm 형식
+      } else if (formattedDate.length > 6) {
+        formattedDate = formattedDate.slice(0, 4) + '.' + formattedDate.slice(4, 6) + '.' + formattedDate.slice(6, 8); // yyyy.mm.dd 형식
+      }
+      myRecords.value[index].date = formattedDate;
+    };
 
     // 기록 추가
     const addRecord = () => {
@@ -150,6 +161,7 @@ export default defineComponent({
       addRecord,
       removeRecord,
       closeModal,
+      formatDate,
     };
   },
 });

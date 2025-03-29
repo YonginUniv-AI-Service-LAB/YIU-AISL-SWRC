@@ -18,7 +18,12 @@
                     <div class="form-grid">
                         <div class="form-group1">
                             <label>날짜</label>
-                            <input type="text" placeholder="날짜를 입력해주세요." />
+                            <input 
+                                type="text" 
+                                placeholder="날짜를 입력해주세요." 
+                                v-model="date" 
+                                @input="formatDate" 
+                            />
                         </div>
                         <div class="form-group2">
                             <label>대회이름</label>
@@ -57,12 +62,25 @@ export default defineComponent({
     emits: ["update:show"],
     setup(props, { emit }) {
         const selectedField = ref("");
+        const date = ref(""); // 날짜 값 추가
+
         const closeModal = () => emit("update:show", false);
-        return { closeModal, selectedField };
+
+        // 날짜 형식 자동 적용
+        const formatDate = () => {
+            let formattedDate = date.value.replace(/[^\d]/g, ''); // 숫자만 남기고, 점은 포함되지 않음
+            if (formattedDate.length > 4 && formattedDate.length <= 6) {
+                formattedDate = formattedDate.slice(0, 4) + '.' + formattedDate.slice(4, 6); // yyyy.mm 형식
+            } else if (formattedDate.length > 6) {
+                formattedDate = formattedDate.slice(0, 4) + '.' + formattedDate.slice(4, 6) + '.' + formattedDate.slice(6, 8); // yyyy.mm.dd 형식
+            }
+            date.value = formattedDate;
+        };
+
+        return { closeModal, selectedField, date, formatDate };
     }
 });
 </script>
-
 <style scoped>
 .modal-overlay {
     position: fixed;
