@@ -213,7 +213,31 @@ export default {
       sports: ["축구", "야구", "태권도", "검도", "복싱"], // 선택 가능한 종목 리스트
     };
   },
+  computed: {
+    completeEmail() {
+      return this.emailPrefix + "@yiu.ac.kr";
+    },
+  },
+  watch: {
+    "formData.phone"(newVal) {
+      this.formData.phone = this.formatPhoneNumber(newVal);
+    },
+  },
   methods: {
+    formatPhoneNumber(value) {
+      let digits = value.replace(/\D/g, ""); // 숫자만 추출
+      if (digits.length > 10) {
+        // 11자리 번호 (예: 010-1234-5678)
+        return digits.replace(/^(\d{3})(\d{4})(\d{4})$/, "$1-$2-$3");
+      } else if (digits.length > 6) {
+        // 10자리 번호 (예: 02-1234-5678)
+        return digits.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, "$1-$2-$3");
+      } else if (digits.length > 3) {
+        return digits.replace(/^(\d{2,3})(\d{3,4})$/, "$1-$2");
+      }
+      return digits;
+    },
+
     // 역할 선택
     selectRole(role) {
       this.userRole = role;
