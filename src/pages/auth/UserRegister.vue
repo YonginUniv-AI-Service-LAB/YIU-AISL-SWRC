@@ -44,12 +44,13 @@
           <div class="input-group">
             <input
               id="email"
-              v-model="formData.email"
-              type="email"
-              placeholder="이메일을 입력해주세요."
+              v-model="formData.emailPrefix"
+              type="text"
+              placeholder="이메일 아이디 입력"
               required
               class="email-input"
             >
+            <span class="email-domain">@yiu.ac.kr</span>
             <button
               type="button"
               class="check-btn"
@@ -200,7 +201,7 @@ export default {
   data() {
     return {
       formData: {
-        email: "",
+        emailPrefix: "", // 사용자 입력 부분
         password: "",
         passwordConfirm: "",
         name: "",
@@ -215,7 +216,7 @@ export default {
   },
   computed: {
     completeEmail() {
-      return this.emailPrefix + "@yiu.ac.kr";
+      return this.formData.emailPrefix + "@yiu.ac.kr";
     },
   },
   watch: {
@@ -248,13 +249,13 @@ export default {
 
     // 이메일 인증 요청
     async checkEmailAvailability() {
-      if (!this.formData.email) {
+      if (!this.formData.emailPrefix) {
         alert("이메일을 입력해주세요.");
         return;
       }
       try {
         await axios.get("http://localhost:8080/api/auth/send-verification", {
-          params: { email: this.formData.email }
+          params: { email:this.completeEmail }
         });
         alert("인증 코드가 이메일로 전송되었습니다.");
       } catch (error) {
@@ -268,7 +269,7 @@ export default {
       try {
         const response = await axios.get("http://localhost:8080/api/auth/email/verify", {
           params: {
-            email: this.formData.email,
+            email: this.completeEmail,
             verificationCode: this.formData.verificationCode
           }
         });
@@ -304,7 +305,7 @@ export default {
         : "http://localhost:8080/api/auth/signup/admin";
 
       const requestBody = {
-        email: this.formData.email,
+        email: this.completeEmail,
         password: this.formData.password,
         name: this.formData.name,
         phoneNumber: this.formData.phone,
@@ -440,7 +441,12 @@ export default {
   height: 48px; /* 높이 고정 */
   line-height: 24px; /* 텍스트 수직 중앙 정렬 */
 }
-
+/* @yiu.ac.kr 위치조정 */
+.email-domain{
+  font-size: 16.5px;
+  position: relative;
+  margin-top: 3.2%;
+}
 .verificationCode-input {
   flex: 1; /* 남은 공간을 모두 차지 */
   padding: 12px 24px;
