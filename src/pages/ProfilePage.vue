@@ -18,27 +18,17 @@
         어서오세요!
       </h2>
       <p class="subtitle">
-        첫 설정 시 프로필을 작성해주세요. 프로필은 엘리트 선수 기록 관리 시스템에서 언제든 수정 가능해요.
+        첫 설정 시 프로필을 작성해주세요.<br>
+        프로필은 엘리트 선수 기록 관리 시스템에서 언제든 수정 가능해요.
       </p>
   
       <!-- 프로필 사진 선택 -->
       <div class="profile-picture">
         <div class="profile-circle">
           <img
-            v-if="profileImage"
-            :src="profileImage"
+            src="@/assets/images/profile.png"
             alt="Profile Picture"
             class="profile-image"
-          >
-          <span
-            v-else
-            class="upload-text"
-          >사진 업로드</span>
-          <input
-            type="file"
-            accept="image/*"
-            class="file-input"
-            @change="handleImageUpload"
           >
         </div>
       </div>
@@ -203,12 +193,13 @@
     min-height: 100vh;
     background: white;
     position: relative;
+    overflow: hidden;
   }
   
   /* 배경 컨테이너 */
   .background-container {
     width: 100vw;
-    height: 100vh;
+    height: 130vh;
     position: relative;
     display: flex;
     justify-content: center;
@@ -247,35 +238,35 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 2rem;
+    padding: 2.5rem 3rem;
     background: white;
-    border-radius: 12px;
+    border-radius: 8px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-    width: 60%;
-    max-width: 800px;
-    min-width: 320px;
+    width: 70%;
+    max-width: 820px;
+    min-width: 350px;
     height: auto;
     min-height: 400px;
   }
   
   /* 제목 스타일 */
   .title {
-    font-size: 24px;
+    font-size: 1.7rem;
     font-weight: 700;
-    color: #262626;
-    margin-bottom: 10px;
+    color: #000000;
+    margin-bottom: 0;
   }
   
   /* 부제목 스타일 */
   .subtitle {
-    font-size: 14px;
-    color: #737373;
-    margin-bottom: 20px;
+    font-size: 0.85rem;
+    color: #6B6B6B;
+    margin-bottom: 2rem;
   }
   
   /* 프로필 사진 컨테이너 */
   .profile-picture {
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
   }
   
   /* 프로필 사진 원형 컨테이너 */
@@ -289,7 +280,6 @@
     align-items: center;
     overflow: hidden;
     position: relative;
-    cursor: pointer;
   }
   
   /* 프로필 사진 */
@@ -298,18 +288,7 @@
     height: 100%;
     object-fit: cover;
   }
-  
-  /* 사진 업로드 텍스트 */
-  .upload-text {
-    font-size: 14px;
-    color: #737373;
-  }
-  
-  /* 파일 입력 필드 (숨김) */
-  .file-input {
-    display: none;
-  }
-  
+
   /* 섹션 스타일 */
   .section {
     width: 100%;
@@ -319,8 +298,8 @@
   /* 섹션 제목 스타일 */
   .section-title {
     font-size: 18px;
-    font-weight: 600;
-    color: #262626;
+    font-weight: 700;
+    color: #3F3F3F;
     text-align: left;
     margin-bottom: 10px;
   }
@@ -342,7 +321,9 @@
     padding: 10px;
     border: 2px solid #737373;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #262626;
     box-sizing: border-box;
   }
   
@@ -357,12 +338,13 @@
   
   /* 뒤로가기 버튼 */
   .back-btn {
-    padding: 10px 20px;
-    border: 2px solid #737373;
+    padding: 0.8rem 2.8rem;
     border-radius: 8px;
-    background: white;
+    border: none;
+    background: #ECECEC;
     color: #737373;
-    font-size: 16px;
+    font-size: 1rem;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
   }
@@ -373,12 +355,13 @@
   
   /* 프로필 저장 버튼 */
   .save-btn {
-    padding: 10px 20px;
-    border: 2px solid #005871;
+    padding: 0.8rem 2.2rem;
+    border: none;
     border-radius: 8px;
     background: #005871;
-    color: white;
-    font-size: 16px;
+    color: #ECECEC;
+    font-size: 1rem;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
   }

@@ -42,8 +42,8 @@ const routes = [
     // 프로필 작성 페이지 추가
     {
         path: '/profile', // 경로 설정
-        name: 'UserProfile', // 라우트 이름
-        component: () => import('@/pages/UserProfile.vue'), // 컴포넌트 경로
+        name: 'ProfilePage', // 라우트 이름
+        component: () => import('@/pages/ProfilePage.vue'), // 컴포넌트 경로
     },
       // 최고관리자 
     {
