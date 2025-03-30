@@ -410,7 +410,7 @@ export default {
 
 .title {
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 700;
   color: #000000;
 }
 
@@ -757,12 +757,6 @@ export default {
   text-decoration: none;
   transition: color 0.2s ease-in-out;
 }
-
-/* 호버 효과 */
-.login-link:hover {
-  color: #505050; /* 조금 더 어두운 색상으로 변경 */
-}
-
 
 /* 📌 반응형 적용 */
 @media (max-width: 1200px) {

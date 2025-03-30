@@ -16,7 +16,7 @@
     <div class="password-change-box">
       <!-- 로그인 하러가기 링크 -->
       <div class="login-link">
-        <span @click="goToLogin">로그인 하러가기 -></span>
+        <span @click="goToLogin">로그인 하러가기  →</span>
       </div>
   
       <h2 class="title">
@@ -49,15 +49,28 @@
           </div>
         </div>
   
-        <!-- 인증번호 입력 필드 -->
-        <div class="form-group">
-          <input
-            id="verificationCode"
-            v-model="formData.verificationCode"
-            type="text"
-            placeholder="인증번호를 입력해주세요."
-            class="password-input"
-          >
+        <!-- 인증번호 입력 + 확인 버튼 -->
+        <div class="form-group verificationCode-group">
+          <label
+            for="verificationCode"
+            class="left-align"
+          >인증번호</label>
+          <div class="input-group">
+            <input
+              id="verificationCode"
+              v-model="formData.verificationCode"
+              type="text"
+              placeholder="인증번호를 입력해주세요."
+              class="verificationCode-input"
+            >
+            <button
+              type="button"
+              class="auth-btn"
+              @click="validateVerificationCode"
+            >
+              인증번호 확인
+            </button>
+          </div>
         </div>
   
         <!-- 새 비밀번호 입력 필드 -->
@@ -82,7 +95,7 @@
             v-model="formData.confirmPassword"
             type="password"
             placeholder="비밀번호 확인"
-            class="password-input"
+            :class="['password-input', passwordMatchClass]"
           >
         </div>
   
@@ -90,6 +103,7 @@
         <button
           type="submit"
           class="change-btn"
+          @click.prevent="changePassword"
         >
           비밀번호 변경
         </button>
@@ -102,6 +116,7 @@
   <script>
   import MainHeader from "@/components/layout/MainHeader.vue";
   import MainFooter from "@/components/layout/MainFooter.vue";
+  import axios from "axios";
   
   export default {
     components: {
@@ -118,14 +133,72 @@
         },
       };
     },
+
+    computed: {
+      passwordMatchClass() {
+        if (this.formData.confirmPassword === "") return "";
+        return this.formData.newPassword === this.formData.confirmPassword
+          ? "match"
+          : "mismatch";
+      }
+    },
+
     methods: {
-      sendVerificationCode() {
-        // 인증번호 전송 로직
-        alert("인증번호가 전송되었습니다.");
+      async sendVerificationCode() {
+        if (!this.formData.email) {
+          alert("이메일을 입력해주세요.");
+          return;
+        }
+
+        try {
+          await axios.post("http://localhost:8080/api/auth/email/send-verification", null, {
+            params: { email: this.formData.email }
+          });
+          alert("인증번호가 전송되었습니다.");
+        } catch (error) {
+          console.error("인증번호 요청 실패:", error);
+          alert("인증번호 요청 중 오류가 발생했습니다.");
+        }
       },
-      goToLogin() {
-        this.$router.push("/login"); // 로그인 페이지로 이동
+
+      async validateVerificationCode() {
+        try {
+          const response = await axios.get("http://localhost:8080/api/auth/email/verify", {
+            params: {
+              email: this.formData.email,
+              verificationCode: this.formData.verificationCode
+            }
+          });
+          console.log(response);
+          alert("인증 성공! 이메일이 확인되었습니다.");
+        } catch (error) {
+          alert("인증 실패: 인증번호가 올바르지 않습니다.");
+        }
       },
+
+      async changePassword() {
+        if (this.formData.newPassword !== this.formData.confirmPassword) {
+          alert("비밀번호가 일치하지 않습니다.");
+          return;
+        }
+
+        try {
+          const payload = {
+            email: this.formData.email,
+            verificationCode: this.formData.verificationCode,
+            newPassword: this.formData.newPassword,
+          };
+
+          const response = await axios.put("http://localhost:8080/api/password/reset", payload);
+
+          console.log(response);
+          alert("비밀번호가 성공적으로 변경되었습니다.");
+          this.$router.push("/login");
+        } catch (error) {
+          console.error("비밀번호 변경 실패:", error.response?.data || error);
+          alert("비밀번호 변경 실패: " + (error.response?.data?.message || "오류가 발생했습니다."));
+        }
+      }
     },
   };
   </script>
@@ -139,14 +212,14 @@
     align-items: center;
     width: 100%;
     min-height: 100vh;
-    background: white;
     position: relative;
+    overflow: hidden;
   }
   
   /* 배경 컨테이너 */
   .background-container {
     width: 100vw;
-    height: 100vh;
+    height: 130vh;
     position: relative;
     display: flex;
     justify-content: center;
@@ -186,7 +259,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 2rem;
+    padding: 2.5rem 2rem;
     background: white;
     border-radius: 12px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
@@ -194,25 +267,25 @@
     max-width: 1190px;
     min-width: 320px;
     height: auto;
-    min-height: 400px;
-    max-height: 90vh;
   }
   
   /* 로그인 하러가기 링크 */
   .login-link {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 14px;
-    font-weight: 600;
+    top: 30px;
+    right: 30px;
+    font-size: 1rem;
+    font-weight: 700;
     color: #737373; /* 회색으로 변경 */
     cursor: pointer;
-    transition: color 0.3s ease-in-out;
+    transition: color 0.2s ease-in-out;
   }
   
-  .login-link:hover {
-    color: #005871; /* 호버 시 색상 변경 */
-  }
+  .title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #000000;
+}
   
   /* 폼 영역 */
   .password-change-form {
@@ -267,7 +340,7 @@
   /* 인증번호 받기 버튼 */
   .auth-btn {
     flex: 1; /* 더 적은 공간 차지 */
-    padding: 12px;
+    padding: 14px 12px;
     background: #e6e6e6; /* 평소 색상 */
     color: #737373; /* 평소 글자 색상 */
     border: none;
@@ -275,12 +348,33 @@
     cursor: pointer;
     font-size: 14px;
     font-weight: 600;
-    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
   }
   
   .auth-btn:hover {
     background: #005871; /* 눌렀을 때 색상 */
     color: white; /* 눌렀을 때 글자 색상 */
+  }
+
+  /* 인증번호 입력 필드 + 버튼 그룹 */
+  .verificationCode-group .input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 입력 필드와 버튼 사이 간격 */
+    margin-bottom: 1rem;
+  }
+
+  /* 인증번호 입력 필드 */
+  .verificationCode-input {
+    flex: 2;
+    padding: 12px 24px;
+    border: 2px solid #737373;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-align: left;
+    box-sizing: border-box;
+    height: 48px;
+    line-height: 24px;
   }
   
   /* 비밀번호 입력 필드 */
@@ -295,6 +389,14 @@
     margin-bottom: 5px; /* 필드 간격 최소화 */
   }
   
+  .password-input.match {
+    border: 3px solid #005871;
+  }
+
+  .password-input.mismatch {
+    border: 3px solid #FF4545;
+  }
+
   /* 비밀번호 변경 버튼 */
   .change-btn {
     width: 100%;
@@ -307,8 +409,9 @@
     font-weight: 600;
     color: #737373; /* 평소 글자 색상 */
     cursor: pointer;
-    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
-    margin-top: 20px;
+    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+    margin-top: 2rem;
+    margin-bottom: 1rem; /* 버튼과 폼 간격 최소화 */
   }
   
   .change-btn:hover {
