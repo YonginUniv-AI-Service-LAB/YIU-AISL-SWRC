@@ -5,13 +5,9 @@
         <div class="title">
           분야
         </div>
-        <select v-model="selectedField">
-          <option
-            disabled
-            value=""
-          >
-            지구력
-          </option>
+        <select v-model="field" @change="$emit('update-field', field)">
+          <option disabled value="">선택</option>
+          <option>지구력</option>
           <option>근력</option>
           <option>점프력</option>
           <option>순발력</option>
@@ -22,13 +18,9 @@
         <div class="title">
           단위
         </div>
-        <select v-model="selectedUnit">
-          <option
-            disabled
-            value=""
-          >
-            분
-          </option>
+        <select v-model="unit" @change="$emit('update-unit', unit)">
+          <option disabled value="">선택</option>
+          <option>분</option>
           <option>kg</option>
           <option>cm</option>
           <option>s</option>
@@ -42,8 +34,8 @@
 export default {
   data() {
     return {
-      selectedField: "", // 분야 선택값
-      selectedUnit: "" // 단위 선택값
+      field: "", // 분야 선택값
+      unit: "" // 단위 선택값
     };
   }
 };

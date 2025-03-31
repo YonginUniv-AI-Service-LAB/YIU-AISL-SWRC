@@ -10,6 +10,7 @@
         :show-edit-button="false"
         :show-add-record-button="true"  
         :page-title="pageTitle"
+        @save-records="updateChartRecords"
       />
 
       <div class="main-section">
@@ -26,6 +27,7 @@
             <PerformanceCharts
               v-if="activeTab === 0"
               :record-id="recordId"
+              :external-records="chartRecords"
             />
             <MatchRecordList
               v-else-if="activeTab === 1"
@@ -39,10 +41,16 @@
 </template>
 
 <script setup>
-import { computed, defineProps} from 'vue';
+import { ref, computed, defineProps} from 'vue';
 import UserProfile from './UserProfile.vue';
 import MatchRecordList from './MatchRecordList.vue';
 import PerformanceCharts from './PerformanceCharts.vue';
+
+const chartRecords = ref([]);
+
+const updateChartRecords = (records) => {
+  chartRecords.value = records;
+};
 
 const props = defineProps({
     activeTab: Number,

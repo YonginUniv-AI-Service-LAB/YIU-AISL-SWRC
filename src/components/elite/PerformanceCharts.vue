@@ -39,243 +39,153 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-import { Line } from 'vue-chartjs'
+import { defineComponent, ref, watch } from 'vue';
+import { Line } from 'vue-chartjs';
 import {
-    Chart as ChartJS,
-    Title,
-    Tooltip,
-    Legend,
-    LineElement,
-    PointElement,
-    CategoryScale,
-    LinearScale,
-    Filler
-} from 'chart.js'
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  Filler
+} from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-import ChartDataLabels from 'chartjs-plugin-datalabels'
-
-// Chart.js 플러그인 등록
 ChartJS.register(
-    Title,
-    Tooltip,
-    Legend,
-    LineElement,
-    PointElement,
-    CategoryScale,
-    LinearScale,
-    ChartDataLabels,
-    Filler
-)
+  Title,
+  Tooltip,
+  Legend,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  ChartDataLabels,
+  Filler
+);
 
 export default defineComponent({
-    name: 'PerformanceCharts',
-    components: { Line },
-    setup() {
-        // 그라데이션 생성 함수
-        const gradientBackground = (context) => {
-            const chart = context.chart
-            const { ctx, chartArea } = chart
-            if (!chartArea) return null
-            const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom)
-            gradient.addColorStop(0, 'rgba(114,189,214,0.5)') // 상단 (7.4% 정도면 0.074로 조정)
-            gradient.addColorStop(1, 'rgba(114,189,214,0)')   // 하단 투명
-            return gradient
-        }
-
-        /**
-         * chart.js 옵션
-         * - datalabels 설정으로 마지막 데이터 포인트에만 라벨 표시
-         */
-        const commonOptions = {
-            responsive: true,
-            maintainAspectRatio: false,
-            hover: {
-                mode: 'nearest',
-                intersect: true
-            },
-            layout: {
-                padding: {
-                    top: 20,
-                    bottom: 35 // x축 레이블이 안 잘리도록 아래쪽 여백
-                }
-            },
-            plugins: {
-                tooltip: {
-                    enabled: false
-                },
-                legend: { display: false },
-                title: { display: false },
-                datalabels: {
-                    // 표시 여부: 마지막 데이터 포인트이거나, 호버(active) 상태일 때만 표시
-                    display: (context) => {
-                        const dataset = context.dataset
-                        const index = context.dataIndex
-                        const lastIndex = dataset.data.length - 1
-                        return index === lastIndex || context.active
-                    },
-                    color: '#005871',
-                    align: 'end',
-                    anchor: 'end',
-                    backgroundColor: '#FFFFFF',
-                    borderColor: '#D9D9D9',
-                    borderWidth: 1,
-                    borderRadius: 4,
-                    padding: {
-                        top: 6,
-                        right: 8,
-                        bottom: 6,
-                        left: 8
-                    },
-                    offset: 6,
-                    font: {
-                        size: 12
-                    },
-                    // 라벨 텍스트: 각 데이터셋 라벨에 따라 단위 부여
-                    formatter: (value, context) => {
-                        const dataset = context.dataset
-                        switch (dataset.label) {
-                        case '지구력':
-                            return value + '분'
-                        case '근력':
-                            return value + 'kg'
-                        case '점프력':
-                            return value + 'cm'
-                        case '순발력':
-                            return value + 's'
-                        default:
-                            return value
-                        }
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    offset: true, //  x축 왼쪽, 오른쪽에 여백을 둠
-                    grid: {
-                        display: false,
-                    },
-                    
-                },
-
-                y: {
-                    suggestedMin: 0,
-                    suggestedMax: 90,
-                    ticks: {
-                        maxTicksLimit: 6, // y축 최대 표시 갯수
-                    },
-                    border: {
-                        display: false
-                    },
-                }
-            }
-        }
-
-        // 1) 지구력 데이터
-        const staminaData = {
-            labels: ['2024.07', '2024.08', '2024.09', '2024.10', '2024.11', '2024.12'],
-            datasets: [
-                {
-                    label: '지구력',
-                    data: [60, 65, 70, 80, 85, 90],
-                    // 선 스타일
-                    borderColor: '#005871',
-                    borderWidth: 1,
-                    tension: 0.3, 
-                    // 영역 채우기
-                    fill: true,
-                    backgroundColor: gradientBackground,
-                    // 포인트(동그라미)
-                    pointRadius: 3,
-                    pointBackgroundColor: '#ffffff', // 동그라미 내부 흰색
-                    pointBorderColor: '#005871',     // 동그라미 테두리
-                    pointBorderWidth: 2,
-                    pointHitRadius: 10,
-                }
-            ]
-        }
-
-        // 2) 근력 데이터
-        const muscleData = {
-            labels: ['2024.07', '2024.08', '2024.09', '2024.10', '2024.11', '2024.12'],
-            datasets: [
-                {
-                    label: '근력',
-                    data: [35, 40, 45, 48, 50, 50],
-                    // 선 스타일
-                    borderColor: '#005871',
-                    borderWidth: 1,
-                    tension: 0.3,
-                    // 영역 채우기
-                    fill: true,
-                    backgroundColor: gradientBackground,
-                    // 포인트(동그라미)
-                    pointRadius: 3,
-                    pointBackgroundColor: '#ffffff', // 동그라미 내부 흰색
-                    pointBorderColor: '#005871',     // 동그라미 테두리
-                    pointBorderWidth: 2,
-                    pointHitRadius: 10,
-                }
-            ]
-        }
-
-        // 3) 점프력 데이터
-        const jumpData = {
-            labels: ['2024.07', '2024.08', '2024.09', '2024.10', '2024.11', '2024.12'],
-            datasets: [
-                {
-                    label: '점프력',
-                    data: [30, 35, 38, 40, 43, 45],
-                    // 선 스타일
-                    borderColor: '#005871',
-                    borderWidth: 1,
-                    tension: 0.3,
-                    // 영역 채우기
-                    fill: true,
-                    backgroundColor: gradientBackground,
-                    // 포인트(동그라미)
-                    pointRadius: 3,
-                    pointBackgroundColor: '#ffffff', // 동그라미 내부 흰색
-                    pointBorderColor: '#005871',     // 동그라미 테두리
-                    pointBorderWidth: 2,
-                    pointHitRadius: 10,
-                }
-            ]
-        }
-
-        // 4) 순발력 데이터
-        const quicknessData = {
-            labels: ['2024.07', '2024.08', '2024.09', '2024.10', '2024.11', '2024.12'],
-            datasets: [
-                {
-                    label: '순발력',
-                    data: [80, 78, 76, 75, 74, 75],
-                    // 선 스타일
-                    borderColor: '#005871',
-                    borderWidth: 1,
-                    tension: 0.3,
-                    // 영역 채우기
-                    fill: true,
-                    backgroundColor: gradientBackground,
-                    // 포인트(동그라미)
-                    pointRadius: 3,
-                    pointBackgroundColor: '#ffffff', // 동그라미 내부 흰색
-                    pointBorderColor: '#005871',     // 동그라미 테두리
-                    pointBorderWidth: 2,
-                    pointHitRadius: 10,
-                }
-            ]
-        }
-
-        return {
-            commonOptions,
-            staminaData,
-            muscleData,
-            jumpData,
-            quicknessData
-        }
+  name: 'PerformanceCharts',
+  components: { Line },
+  props: {
+    externalRecords: {
+      type: Array,
+      default: () => []
     }
-})
+  },
+  setup(props) {
+    const staminaData = ref({ labels: [], datasets: [] });
+    const muscleData = ref({ labels: [], datasets: [] });
+    const jumpData = ref({ labels: [], datasets: [] });
+    const quicknessData = ref({ labels: [], datasets: [] });
+
+    const gradientBackground = (context) => {
+      const chart = context.chart;
+      const { ctx, chartArea } = chart;
+      if (!chartArea) return null;
+      const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+      gradient.addColorStop(0, 'rgba(114,189,214,0.5)');
+      gradient.addColorStop(1, 'rgba(114,189,214,0)');
+      return gradient;
+    };
+
+    const commonOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: { padding: { top: 20, bottom: 35 } },
+      plugins: {
+        tooltip: { enabled: false },
+        legend: { display: false },
+        datalabels: {
+          display: (ctx) => {
+            const dataset = ctx.dataset;
+            const index = ctx.dataIndex;
+            return index === dataset.data.length - 1 || ctx.active;
+          },
+          color: '#005871',
+          align: 'end',
+          anchor: 'end',
+          backgroundColor: '#fff',
+          borderColor: '#D9D9D9',
+          borderWidth: 1,
+          borderRadius: 4,
+          padding: { top: 6, right: 8, bottom: 6, left: 8 },
+          offset: 6,
+          font: { size: 12 },
+          formatter: (value, ctx) => {
+            const label = ctx.dataset.label;
+            if (label === '지구력') return value + '분';
+            if (label === '근력') return value + 'kg';
+            if (label === '점프력') return value + 'cm';
+            if (label === '순발력') return value + 's';
+            return value;
+          }
+        }
+      },
+      scales: {
+        x: { offset: true, grid: { display: false } },
+        y: {
+          suggestedMin: 0,
+          suggestedMax: 90,
+          ticks: { maxTicksLimit: 6 },
+          border: { display: false }
+        }
+      }
+    };
+
+    const updateChartData = () => {
+      const grouped = {
+        지구력: [],
+        근력: [],
+        점프력: [],
+        순발력: []
+      };
+
+      (props.externalRecords || []).forEach((item) => {
+        const field = item.field;
+        const value = parseFloat(item.record);
+        if (grouped[field] && !isNaN(value)) {
+          grouped[field].push({ date: item.date, value });
+        }
+      });
+
+      const buildData = (label, items) => ({
+        labels: items.map(i => i.date),
+        datasets: [{
+          label,
+          data: items.map(i => i.value),
+          borderColor: '#005871',
+          borderWidth: 1,
+          tension: 0.3,
+          fill: true,
+          backgroundColor: gradientBackground,
+          pointRadius: 3,
+          pointBackgroundColor: '#ffffff',
+          pointBorderColor: '#005871',
+          pointBorderWidth: 2,
+          pointHitRadius: 10
+        }]
+      });
+
+      staminaData.value = buildData('지구력', grouped['지구력']);
+      muscleData.value = buildData('근력', grouped['근력']);
+      jumpData.value = buildData('점프력', grouped['점프력']);
+      quicknessData.value = buildData('순발력', grouped['순발력']);
+    };
+
+    watch(() => props.externalRecords, updateChartData, { immediate: true });
+
+    return {
+      staminaData,
+      muscleData,
+      jumpData,
+      quicknessData,
+      commonOptions
+    };
+  }
+});
 </script>
 
 <style scoped>

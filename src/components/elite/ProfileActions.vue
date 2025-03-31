@@ -23,6 +23,7 @@
     <EliteModal
       v-if="showEliteModal"
       v-model:show="showEliteModal"
+      @save-records="handleUpdateRecords"
     />
     
     <MatchRecordModal
@@ -42,6 +43,13 @@ const props = defineProps({
   showAddRecordButton: { type: Boolean, default: true },
   pageTitle: { type: String, default: '' }
 });
+
+// emit으로 상위로 전달
+const emit = defineEmits(["save-records"]);
+
+const handleUpdateRecords = (records) => {
+  emit("save-records", records); // UserProfile.vue로 전달
+};
 
 // 각각 모달 표시 여부
 const showEliteModal = ref(false);

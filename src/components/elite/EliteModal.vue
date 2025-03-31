@@ -18,7 +18,7 @@
             <button class="delete-record">
               기록 삭제
             </button>
-            <button class="add">
+            <button class="add" @click="saveAndClose">
               저장 및 추가
             </button>
           </div>
@@ -28,7 +28,7 @@
         <!-- 기본 사항 -->
         <div class="basic-section">
           <p class="option1">기본 사항</p>
-          <EliteSelect />
+          <EliteSelect @update-field="updateField" @update-unit="updateUnit" />
         </div>
 
         <hr class="line2">
@@ -130,6 +130,17 @@ export default defineComponent({
       { date: "", record: "", notes: "" },
     ]);
 
+    const selectedField = ref("지구력");
+    const selectedUnit = ref("분");
+
+    const updateField = (newField) => {
+      selectedField.value = newField;
+    };
+
+    const updateUnit = (newUnit) => {
+      selectedUnit.value = newUnit;
+    };
+
     // 날짜 형식 자동 적용
     const formatDate = (index) => {
       let formattedDate = myRecords.value[index].date.replace(/[^\d]/g, ''); // 숫자만 남기고, 점은 포함되지 않음
@@ -139,6 +150,16 @@ export default defineComponent({
         formattedDate = formattedDate.slice(0, 4) + '.' + formattedDate.slice(4, 6) + '.' + formattedDate.slice(6, 8); // yyyy.mm.dd 형식
       }
       myRecords.value[index].date = formattedDate;
+    };
+
+    const saveAndClose = () => {
+      const enhancedRecords = myRecords.value.map((r) => ({
+        ...r,
+        field: selectedField.value,
+        unit: selectedUnit.value,
+      }));
+      emit("save-records", enhancedRecords); // 필드/단위 포함해서 emit!
+      closeModal();
     };
 
     // 기록 추가
@@ -158,10 +179,15 @@ export default defineComponent({
 
     return {
       myRecords,
+      saveAndClose,
       addRecord,
       removeRecord,
       closeModal,
       formatDate,
+      updateField,
+      updateUnit,
+      selectedField,
+      selectedUnit,
     };
   },
 });

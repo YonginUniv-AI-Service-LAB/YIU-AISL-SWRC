@@ -12,6 +12,7 @@
       :show-edit-button="showEditButton"
       :show-add-record-button="showAddRecordButton"
       :page-title="pageTitle"
+      @save-records="forwardSaveRecords"
     />
   </div>
 </template>
@@ -30,6 +31,13 @@ defineProps({
   showAddRecordButton: { type: Boolean, default: true },
   pageTitle: { type: String, default: '' }
 });
+
+const emit = defineEmits(["save-records"]);
+
+const forwardSaveRecords = (records) => {
+  emit("save-records", records); // ManagerDetailContent.vue로 전달
+};
+
 </script>
 
 <style scoped>
