@@ -294,6 +294,12 @@ export default {
         return;
       }
 
+      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+=-]).{8,20}$/;
+      if (!passwordRegex.test(this.formData.password)) {
+        alert("비밀번호는 8자 이상 20자 이하이며, 영문, 숫자, 특수문자를 모두 포함해야 합니다.");
+        return;
+      }
+
       if (this.formData.password !== this.formData.passwordConfirm) {
         alert("비밀번호가 일치하지 않습니다.");
         return;
