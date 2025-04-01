@@ -63,16 +63,26 @@
         </template>
       </tbody>
     </table>
+    <MatchRecordModal
+      v-if="showModal && selectedRecord"
+      v-model:show="showModal"
+      :record="selectedRecord"
+    />
   </div>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue';
+import MatchRecordModal from './MatchRecordModal.vue';
 
 const hoveredRow = ref(null);
+const showModal = ref(false); // ✅ 모달 표시 여부
+const selectedRecord = ref(null); // ✅ 현재 선택한 수정 기록
 
 const editRecord = (record) => {
-    console.log('수정할 기록:', record);
+  selectedRecord.value = { ...record }; // 선택된 기록 저장
+  showModal.value = true; // 모달 열기
+  console.log('수정할 기록:', record);
 };
 
 const deleteRecord = (recordToDelete) => {

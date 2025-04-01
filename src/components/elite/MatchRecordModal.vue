@@ -7,7 +7,7 @@
                     <h2>경기 기록 추가</h2>
                     <div class="modal-actions">
                         <button class="btn-cancel" @click="closeModal">닫기</button>
-                        <button class="btn-save">저장 및 추가</button>
+                        <button class="btn-save" @click="saveRecord">저장 및 추가</button>
                     </div>
                 </div>
                 <hr class="divider" />
@@ -21,26 +21,26 @@
                             <input 
                                 type="text" 
                                 placeholder="날짜를 입력해주세요." 
-                                v-model="date" 
+                                v-model="form.date" 
                                 @input="formatDate" 
                             />
                         </div>
                         <div class="form-group2">
                             <label>대회이름</label>
-                            <input type="text" placeholder="대회이름을 입력해주세요." />
+                            <input type="text" placeholder="대회이름을 입력해주세요." v-model="form.tournament" />
                         </div>
                         <div class="form-group3">
                             <label>상대</label>
-                            <input type="text" placeholder="상대를 입력해주세요." />
+                            <input type="text" placeholder="상대를 입력해주세요." v-model="form.opponent" />
                         </div>
                         <div class="form-group4">
                             <label>추가사항</label>
-                            <input type="text" placeholder="추가사항을 입력해주세요." />
+                            <input type="text" placeholder="추가사항을 입력해주세요." v-model="form.notes" />
                         </div>
                         <div class="form-group5">
                             <label>승패</label>
-                            <select v-model="selectedField">
-                                <option disabled value="">승</option>
+                            <select v-model="form.result">
+                                <option disabled value="">선택</option>
                                 <option>승</option>
                                 <option>무</option>
                                 <option>패</option>
@@ -54,33 +54,60 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch } from "vue";
 
 export default defineComponent({
     name: "MatchRecordModal",
-    props: { show: Boolean },
+    props: { 
+        show: Boolean,
+        record: Object, // ✅ 수정할 기록 받기 
+    },
     emits: ["update:show"],
     setup(props, { emit }) {
-        const selectedField = ref("");
-        const date = ref(""); // 날짜 값 추가
+        // ✅ 내부 입력 폼용 상태 (수정 시 복사해서 씀)
+        const form = ref({
+            date: "",
+            tournament: "",
+            opponent: "",
+            result: "",
+            notes: ""
+        });
+
+        // ✅ props.record가 바뀔 때마다 form에 복사
+        watch(
+            () => props.record,
+            (newRecord) => {
+                if (newRecord) {
+                form.value = { ...newRecord };
+                }
+            },
+            { immediate: true }
+        );
 
         const closeModal = () => emit("update:show", false);
 
         // 날짜 형식 자동 적용
         const formatDate = () => {
-            let formattedDate = date.value.replace(/[^\d]/g, ''); // 숫자만 남기고, 점은 포함되지 않음
+            let formattedDate = form.value.date.replace(/[^\d]/g, ''); // 숫자만 남기고, 점은 포함되지 않음
             if (formattedDate.length > 4 && formattedDate.length <= 6) {
                 formattedDate = formattedDate.slice(0, 4) + '.' + formattedDate.slice(4, 6); // yyyy.mm 형식
             } else if (formattedDate.length > 6) {
                 formattedDate = formattedDate.slice(0, 4) + '.' + formattedDate.slice(4, 6) + '.' + formattedDate.slice(6, 8); // yyyy.mm.dd 형식
             }
-            date.value = formattedDate;
+            form.value.date = formattedDate;
         };
 
-        return { closeModal, selectedField, date, formatDate };
+        const saveRecord = () => {
+            console.log("✅ 저장될 기록:", form.value);
+            // 이후 서버 저장 or 부모로 emit 가능
+            closeModal();
+        };
+
+        return { form, closeModal, formatDate, saveRecord, };
     }
 });
 </script>
+
 <style scoped>
 .modal-overlay {
     position: fixed;
