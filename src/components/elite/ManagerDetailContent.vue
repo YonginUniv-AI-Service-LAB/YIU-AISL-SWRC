@@ -137,7 +137,8 @@ const pageTitle = computed(() => pageTitles[props.activeTab]);
   cursor: pointer;
   font-size: 0.9rem;
   gap: 0.4rem;
-  margin-top: 14px
+  margin-top: 14px;
+  letter-spacing: -0.08em; /* 글자 간격 조정 */
 }
 
 .back-button img {

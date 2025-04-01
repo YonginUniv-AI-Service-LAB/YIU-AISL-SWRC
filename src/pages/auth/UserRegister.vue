@@ -259,8 +259,12 @@ export default {
         });
         alert("인증 코드가 이메일로 전송되었습니다.");
       } catch (error) {
-        console.error("이메일 인증 오류:", error);
-        alert("이메일 인증 중 오류가 발생했습니다.");
+        if (error.response?.status === 409) {
+          alert("이미 가입된 이메일입니다.");
+        } else {
+          console.error("이메일 인증 오류:", error);
+          alert("이메일 인증 중 오류가 발생했습니다.");
+        }
       }
     },
 
