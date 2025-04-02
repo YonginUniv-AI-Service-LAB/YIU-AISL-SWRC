@@ -10,6 +10,7 @@
         :show-edit-button="true"
         :show-add-record-button="true"
         :page-title="pageTitle"
+        @save-records="updatePerformanceData"
       />
 
       <div class="main-section">
@@ -19,12 +20,15 @@
 
         <div class="main-content">
           <div class="content-area">
+            <!-- 🔹 activeTab이 0이면 PerformanceCharts 보여주기 -->
+            <template v-if="activeTab === 0">
+              <PerformanceCharts v-if="hasPerformanceData" :external-records="performanceData" />
+              <p v-else>
+                현재 입력된 기록이 없습니다. 내 기록 추가를 통해 몸 상태를 기록해 보세요!
+              </p>
+            </template>
             <!-- 🔹 activeTab이 1이면 MatchRecordList 보여주기 -->
             <MatchRecordList v-if="activeTab === 1" />
-                        
-            <p v-else>
-              현재 입력된 기록이 없습니다. 내 기록 추가를 통해 몸 상태를 기록해 보세요!
-            </p>
           </div>
         </div>
       </div>
@@ -33,16 +37,29 @@
 </template>
 
 <script setup>
-import { computed, defineProps } from 'vue';
+import { computed, defineProps, ref } from 'vue';
 import UserProfile from './UserProfile.vue';
+import PerformanceCharts from './PerformanceCharts.vue';
 import MatchRecordList from './MatchRecordList.vue';
 
 const props = defineProps({
   activeTab: Number, // 부모(App.vue)에서 내려받는 activeTab 값
+  performanceData: Array, // 부모(App.vue)에서 내려받는 performanceData 값
 });
 
 const pageTitles = ['체력측정분석', '경기기록'];
 const pageTitle = computed(() => pageTitles[props.activeTab]);
+
+// 모달에서 입력한 데이터를 저장하는 상태
+const performanceData = ref([]); // 데이터 리스트라고 가정
+
+//  데이터 유무 판단
+const hasPerformanceData = computed(() => performanceData.value.length > 0);
+
+// ✅ 모달에서 저장 이벤트로 받은 데이터 처리
+const updatePerformanceData = (data) => {
+  performanceData.value = data;
+};
 
 </script>
 

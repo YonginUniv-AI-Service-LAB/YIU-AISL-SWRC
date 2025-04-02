@@ -4,7 +4,11 @@
     <div class="content-wrapper">
       <EliteBanner />
       <TabNavigation v-model:activeTab="activeTab" />
-      <EliteContent :active-tab="activeTab" />           
+      <EliteContent
+        :active-tab="activeTab"
+        :performance-data="performanceData"
+        @save-performance="handleSavePerformance"
+      />           
     </div>
     <MainFooter />
   </div>
@@ -20,6 +24,13 @@ import MainFooter from '../components/layout/MainFooter.vue';
 
 // ✅ Composition API 방식으로 activeTab 상태 관리
 const activeTab = ref(0);
+
+const performanceData = ref([]);
+
+const handleSavePerformance = (data) => {
+  performanceData.value = data;
+};
+
 </script>
 
 <style lang="scss" scoped>
