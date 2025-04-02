@@ -7,7 +7,7 @@
                     <h2>경기 기록 추가</h2>
                     <div class="modal-actions">
                         <button class="btn-cancel" @click="closeModal">닫기</button>
-                        <button class="btn-save" @click="saveRecord">저장 및 추가</button>
+                        <button class="btn-save" @click="saveRecord">저장하기</button>
                     </div>
                 </div>
                 <hr class="divider" />
@@ -60,11 +60,10 @@ export default defineComponent({
     name: "MatchRecordModal",
     props: { 
         show: Boolean,
-        record: Object, // ✅ 수정할 기록 받기 
+        record: Object, 
     },
-    emits: ["update:show"],
+    emits: ["update:show", "save"], // ✅ 부모로 "save" 이벤트 emit 추가
     setup(props, { emit }) {
-        // ✅ 내부 입력 폼용 상태 (수정 시 복사해서 씀)
         const form = ref({
             date: "",
             tournament: "",
@@ -73,12 +72,11 @@ export default defineComponent({
             notes: ""
         });
 
-        // ✅ props.record가 바뀔 때마다 form에 복사
         watch(
             () => props.record,
             (newRecord) => {
                 if (newRecord) {
-                form.value = { ...newRecord };
+                    form.value = { ...newRecord };
                 }
             },
             { immediate: true }
@@ -86,24 +84,22 @@ export default defineComponent({
 
         const closeModal = () => emit("update:show", false);
 
-        // 날짜 형식 자동 적용
         const formatDate = () => {
-            let formattedDate = form.value.date.replace(/[^\d]/g, ''); // 숫자만 남기고, 점은 포함되지 않음
+            let formattedDate = form.value.date.replace(/[^\d]/g, '');
             if (formattedDate.length > 4 && formattedDate.length <= 6) {
-                formattedDate = formattedDate.slice(0, 4) + '.' + formattedDate.slice(4, 6); // yyyy.mm 형식
+                formattedDate = formattedDate.slice(0, 4) + '.' + formattedDate.slice(4, 6);
             } else if (formattedDate.length > 6) {
-                formattedDate = formattedDate.slice(0, 4) + '.' + formattedDate.slice(4, 6) + '.' + formattedDate.slice(6, 8); // yyyy.mm.dd 형식
+                formattedDate = formattedDate.slice(0, 4) + '.' + formattedDate.slice(4, 6) + '.' + formattedDate.slice(6, 8);
             }
             form.value.date = formattedDate;
         };
 
         const saveRecord = () => {
-            console.log("✅ 저장될 기록:", form.value);
-            // 이후 서버 저장 or 부모로 emit 가능
+            emit("save", { ...form.value }); // ✅ 부모로 저장된 데이터 전달
             closeModal();
         };
 
-        return { form, closeModal, formatDate, saveRecord, };
+        return { form, closeModal, formatDate, saveRecord };
     }
 });
 </script>
