@@ -3,6 +3,7 @@
     <button 
       v-if="showEditButton" 
       class="btn-edit-profile"
+      @click="openProfileModal"
     >
       프로필 수정
     </button>
@@ -20,6 +21,11 @@
     </button>
 
     <!-- 조건에 따라 해당 모달 렌더링 -->
+    <ProfileModal
+      v-if="showProfileModal"
+      v-model:show="showProfileModal"
+    />
+
     <EliteModal
       v-if="showEliteModal"
       v-model:show="showEliteModal"
@@ -37,6 +43,7 @@
 import { ref, computed } from 'vue';
 import EliteModal from './EliteModal.vue';
 import MatchRecordModal from './MatchRecordModal.vue';
+import ProfileModal from './ProfileModal.vue';
 
 const props = defineProps({
   showEditButton: { type: Boolean, default: true },
@@ -54,6 +61,7 @@ const handleUpdateRecords = (records) => {
 // 각각 모달 표시 여부
 const showEliteModal = ref(false);
 const showMatchModal = ref(false);
+const showProfileModal = ref(false);
 
 // 버튼 클릭 시 모달 분기
 const openAddRecordModal = () => {
@@ -62,6 +70,10 @@ const openAddRecordModal = () => {
   } else {
     showEliteModal.value = true;
   }
+};
+
+const openProfileModal = () => {
+  showProfileModal.value = true;
 };
 
 // 버튼 텍스트 변경

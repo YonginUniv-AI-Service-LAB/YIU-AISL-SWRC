@@ -127,7 +127,7 @@
         <button
           type="submit"
           class="save-btn"
-          @click="saveProfile"
+          @click="save"
         >
           프로필 저장
         </button>
@@ -173,7 +173,7 @@
         this.$router.go(-1); // 이전 페이지로 이동
       },
       // 프로필 저장
-      saveProfile() {
+      save() {
         console.log("프로필 저장:", this.formData);
         alert("프로필이 저장되었습니다.");
         // 저장 로직 추가 (예: API 호출)
