@@ -37,7 +37,7 @@ const props = defineProps({
 });
 
 // emit
-const emit = defineEmits(["save-records"]);
+const emit = defineEmits(["save-records", "save-profile"]);
 
 // ✅ profile 상태 정의 + 초기화
 const profile = ref({
