@@ -1,27 +1,31 @@
 <template>
   <div class="user-profile">
     <UserInfo
-      :user-name="userName"
-      :gender="gender"
-      :sport="sport"
-      :height="height"
-      :weight="weight"
+      :name="profile.name"
+      :gender="profile.gender"
+      :sport="profile.sport"
+      :height="profile.height"
+      :weight="profile.weight"
     />
 
     <ProfileActions
       :show-edit-button="showEditButton"
       :show-add-record-button="showAddRecordButton"
       :page-title="pageTitle"
+      :user-profile="profile"
       @save-records="forwardSaveRecords"
+      @save-profile="handleProfileUpdate"
     />
   </div>
 </template>
 
 <script setup>
+import { ref, watch } from 'vue'; 
 import UserInfo from './UserInfo.vue';
 import ProfileActions from './ProfileActions.vue';
 
-defineProps({
+// ✅ props 정의
+const props = defineProps({
   userName: String,
   gender: String,
   sport: String,
@@ -29,15 +33,47 @@ defineProps({
   weight: Number,
   showEditButton: { type: Boolean, default: true },
   showAddRecordButton: { type: Boolean, default: true },
-  pageTitle: { type: String, default: '' }
+  pageTitle: { type: String, default: '' },
 });
 
+// emit
 const emit = defineEmits(["save-records"]);
 
+// ✅ profile 상태 정의 + 초기화
+const profile = ref({
+  name: props.userName,
+  gender: props.gender,
+  sport: props.sport,
+  height: props.height,
+  weight: props.weight,
+});
+
+// ✅ props가 바뀔 때 profile도 업데이트
+watch(() => props, (newProps) => {
+  profile.value = {
+    name: newProps.userName,
+    gender: newProps.gender,
+    sport: newProps.sport,
+    height: newProps.height,
+    weight: newProps.weight,
+  };
+}, { immediate: true, deep: true });
+
+// ✅ 경기 기록 저장 이벤트 전달
 const forwardSaveRecords = (records) => {
   emit("save-records", records); // ManagerDetailContent.vue로 전달
 };
 
+// ✅ 프로필 수정 시 상태 업데이트
+const handleProfileUpdate = (updatedProfile) => {
+  profile.value = {
+    name: updatedProfile.name,
+    gender: updatedProfile.gender,
+    sport: updatedProfile.sport,
+    height: updatedProfile.height,
+    weight: updatedProfile.weight,
+  };
+};
 </script>
 
 <style scoped>

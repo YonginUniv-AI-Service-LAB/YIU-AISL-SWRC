@@ -24,6 +24,8 @@
     <ProfileModal
       v-if="showProfileModal"
       v-model:show="showProfileModal"
+      :initial-data="profileData"
+      @save="handleProfileSave"
     />
 
     <EliteModal
@@ -41,6 +43,8 @@
 
 <script setup>
 import { ref, computed } from 'vue';
+import axios from 'axios';
+
 import EliteModal from './EliteModal.vue';
 import MatchRecordModal from './MatchRecordModal.vue';
 import ProfileModal from './ProfileModal.vue';
@@ -48,20 +52,52 @@ import ProfileModal from './ProfileModal.vue';
 const props = defineProps({
   showEditButton: { type: Boolean, default: true },
   showAddRecordButton: { type: Boolean, default: true },
-  pageTitle: { type: String, default: '' }
+  pageTitle: { type: String, default: '' },
+  userProfile: { type: Object, default: () => ({}) },
 });
 
 // emit으로 상위로 전달
-const emit = defineEmits(["save-records"]);
-
-const handleUpdateRecords = (records) => {
-  emit("save-records", records); // UserProfile.vue로 전달
-};
+const emit = defineEmits(["save-records", "save-profile"]);
 
 // 각각 모달 표시 여부
 const showEliteModal = ref(false);
 const showMatchModal = ref(false);
 const showProfileModal = ref(false);
+
+// 프로필 데이터 초기화
+const profileData = ref({ ...props.userProfile });
+
+const handleUpdateRecords = (records) => {
+  emit("save-records", records); // UserProfile.vue로 전달
+};
+
+// 프로필 저장 이벤트
+const handleProfileSave = async (updatedProfile) => {
+  try {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      alert("로그인 정보가 없습니다.");
+      return;
+    }
+
+    const response = await axios.put(`http://localhost:8080/api/profiles/user/${userId}`, {
+      name: updatedProfile.name,
+      birthDate: updatedProfile.birthdate,
+      gender: updatedProfile.gender,
+      height: updatedProfile.height,
+      weight: updatedProfile.weight,
+      event: updatedProfile.sport,
+      unit: "kg"
+    });
+
+    // 수정된 데이터를 상위(UserProfile.vue)로 전달
+    emit("save-profile", response.data);
+    alert("프로필이 수정되었습니다.");
+  } catch (error) {
+    console.error("❌ 프로필 수정 실패:", error);
+    alert("프로필 수정 중 오류가 발생했습니다.");
+  }
+};
 
 // 버튼 클릭 시 모달 분기
 const openAddRecordModal = () => {

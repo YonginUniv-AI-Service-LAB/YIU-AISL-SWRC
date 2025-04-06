@@ -11,6 +11,7 @@
         :show-add-record-button="true"
         :page-title="pageTitle"
         @save-records="updatePerformanceData"
+        @save-profile="updateUserProfile"
       />
 
       <div class="main-section">
@@ -72,6 +73,17 @@ const userProfile = ref({
   weight: 0,
 });
 
+// 저장된 프로필로 갱신
+const updateUserProfile = (updated) => {
+  userProfile.value = {
+    userName: updated.name,
+    gender: updated.gender === 'male' ? '남자' : '여자',
+    sport: updated.event,
+    height: updated.height,
+    weight: updated.weight,
+  };
+};
+
 onMounted(async () => {
   try {
     const userId = localStorage.getItem('userId');
@@ -79,6 +91,8 @@ onMounted(async () => {
 
     const res = await axios.get(`http://localhost:8080/api/profiles/user/${userId}`);
     const profile = res.data;
+
+    console.log('👀 프로필 불러옴:', profile);
 
     userProfile.value = {
       userName: profile.name,
