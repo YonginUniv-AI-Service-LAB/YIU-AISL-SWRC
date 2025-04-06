@@ -42,9 +42,10 @@ const forwardSaveRecords = (records) => {
 
 <style scoped>
 .user-profile {
-  position: relative;
-  width: 15vw;
-  /* max-width: 180px; */
+  /* position: relative; */
+  /* width: 15vw; */
+  width: 100%;
+  max-width: 180px;
   min-width: 160px;
   min-height: 33vh;
   background: #FFFFFF;

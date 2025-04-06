@@ -129,9 +129,25 @@ export default {
             password: this.formData.password
           }
         });
+
+        const { accessToken, refreshToken, isProfileSet } = response.data;
+
+        // 토큰 저장 (필요에 따라 localStorage나 sessionStorage 사용 가능)
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+
         console.log("✅ 로그인 성공:", response.data);
-        alert("로그인 성공!");
-        // 여기서 토큰 저장 후 이동할 수 있음
+
+        // 🔀 최초 로그인(프로필 미설정) → 프로필 설정 페이지로 이동
+        if (!isProfileSet) {
+          this.$router.push("/profile");
+        } else {
+          // 역할에 따라 페이지 분기
+          // 예: 관리자라면 /elite-manager, 학생이면 /elite-player
+          // 백엔드 응답에 role이 없다면 추가하는 것도 좋음
+          this.$router.push("/elite-player"); // 기본으로 학생용
+        }
+
       } catch (error) {
         console.error("❌ 로그인 실패:", error.response?.data || error);
         alert("로그인 실패. 이메일과 비밀번호를 확인해주세요.");
