@@ -74,12 +74,6 @@ const handleUpdateRecords = (records) => {
 // 프로필 저장 이벤트
 const handleProfileSave = async (updatedProfile) => {
   try {
-    const userId = localStorage.getItem("userId");
-    if (!userId) {
-      alert("로그인 정보가 없습니다.");
-      return;
-    }
-
     const response = await axios.put("http://localhost:8080/api/profiles/me", {
       name: updatedProfile.name,
       birthDate: updatedProfile.birthdate,
@@ -114,6 +108,7 @@ const openAddRecordModal = () => {
 };
 
 const openProfileModal = () => {
+  profileData.value = { ...props.userProfile };
   showProfileModal.value = true;
 };
 

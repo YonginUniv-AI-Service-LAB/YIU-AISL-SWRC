@@ -2,7 +2,7 @@
   <div class="user-profile">
     <UserInfo
       :name="profile.name"
-      :gender="profile.gender"
+      :gender="profile.gender === 'male' ? '남자' : '여자'"
       :sport="profile.sport"
       :height="profile.height"
       :weight="profile.weight"

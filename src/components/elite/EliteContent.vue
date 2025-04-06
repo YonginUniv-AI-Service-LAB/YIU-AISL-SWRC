@@ -77,6 +77,7 @@ const userProfile = ref({
 const updateUserProfile = (updated) => {
   userProfile.value = {
     userName: updated.name,
+    birthdate: updated.birthDate,
     gender: updated.gender === 'male' ? '남자' : '여자',
     sport: updated.event,
     height: updated.height,
@@ -100,7 +101,8 @@ onMounted(async () => {
 
     userProfile.value = {
       userName: profile.name,
-      gender: profile.gender === 'male' ? '남자' : '여자',
+      birthdate: profile.birthDate,
+      gender: profile.gender,
       sport: profile.event,
       height: profile.height,
       weight: profile.weight,
