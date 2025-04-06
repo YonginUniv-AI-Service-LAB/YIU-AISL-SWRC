@@ -130,13 +130,14 @@ export default {
           }
         });
 
-        const { accessToken, refreshToken, isProfileSet } = response.data;
+        const { accessToken, refreshToken, isProfileSet, userId } = response.data;
 
         // 토큰 저장 (필요에 따라 localStorage나 sessionStorage 사용 가능)
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem("userId", userId); // 사용자 ID 저장 (필요에 따라)
 
-        console.log("✅ 로그인 성공:", response.data);
+        console.log("로그인 성공:", response.data);
 
         // 🔀 최초 로그인(프로필 미설정) → 프로필 설정 페이지로 이동
         if (!isProfileSet) {

@@ -138,49 +138,74 @@
   <MainFooter />
 </template>
   
-  <script>
-  import MainHeader from "@/components/layout/MainHeader.vue";
-  import MainFooter from "@/components/layout/MainFooter.vue";
+<script>
+import MainHeader from "@/components/layout/MainHeader.vue";
+import MainFooter from "@/components/layout/MainFooter.vue";
+import axios from "axios";
   
-  export default {
-    components: {
-      MainHeader,
-      MainFooter,
+export default {
+  components: {
+    MainHeader,
+    MainFooter,
+  },
+  data() {
+    return {
+      profileImage: null, // 프로필 사진 URL
+      formData: {
+        name: "",
+        birthdate: "",
+        gender: "",
+        height: "",
+        weight: "",
+        sport: "",
+      },
+    };
+  },
+  methods: {
+    handleImageUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        this.profileImage = URL.createObjectURL(file);
+      }
     },
-    data() {
-      return {
-        profileImage: null, // 프로필 사진 URL
-        formData: {
-          name: "",
-          birthdate: "",
-          gender: "",
-          height: "",
-          weight: "",
-          sport: "",
-        },
-      };
+    goBack() {
+      this.$router.go(-1);
     },
-    methods: {
-      // 프로필 사진 업로드 처리
-      handleImageUpload(event) {
-        const file = event.target.files[0];
-        if (file) {
-          this.profileImage = URL.createObjectURL(file);
+    async save() {
+      try {
+        const userId = localStorage.getItem("userId");
+        if (!userId || userId === "undefined" || isNaN(userId)) {
+          alert("로그인 정보가 없습니다.");
+          return;
         }
-      },
-      // 뒤로가기
-      goBack() {
-        this.$router.go(-1); // 이전 페이지로 이동
-      },
-      // 프로필 저장
-      save() {
-        console.log("프로필 저장:", this.formData);
+
+        const payload = {
+          name: this.formData.name,
+          birthDate: this.formData.birthdate,
+          gender: this.formData.gender,
+          height: parseFloat(this.formData.height),
+          weight: parseFloat(this.formData.weight),
+          event: this.formData.sport,
+          unit: "kg",
+          user: {
+            id: Number(userId)
+          }
+        };
+
+        const response = await axios.post("http://localhost:8080/api/profiles", payload);
+        console.log("✅ 프로필 저장 완료:", response.data);
         alert("프로필이 저장되었습니다.");
-        // 저장 로직 추가 (예: API 호출)
-      },
-    },
-  };
-  </script>
+
+        this.$router.push("/elite-player");
+
+      } catch (error) {
+        console.error("❌ 프로필 저장 실패:", error.response?.data || error);
+        alert("프로필 저장 중 오류가 발생했습니다.");
+      }
+    }
+  },
+};
+</script>
   
   <style scoped>
   /* 전체 컨테이너 */
