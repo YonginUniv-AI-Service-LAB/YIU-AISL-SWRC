@@ -2,11 +2,11 @@
   <div class="elite-content">
     <div class="content-wrapper">
       <UserProfile 
-        user-name="김태훈"
-        gender="남자"
-        sport="축구"
-        height="178"
-        weight="72"
+        :user-name="userProfile.userName"
+        :gender="userProfile.gender"
+        :sport="userProfile.sport"
+        :height="userProfile.height"
+        :weight="userProfile.weight"
         :show-edit-button="true"
         :show-add-record-button="true"
         :page-title="pageTitle"
@@ -37,7 +37,9 @@
 </template>
 
 <script setup>
-import { computed, defineProps, ref } from 'vue';
+import { computed, defineProps, ref, onMounted } from 'vue';
+import axios from 'axios';
+
 import UserProfile from './UserProfile.vue';
 import PerformanceCharts from './PerformanceCharts.vue';
 import MatchRecordList from './MatchRecordList.vue';
@@ -61,6 +63,34 @@ const updatePerformanceData = (data) => {
   performanceData.value = data;
 };
 
+// ✅ 사용자 프로필 데이터 상태
+const userProfile = ref({
+  userName: '',
+  gender: '',
+  sport: '',
+  height: 0,
+  weight: 0,
+});
+
+onMounted(async () => {
+  try {
+    const userId = localStorage.getItem('userId');
+    if (!userId) return;
+
+    const res = await axios.get(`http://localhost:8080/api/profiles/user/${userId}`);
+    const profile = res.data;
+
+    userProfile.value = {
+      userName: profile.name,
+      gender: profile.gender === 'male' ? '남자' : '여자',
+      sport: profile.event,
+      height: profile.height,
+      weight: profile.weight,
+    };
+  } catch (err) {
+    console.error('❌ 프로필 데이터 불러오기 실패:', err);
+  }
+});
 </script>
 
 <style scoped>
