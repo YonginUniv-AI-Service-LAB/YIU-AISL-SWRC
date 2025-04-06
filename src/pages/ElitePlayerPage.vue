@@ -40,6 +40,7 @@ const handleSavePerformance = (data) => {
     display: flex;
     flex-direction: column; /* 세로 정렬 */
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 /* 콘텐츠 영역 */

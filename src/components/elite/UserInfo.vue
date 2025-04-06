@@ -8,7 +8,7 @@
 
     <div class="user-information">
       <h2 class="user-name">
-        {{ userName }}
+        {{ name }}
       </h2>
       <h2 class="user-gender">
         ({{ gender }})
@@ -35,7 +35,7 @@
 
 <script setup>
 defineProps({
-    userName: String,
+    name: String,
     gender: String,
     sport: String,
     height: Number,
