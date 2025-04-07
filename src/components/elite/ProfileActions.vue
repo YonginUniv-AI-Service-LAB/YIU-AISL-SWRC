@@ -74,13 +74,7 @@ const handleUpdateRecords = (records) => {
 // 프로필 저장 이벤트
 const handleProfileSave = async (updatedProfile) => {
   try {
-    const userId = localStorage.getItem("userId");
-    if (!userId) {
-      alert("로그인 정보가 없습니다.");
-      return;
-    }
-
-    const response = await axios.put(`http://localhost:8080/api/profiles/user/${userId}`, {
+    const response = await axios.put("http://localhost:8080/api/profiles/me", {
       name: updatedProfile.name,
       birthDate: updatedProfile.birthdate,
       gender: updatedProfile.gender,
@@ -88,6 +82,11 @@ const handleProfileSave = async (updatedProfile) => {
       weight: updatedProfile.weight,
       event: updatedProfile.sport,
       unit: "kg"
+    }
+    , {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     });
 
     // 수정된 데이터를 상위(UserProfile.vue)로 전달
@@ -109,6 +108,7 @@ const openAddRecordModal = () => {
 };
 
 const openProfileModal = () => {
+  profileData.value = { ...props.userProfile };
   showProfileModal.value = true;
 };
 

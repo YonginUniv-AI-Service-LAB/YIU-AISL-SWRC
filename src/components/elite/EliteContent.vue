@@ -77,6 +77,7 @@ const userProfile = ref({
 const updateUserProfile = (updated) => {
   userProfile.value = {
     userName: updated.name,
+    birthdate: updated.birthDate,
     gender: updated.gender === 'male' ? '남자' : '여자',
     sport: updated.event,
     height: updated.height,
@@ -86,17 +87,22 @@ const updateUserProfile = (updated) => {
 
 onMounted(async () => {
   try {
-    const userId = localStorage.getItem('userId');
-    if (!userId) return;
+    // const userId = localStorage.getItem('userId');
+    // if (!userId) return;
 
-    const res = await axios.get(`http://localhost:8080/api/profiles/user/${userId}`);
+    const res = await axios.get("http://localhost:8080/api/profiles/me", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
     const profile = res.data;
 
     console.log('👀 프로필 불러옴:', profile);
 
     userProfile.value = {
       userName: profile.name,
-      gender: profile.gender === 'male' ? '남자' : '여자',
+      birthdate: profile.birthDate,
+      gender: profile.gender,
       sport: profile.event,
       height: profile.height,
       weight: profile.weight,
