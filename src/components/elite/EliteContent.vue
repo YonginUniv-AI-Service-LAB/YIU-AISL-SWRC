@@ -10,7 +10,7 @@
         :show-edit-button="true"
         :show-add-record-button="true"
         :page-title="pageTitle"
-        @save-records="updatePerformanceData"
+        @save-records="handleSaveRecords"
         @save-profile="updateUserProfile"
       />
 
@@ -29,7 +29,11 @@
               </p>
             </template>
             <!-- 🔹 activeTab이 1이면 MatchRecordList 보여주기 -->
-            <MatchRecordList v-if="activeTab === 1" />
+            <MatchRecordList 
+              v-if="activeTab === 1"
+              :records="matchRecords"
+              @update-records="matchRecords = $event"
+            />
           </div>
         </div>
       </div>
@@ -55,6 +59,7 @@ const pageTitle = computed(() => pageTitles[props.activeTab]);
 
 // 모달에서 입력한 데이터를 저장하는 상태
 const performanceData = ref([]); // 데이터 리스트라고 가정
+const matchRecords = ref([]); // 경기 기록 리스트
 
 //  데이터 유무 판단
 const hasPerformanceData = computed(() => performanceData.value.length > 0);
@@ -62,6 +67,18 @@ const hasPerformanceData = computed(() => performanceData.value.length > 0);
 // ✅ 모달에서 저장 이벤트로 받은 데이터 처리
 const updatePerformanceData = (data) => {
   performanceData.value = data;
+};
+
+const updateMatchRecords = (data) => {
+  matchRecords.value = data;
+};
+
+const handleSaveRecords = (records) => {
+  if (props.activeTab === 0) {
+    updatePerformanceData(records);
+  } else {
+    updateMatchRecords(records);
+  }
 };
 
 // ✅ 사용자 프로필 데이터 상태

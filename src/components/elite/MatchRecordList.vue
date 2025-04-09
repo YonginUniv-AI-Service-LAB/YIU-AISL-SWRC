@@ -24,7 +24,7 @@
             class="record-row"
             @mouseenter="hoveredRow = `${group.year}-${idx}`"
             @mouseleave="hoveredRow = null"
-          >
+          > 
             <td class="date-cell">
               {{ record.date }}
             </td>
@@ -71,16 +71,28 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import MatchRecordModal from './MatchRecordModal.vue';
+
+// props로 records 받기
+const props = defineProps({
+  records: {
+    type: Array,
+    default: () => []
+  }
+});
+
+const emit = defineEmits(["update-records"]);
 
 const hoveredRow = ref(null);
 const showModal = ref(false);
 const selectedRecord = ref(null);
-const matchRecords = ref([
-    { id: 1, date: '2024.05.02', tournament: 'U리그', opponent: '경희대학교', result: '승', year: '2024', notes: '3-0 승리' },
-    { id: 2, date: '2024.04.15', tournament: '전국 대학축구 선수권 대회', opponent: '단국대학교', result: '무', year: '2024', notes: '8강전, 승부차기 패배 (3-4)' },
-]);
+const matchRecords = ref([]);
+
+// ✅ props.records를 기준으로 내부 상태 동기화
+watch(() => props.records, (newRecords) => {
+  matchRecords.value = [...newRecords];
+}, { immediate: true, deep: true });
 
 // ✅ ID 생성 (신규 데이터에 대해 ID 부여)
 const generateId = () => {
@@ -103,6 +115,9 @@ const addRecord = (newRecord) => {
     }
 
     matchRecords.value = sortByDateDesc(matchRecords.value); // ✅ 정렬 후 반영
+
+    // ✅ 상위 컴포넌트로 업데이트된 기록 전달
+    emit("update-records", [...matchRecords.value]);
 };
 
 // ✅ 날짜 내림차순 정렬
@@ -116,10 +131,12 @@ const sortByDateDesc = (records) => {
 
 const groupedRecordsArray = computed(() => {
     const sortedRecords = sortByDateDesc(matchRecords.value);
+
     const grouped = sortedRecords.reduce((acc, record) => {
-        if (!acc[record.year]) acc[record.year] = [];
-        acc[record.year].push(record);
-        return acc;
+      const year = record.year || (record.date ? record.date.split(".")[0] : "미지정");
+      if (!acc[year]) acc[year] = [];
+      acc[year].push(record);
+      return acc;
     }, {});
 
     return Object.entries(grouped)
@@ -133,11 +150,10 @@ const editRecord = (record) => {
 };
 
 const deleteRecord = (recordToDelete) => {
-    if (confirm('경기 기록을 삭제하시겠습니까?')) {
-        matchRecords.value = matchRecords.value.filter(
-        record => record.id !== recordToDelete.id
-        );
-    }
+  if (confirm('경기 기록을 삭제하시겠습니까?')) {
+    matchRecords.value = matchRecords.value.filter(record => record.id !== recordToDelete.id);
+    emit("update-records", [...matchRecords.value]);
+  }
 };
 
 // ✅ 승무패 스타일 지정

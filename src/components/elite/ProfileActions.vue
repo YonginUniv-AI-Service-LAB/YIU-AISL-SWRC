@@ -37,6 +37,7 @@
     <MatchRecordModal
       v-if="showMatchModal"
       v-model:show="showMatchModal"
+      @save="handleSaveMatchRecord"
     />
   </div>
 </template>
@@ -63,6 +64,11 @@ const emit = defineEmits(["save-records", "save-profile"]);
 const showEliteModal = ref(false);
 const showMatchModal = ref(false);
 const showProfileModal = ref(false);
+
+// ✅ 경기 기록 저장 함수 추가
+const handleSaveMatchRecord = (record) => {
+  emit("save-match-record", record);
+};
 
 // 프로필 데이터 초기화
 const profileData = ref({ ...props.userProfile });
