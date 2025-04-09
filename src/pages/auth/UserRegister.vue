@@ -329,7 +329,13 @@ export default {
       try {
         const response = await axios.post(endpoint, requestBody);
         console.log("회원가입 성공:", response.data);
-        alert("회원가입 성공!");
+
+        if (this.userRole === "admin") {
+          alert("회원가입 요청이 완료되었습니다.\n최고관리자의 승인 후 로그인하실 수 있습니다.");
+        } else {
+          alert("회원가입 성공! 로그인해주세요.");
+        }
+
         this.$router.push("/login");
       } catch (error) {
         console.error("회원가입 실패:", error.response?.data || error);

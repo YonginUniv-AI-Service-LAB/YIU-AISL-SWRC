@@ -150,8 +150,6 @@ const getResultClass = (result) => {
 };
 </script>
 
-
-
 <style scoped>
 .match-table {
     width: 100%;
