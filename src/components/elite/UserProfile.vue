@@ -15,6 +15,7 @@
       :user-profile="profile"
       @save-records="forwardSaveRecords"
       @save-profile="handleProfileUpdate"
+      @save-match-record="handleMatchRecord"
     />
   </div>
 </template>
@@ -48,6 +49,9 @@ const profile = ref({
   weight: props.weight,
 });
 
+// ✅ 경기기록 배열
+const matchRecords = ref([]);
+
 // ✅ props가 바뀔 때 profile도 업데이트
 watch(() => props, (newProps) => {
   profile.value = {
@@ -74,6 +78,13 @@ const handleProfileUpdate = (updatedProfile) => {
     weight: updatedProfile.weight,
   };
 };
+
+// ✅ 경기기록 저장 핸들러
+const handleMatchRecord = (newRecord) => {
+  matchRecords.value.push(newRecord);
+  emit("save-records", matchRecords.value); // 상위로 전달
+};
+
 </script>
 
 <style scoped>
