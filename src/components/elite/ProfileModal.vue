@@ -14,79 +14,70 @@
                 </div>
             </div>
         
-            <!-- 인적사항 -->
-            <div class="section">
-                <h3 class="section-title">
-                    인적사항
-                </h3>
-                <div class="input-group">
-                    <div class="form-group">
-                        <input
-                            v-model="formData.name"
-                            type="text"
-                            placeholder="이름"
-                        >
-                    </div>
-                <div class="form-group">
-                    <input
-                        v-model="formData.birthdate"
-                        type="date"
-                    >
-                </div>
-                <div class="form-group">
-                    <select v-model="formData.gender">
-                        <option value="" disabled selected>
-                            성별
-                        </option>
-                        <option value="male">
-                            남성
-                        </option>
-                        <option value="female">
-                            여성
-                        </option>
-                    </select>
-                </div>
-                </div>
-            </div>
-        
-            <!-- 신체 정보 -->
-            <div class="section">
-                <h3 class="section-title">
-                신체 정보
-                </h3>
-                <div class="input-group">
-                <div class="form-group">
-                    <input
-                        v-model="formData.height"
-                        type="number"
-                        placeholder="키 (cm)"
-                    >
-                </div>
-                <div class="form-group">
-                    <input
-                        v-model="formData.weight"
-                        type="number"
-                        placeholder="몸무게 (kg)"
-                    >
-                </div>
-                <div class="form-group">
-                    <select v-model="formData.sport">
-                        <option value="" disabled selected>
-                            종목
-                        </option>
-                        <option value="축구">
-                            축구
-                        </option>
-                        <option value="유도">
-                            유도
-                        </option>
-                        <option value="태권도">
-                            태권도
-                        </option>
-                    </select>
-                </div>
-                </div>
-            </div>
+            <!-- 인적 사항 -->
+<div class="section">
+    <hr class="line1">
+  <div class="section-header">
+    <h3 class="section-title">인적 사항</h3>
+  </div>
+  <div class="input-group">
+    <div class="form-group form-name">
+        <label>이름</label>
+      <input
+        v-model="formData.name"
+        type="text"
+        placeholder="이름"
+      />
+    </div>
+    <div class="form-group form-birthday">
+        <label>생년월일</label>
+      <input
+        v-model="formData.birthdate"
+        type="date"
+        placeholder="생년월일"
+      />
+    </div>
+    <div class="form-group form-gender">
+        <label>성별</label>
+      <select v-model="formData.gender">
+        <option value="" disabled>성별</option>
+        <option value="male">남자</option>
+        <option value="female">여자</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- 신체 정보 -->
+<div class="section">
+    <hr class="line2">
+  <div class="section-header">
+    <h3 class="section-title">신체 정보</h3>
+  </div>
+  <div class="input-group">
+  <div class="form-group form-height">
+      <label>키</label>
+    <input v-model="formData.height" type="number" placeholder="키" />
+  </div>
+  <div class="form-group form-weight">
+      <label>몸무게</label>
+    <input v-model="formData.weight" type="number" placeholder="몸무게" />
+  </div>
+  <div class="form-group form-sport">
+      <label>분야</label>
+    <select v-model="formData.sport">
+      <option value="" disabled>분야</option>
+      <option value="축구">축구</option>
+      <option value="유도">유도</option>
+      <option value="태권도">태권도</option>
+    </select>
+  </div>
+</div>
+
+  <hr class="line3">
+</div>
+
+
         
             <!-- 버튼 그룹 -->
             <div class="button-group">
@@ -152,7 +143,12 @@ const save = () => {
     align-items: center;
     z-index: 1000;
 }
-
+.form-group label{
+    display: flex;
+    padding-bottom: 10px;
+    padding-left: 70px;
+    color: #737373;
+}
 /* 프로필 작성 박스 */
 .profile-box {
     position: absolute;
@@ -221,31 +217,60 @@ const save = () => {
     color: #3F3F3F;
     text-align: left;
     margin-bottom: 10px;
+   transform: translateY(45px);
 }
 
 /* 입력 그룹 스타일 */
 .input-group {
     display: flex;
-    gap: 10px; /* 입력 필드 사이 간격 */
+    gap: 0; /* ✅ 간격 제거 */
+  
+   
 }
 
 /* 입력 필드 스타일 */
 .form-group {
-    flex: 1;
+  flex: 1;
+  margin-left: 0; /* ✅ 간격 제거 */
 }
 
-.form-group input,
-.form-group select {
-    width: 100%;
-    padding: 10px;
+.form-group input {
+    width: 65%;
+    padding: 12px;
     border: 2px solid #737373;
     border-radius: 8px;
     font-size: 0.9rem;
     font-weight: 500;
     color: #262626;
-    box-sizing: border-box;
+    background-color: #F9F9F9;
+    margin-left: 60px;
+    
+}
+.form-height {
+ transform:translateX(100px) ;
 }
 
+.form-weight {
+    transform:translateX(50px) ;
+}
+.form-name{
+    transform:translateX(100px) ;
+}
+.form-birthday{
+    transform:translateX(50px) ;
+}
+.form-group select{
+    width: 75%;
+    padding: 12px;
+    border: 2px solid #737373;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #262626;
+    background-color: #F9F9F9;
+    margin-left: 60px;
+    
+}
 /* 버튼 그룹 스타일 */
 .button-group {
     display: flex;
@@ -287,5 +312,26 @@ const save = () => {
 
 .save-btn:hover {
     background: #004a63;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+ /* 구분선 추가 */
+.line1,.line2,.line3{
+    width: 99%; 
+    color: #D0D0D0;
+   
+}
+.line1{
+transform: translateY(20px);
+}
+.line2{
+transform: translateY(20px);
+}
+.line3{
+    margin-top: 40px;
 }
 </style>
