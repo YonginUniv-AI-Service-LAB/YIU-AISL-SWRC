@@ -40,19 +40,52 @@
 <script>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import axios from 'axios';
 import MainDropdown from './MainDropdown.vue';
 
 export default {
     components: { MainDropdown },
     setup(_, { emit }) {
         const router = useRouter();
-        const isLoggedIn = ref(true);
+        // const isLoggedIn = ref(true);
         const selectedMainMenu = ref("스포츠ㆍ웰니스연구센터 소개"); // 기본값 설정
 
         const goToHome = () => {
             router.push('/');
             selectedMainMenu.value = "스포츠ㆍ웰니스연구센터 소개"; // 홈 클릭 시 기본값으로 변경
             emit('update:selectedMainMenu', selectedMainMenu.value);
+        };
+
+        // ✅ 엘리트 메뉴 클릭 시 로그인 여부 & 역할 확인
+        const handleEliteMenuClick = async () => {
+          const token = localStorage.getItem("accessToken");
+
+          if (!token) {
+            // ❌ 로그인 안 되어 있음
+            alert("로그인이 필요합니다.");
+            router.push("/login");
+            return;
+          }
+
+          try {
+            const res = await axios.get("http://localhost:8080/api/auth/me", {
+              headers: { Authorization: `Bearer ${token}` }
+            });
+
+            const role = res.data.role;
+
+            if (role === "STUDENT") {
+              router.push("/elite-player");
+            } else if (role === "ADMIN") {
+              router.push("/elite-manager");
+            } else {
+              alert("권한이 올바르지 않습니다.");
+            }
+          } catch (err) {
+            console.error("사용자 정보 조회 실패:", err);
+            alert("로그인 정보가 유효하지 않습니다. 다시 로그인 해주세요.");
+            router.push("/login");
+          }
         };
 
         // 드롭다운 항목 클릭 시 페이지 이동
@@ -73,6 +106,7 @@ export default {
             goToHome, // 메인 페이지 이동 함수
             navigateToPage,
             goToKspo,
+            handleEliteMenuClick,
 
             labIntroItems: [
                 { title: '인사말', path: '/detail/hello' },
@@ -87,10 +121,9 @@ export default {
                 { title: '세미나실 & 스터디룸', path: '/detail/seminar' },
             ],
             eliteItems: [
-                { title: '체력 측정분석', path: '/elite-player' },
-                { title: '경기 기록', path: '/elite-manager' },
+                { title: '체력 측정분석', path: '', action: handleEliteMenuClick },
+                { title: '경기 기록', path: '', action: handleEliteMenuClick },
             ],
-            isLoggedIn,  // 로그인 상태
             admin:[
                 {
                     title: '관리자 페이지', path: '/detail/admin'
