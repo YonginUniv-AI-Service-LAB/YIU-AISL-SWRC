@@ -1,7 +1,7 @@
 <!-- Admin_header.vue -->
 <template>
-  <header class="bg-gray-800 text-white p-4">
-    <h1 class="text-2xl">스포츠 웰니스 관리자</h1>
+  <header class="bg-gray-800 text-white p-8">
+    <h1 class="text-5xl font-bold pl-8 my-4">스포츠 웰니스 관리자</h1>  
   </header>
 </template>
 
@@ -16,5 +16,9 @@ export default {
 header {
   background-color: #2d3748; /* 다크 그레이 */
   color: white;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
 }
 </style>
