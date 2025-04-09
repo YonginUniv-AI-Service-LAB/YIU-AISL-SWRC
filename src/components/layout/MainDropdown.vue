@@ -7,7 +7,7 @@
         <li
           v-for="(item, index) in items"
           :key="index"
-          @click="$emit('navigate', title, item.path)"
+          @click="handleClick(item)"
         >
           {{ item.title }}
           <div
@@ -22,10 +22,19 @@
 
 <script>
 export default {
-    props: {
-        title: String, // 드롭다운 제목 (메인 카테고리)
-        items: Array,  // 드롭다운 내부 항목들
-    },    
+  props: {
+    title: String,
+    items: Array,
+  },
+  methods: {
+    handleClick(item) {
+      if (item.action) {
+        item.action(); // ✅ action 함수가 있으면 실행
+      } else {
+        this.$emit("navigate", this.title, item.path); // path로 이동
+      }
+    },
+  },
 };
 </script>
 
