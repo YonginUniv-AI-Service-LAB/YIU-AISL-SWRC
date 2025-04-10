@@ -13,21 +13,21 @@
         @remove="removeUser"
       />
     </div>
-    <MainFooter />
+   
   </template>
   
   <script>
   // 자식 컴포넌트 import
   import AdminHeader from '../components/details/admin/AdminHeader.vue';
   import AdminArray from '../components/details/admin/AdminArray.vue';
-  import MainFooter from '@/components/layout/MainFooter.vue';
+
   
   export default {
     name: 'AdminMain',
     components: {
       AdminHeader,
       AdminArray,
-      MainFooter
+ 
     },
     data() {
       return {
