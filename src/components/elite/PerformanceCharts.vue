@@ -135,6 +135,11 @@ export default defineComponent({
       }
     };
 
+    const normalizeDate = (dateStr) => {
+      // yyyy-mm-dd 또는 yyyy.mm.dd 모두를 yyyy-mm-dd 형식으로
+      return dateStr?.replace(/\./g, '-');
+    };
+
     const updateChartData = () => {
       const grouped = {
         지구력: [],
@@ -144,30 +149,36 @@ export default defineComponent({
       };
 
       (props.externalRecords || []).forEach((item) => {
-        const field = item.field;
-        const value = parseFloat(item.record);
+        const field = item.field || item.event; // ✅ 백엔드 데이터는 event
+        const value = parseFloat(item.record ?? item.recordValue); // ✅ 백엔드 recordValue
+        const date = normalizeDate(item.date ?? item.recordDate); // ✅ 백엔드 recordDate
+
         if (grouped[field] && !isNaN(value)) {
-          grouped[field].push({ date: item.date, value });
+          grouped[field].push({ date, value });
         }
       });
 
-      const buildData = (label, items) => ({
-        labels: items.map(i => i.date),
-        datasets: [{
-          label,
-          data: items.map(i => i.value),
-          borderColor: '#005871',
-          borderWidth: 1,
-          tension: 0.3,
-          fill: true,
-          backgroundColor: gradientBackground,
-          pointRadius: 3,
-          pointBackgroundColor: '#ffffff',
-          pointBorderColor: '#005871',
-          pointBorderWidth: 2,
-          pointHitRadius: 10
-        }]
-      });
+      const buildData = (label, items) => {
+        const sortedItems = [...items].sort((a, b) => new Date(a.date) - new Date(b.date)); // ✅ 날짜 순 정렬
+
+        return {
+          labels: sortedItems.map(i => i.date),
+          datasets: [{
+            label,
+            data: sortedItems.map(i => i.value),
+            borderColor: '#005871',
+            borderWidth: 1,
+            tension: 0.4,
+            fill: true,
+            backgroundColor: gradientBackground,
+            pointRadius: 3,
+            pointBackgroundColor: '#ffffff',
+            pointBorderColor: '#005871',
+            pointBorderWidth: 2,
+            pointHitRadius: 10
+          }]
+        };
+      };
 
       staminaData.value = buildData('지구력', grouped['지구력']);
       muscleData.value = buildData('근력', grouped['근력']);

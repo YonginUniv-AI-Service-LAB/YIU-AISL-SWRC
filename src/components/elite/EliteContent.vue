@@ -51,7 +51,6 @@ import MatchRecordList from './MatchRecordList.vue';
 
 const props = defineProps({
   activeTab: Number, // 부모(App.vue)에서 내려받는 activeTab 값
-  performanceData: Array, // 부모(App.vue)에서 내려받는 performanceData 값
 });
 
 const pageTitles = ['체력측정분석', '경기기록'];
@@ -124,6 +123,16 @@ onMounted(async () => {
       height: profile.height,
       weight: profile.weight,
     };
+
+    // ✅ 여기 추가! 저장된 기록 불러오기
+    const recordRes = await axios.get("http://localhost:8080/api/athlete-records", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
+    performanceData.value = recordRes.data;
+    console.log("🔥 기록 불러오기 완료:", recordRes.data);
+
   } catch (err) {
     console.error('❌ 프로필 데이터 불러오기 실패:', err);
   }
@@ -134,7 +143,7 @@ onMounted(async () => {
 .elite-content {
     /* position: absolute; */
     width: 100%;
-    height: 160vh;
+    height: 170vh;
     min-height: 100vh;
     top: 40vh;
     left: 0;
