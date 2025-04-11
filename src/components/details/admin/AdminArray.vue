@@ -15,7 +15,7 @@
         <tbody>
           <tr v-for="(user, index) in pendingUsers" :key="index" class="border-b">
             <td class="p-4 font-semibold">{{ user.name }}</td>
-            <td class="p-4 text-blue-600 cursor-pointer">{{ user.sport }}</td>
+            <td class="p-4 text-blue-600 cursor-pointer">{{ user.sportType }}</td>
             <td class="p-4">{{ user.email }}</td>
             <td class="p-3 flex justify-end gap-2"> <!-- 버튼을 오른쪽으로 정렬 -->
               <button class="px-4 py-1 bg-gray-500 text-white rounded" @click="rejectUser(index)">거절</button>
