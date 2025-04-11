@@ -12,14 +12,11 @@
         </tr>
       </thead>
       <tbody>
-        <template
-          v-for="(group, index) in groupedRecordsArray"
-          :key="index"
-        >
+        <template v-for="(group, index) in groupedRecordsArray" :key="index">
           <tr class="year-header">
             <td colspan="6">
               {{ group.year }}
-            </td> <!-- ✅ 연도 헤더 -->
+            </td>
           </tr>
           <tr 
             v-for="(record, idx) in group.records" 
@@ -27,7 +24,7 @@
             class="record-row"
             @mouseenter="hoveredRow = `${group.year}-${idx}`"
             @mouseleave="hoveredRow = null"
-          >
+          > 
             <td class="date-cell">
               {{ record.date }}
             </td>
@@ -63,72 +60,101 @@
         </template>
       </tbody>
     </table>
+    
     <MatchRecordModal
-      v-if="showModal && selectedRecord"
+      v-if="showModal"
       v-model:show="showModal"
       :record="selectedRecord"
+      @save="addRecord" 
     />
   </div>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import MatchRecordModal from './MatchRecordModal.vue';
 
+// props로 records 받기
+const props = defineProps({
+  records: {
+    type: Array,
+    default: () => []
+  }
+});
+
+const emit = defineEmits(["update-records"]);
+
 const hoveredRow = ref(null);
-const showModal = ref(false); // ✅ 모달 표시 여부
-const selectedRecord = ref(null); // ✅ 현재 선택한 수정 기록
+const showModal = ref(false);
+const selectedRecord = ref(null);
+const matchRecords = ref([]);
 
-const editRecord = (record) => {
-  selectedRecord.value = { ...record }; // 선택된 기록 저장
-  showModal.value = true; // 모달 열기
-  console.log('수정할 기록:', record);
+// ✅ props.records를 기준으로 내부 상태 동기화
+watch(() => props.records, (newRecords) => {
+  matchRecords.value = [...newRecords];
+}, { immediate: true, deep: true });
+
+// ✅ ID 생성 (신규 데이터에 대해 ID 부여)
+const generateId = () => {
+    return matchRecords.value.length > 0 ? Math.max(...matchRecords.value.map(r => r.id)) + 1 : 1;
 };
 
-const deleteRecord = (recordToDelete) => {
-    if (confirm('경기 기록을 삭제하시겠습니까?')) {
-        matchRecords.value = matchRecords.value.filter(
-        record => record !== recordToDelete
-        );
-        console.log('삭제됨:', recordToDelete);
+// ✅ 저장 (새 데이터 추가 또는 기존 데이터 수정)
+const addRecord = (newRecord) => {
+    const year = newRecord.date.split(".")[0]; // 연도 추출
+
+    if (newRecord.id) {
+        // ✅ 기존 데이터 수정 (ID가 같은 데이터 찾아 교체)
+        const index = matchRecords.value.findIndex(record => record.id === newRecord.id);
+        if (index !== -1) {
+            matchRecords.value[index] = { ...newRecord, year };
+        }
+    } else {
+        // ✅ 새로운 데이터 추가
+        matchRecords.value.push({ ...newRecord, id: generateId(), year });
     }
+
+    matchRecords.value = sortByDateDesc(matchRecords.value); // ✅ 정렬 후 반영
+
+    // ✅ 상위 컴포넌트로 업데이트된 기록 전달
+    emit("update-records", [...matchRecords.value]);
 };
 
-// ✅ 날짜 내림차순 정렬 (문자열을 Date 객체로 변환 후 비교)
+// ✅ 날짜 내림차순 정렬
 const sortByDateDesc = (records) => {
     return records.slice().sort((a, b) => {
-        const dateA = new Date(a.date.replace(/\./g, '-')); // "YYYY.MM.DD" → "YYYY-MM-DD"
+        const dateA = new Date(a.date.replace(/\./g, '-'));
         const dateB = new Date(b.date.replace(/\./g, '-'));
-        return dateB - dateA; // 최신순 정렬
+        return dateB - dateA;
     });
 };
 
-const matchRecords = ref([
-    { date: '2024.05.02', tournament: 'U리그', opponent: '경희대학교', result: '승', year: '2024', notes: '3-0 승리' },
-    { date: '2024.04.15', tournament: '전국 대학축구 선수권 대회', opponent: '단국대학교', result: '무', year: '2024', notes: '8강전, 승부차기 패배 (3-4)' },
-    { date: '2024.04.05', tournament: '전국 대학축구 선수권 대회', opponent: '울산대학교', result: '승', year: '2024', notes: '16강전, 연장전 3-2 승리' },
-    { date: '2024.03.17', tournament: 'KUSF 대학리그', opponent: '연세대학교', result: '패', year: '2024', notes: '라이벌전, 후반 85분 결승골 허용' },
-    { date: '2024.03.10', tournament: 'KUSF 대학리그', opponent: '고려대학교', result: '승', year: '2024', notes: '개막전, 2-1 승리' },
-    { date: '2023.05.15', tournament: 'U리그', opponent: '한양대학교', result: '승', year: '2023', notes: '원정 경기, 후반 2골 역전승' },
-    { date: '2023.04.08', tournament: '전국 대학축구 선수권 대회', opponent: '부경대학교', result: '무', year: '2023', notes: '조별리그, 1-1 무승부' },
-    { date: '2023.03.18', tournament: '춘계 대학축구 연맹전', opponent: '홍익대학교', result: '패', year: '2023', notes: '16강전, 후반 추가시간 실점' },
-    { date: '2023.03.12', tournament: '춘계 대학축구 연맹전', opponent: '중앙대학교', result: '승', year: '2023', notes: '조별리그, 선제골 포함 2-0 승리' }
-]);
-
 const groupedRecordsArray = computed(() => {
-    const sortedRecords = sortByDateDesc(matchRecords.value); // 날짜 최신순 정렬
+    const sortedRecords = sortByDateDesc(matchRecords.value);
 
     const grouped = sortedRecords.reduce((acc, record) => {
-        if (!acc[record.year]) acc[record.year] = [];
-        acc[record.year].push(record);
-        return acc;
+      const year = record.year || (record.date ? record.date.split(".")[0] : "미지정");
+      if (!acc[year]) acc[year] = [];
+      acc[year].push(record);
+      return acc;
     }, {});
 
-    // ✅ 객체 → 배열 변환 후 연도 내림차순 정렬 (2024 → 2023 → 2022 ...)
     return Object.entries(grouped)
         .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
-        .map(([year, records]) => ({ year, records })); // 배열 객체로 변환
+        .map(([year, records]) => ({ year, records }));
 });
+
+const editRecord = (record) => {
+  selectedRecord.value = { ...record };
+  showModal.value = true;
+};
+
+const deleteRecord = (recordToDelete) => {
+  if (confirm('경기 기록을 삭제하시겠습니까?')) {
+    matchRecords.value = matchRecords.value.filter(record => record.id !== recordToDelete.id);
+    emit("update-records", [...matchRecords.value]);
+  }
+};
 
 // ✅ 승무패 스타일 지정
 const getResultClass = (result) => {

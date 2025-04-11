@@ -189,7 +189,7 @@
 
 
 <script>
-import axios from "axios";
+import api from '@/utils/api';
 import MainHeader from "@/components/layout/MainHeader.vue";
 import MainFooter from "@/components/layout/MainFooter.vue";
 
@@ -254,9 +254,10 @@ export default {
         return;
       }
       try {
-        await axios.get("http://localhost:8080/api/auth/send-verification", {
+        const response = await api.get("/api/auth/send-verification", {
           params: { email:this.completeEmail }
         });
+        console.log("인증번호 응답:", response.data);
         alert("인증 코드가 이메일로 전송되었습니다.");
       } catch (error) {
         if (error.response?.status === 409) {
@@ -271,7 +272,7 @@ export default {
     // 인증번호 확인
     async validateVerificationCode() {
       try {
-        const response = await axios.get("http://localhost:8080/api/auth/email/verify", {
+        const response = await api.get("/api/auth/email/verify", {
           params: {
             email: this.completeEmail,
             verificationCode: this.formData.verificationCode
@@ -311,8 +312,8 @@ export default {
       }
 
       const endpoint = this.userRole === "student"
-        ? "http://localhost:8080/api/auth/signup"
-        : "http://localhost:8080/api/auth/signup/admin";
+        ? "/api/auth/signup"
+        : "/api/auth/signup/admin";
 
       const requestBody = {
         email: this.completeEmail,
@@ -327,9 +328,15 @@ export default {
       }
 
       try {
-        const response = await axios.post(endpoint, requestBody);
+        const response = await api.post(endpoint, requestBody);
         console.log("회원가입 성공:", response.data);
-        alert("회원가입 성공!");
+
+        if (this.userRole === "admin") {
+          alert("회원가입 요청이 완료되었습니다.\n최고관리자의 승인 후 로그인하실 수 있습니다.");
+        } else {
+          alert("회원가입 성공! 로그인해주세요.");
+        }
+
         this.$router.push("/login");
       } catch (error) {
         console.error("회원가입 실패:", error.response?.data || error);

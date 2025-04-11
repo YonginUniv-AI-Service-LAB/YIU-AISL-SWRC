@@ -116,7 +116,7 @@
   <script>
   import MainHeader from "@/components/layout/MainHeader.vue";
   import MainFooter from "@/components/layout/MainFooter.vue";
-  import axios from "axios";
+  import api from '@/utils/api';
   
   export default {
     components: {
@@ -151,7 +151,7 @@
         }
 
         try {
-          await axios.post("http://localhost:8080/api/auth/email/send-verification", null, {
+          await api.post("/api/auth/email/send-verification", null, {
             params: { email: this.formData.email }
           });
           alert("인증번호가 전송되었습니다.");
@@ -163,7 +163,7 @@
 
       async validateVerificationCode() {
         try {
-          const response = await axios.get("http://localhost:8080/api/auth/email/verify", {
+          const response = await api.get("/api/auth/email/verify", {
             params: {
               email: this.formData.email,
               verificationCode: this.formData.verificationCode
@@ -189,7 +189,7 @@
             newPassword: this.formData.newPassword,
           };
 
-          const response = await axios.put("http://localhost:8080/api/password/reset", payload);
+          const response = await api.put("/api/password/reset", payload);
 
           console.log(response);
           alert("비밀번호가 성공적으로 변경되었습니다.");

@@ -28,7 +28,10 @@
         <!-- 기본 사항 -->
         <div class="basic-section">
           <p class="option1">기본 사항</p>
-          <EliteSelect @update-field="updateField" @update-unit="updateUnit" />
+          <EliteSelect
+            @update-field="updateField"
+            @update-unit="updateUnit"
+          />
         </div>
 
         <hr class="line2">
@@ -114,6 +117,7 @@
 
 <script>
 import { defineComponent, ref } from "vue";
+import api from '@/utils/api'; 
 import EliteSelect from "@/components/layout/EliteSelect.vue";
 
 export default defineComponent({
@@ -122,11 +126,10 @@ export default defineComponent({
   props: {
     show: Boolean,
   },
-  emits: ["update:show"],
+  emits: ["update:show", "save-records"],
   setup(props, { emit }) {
     // 기록 배열
     const myRecords = ref([
-      { date: "2024.07.01", record: "80", notes: "-" },
       { date: "", record: "", notes: "" },
     ]);
 
@@ -152,14 +155,59 @@ export default defineComponent({
       myRecords.value[index].date = formattedDate;
     };
 
-    const saveAndClose = () => {
-      const enhancedRecords = myRecords.value.map((r) => ({
-        ...r,
-        field: selectedField.value,
-        unit: selectedUnit.value,
-      }));
-      emit("save-records", enhancedRecords); // 필드/단위 포함해서 emit!
-      closeModal();
+    const toIsoDate = (dotDate) => dotDate.replace(/\./g, "-");
+
+    const saveAndClose = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        
+        // 1. 모든 기록 저장 (POST)
+        for (const r of myRecords.value) {
+          console.log("✅ 보내는 데이터:", {
+            recordDate: toIsoDate(r.date),
+            recordValue: parseFloat(r.record),
+            etc: r.notes,
+            event: selectedField.value,
+            unit: selectedUnit.value,
+          });
+
+          await api.post("/api/athlete-records", {
+            recordDate: toIsoDate(r.date),
+            recordValue: parseFloat(r.record),
+            etc: r.notes,
+            event: selectedField.value,
+            unit: selectedUnit.value,
+          }, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            }
+          });
+        }
+
+        // 2. 저장 후 전체 기록 조회 (GET)
+        const res = await api.get("/api/athlete-records", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          }
+        });
+
+        // 3. 상위로 전달
+        emit("save-records", res.data);
+        closeModal();
+      } catch (error) {
+        console.error("❌ 기록 저장 실패:", error);
+        alert("기록 저장 중 오류가 발생했습니다.");
+      }
+
+      if (!selectedField.value || selectedField.value === '종목 입력') {
+        alert('종목을 선택해주세요!');
+        return;
+      }
+
+      if (!selectedUnit.value || selectedUnit.value === '단위 입력') {
+        alert('단위를 선택해주세요!');
+        return;
+      }
     };
 
     // 기록 추가
@@ -191,6 +239,8 @@ export default defineComponent({
     };
   },
 });
+
+
 </script>
 
 <style lang="scss" scoped>

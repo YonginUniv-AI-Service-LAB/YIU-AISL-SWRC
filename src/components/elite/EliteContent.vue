@@ -10,7 +10,8 @@
         :show-edit-button="true"
         :show-add-record-button="true"
         :page-title="pageTitle"
-        @save-records="updatePerformanceData"
+        @save-records="handleSaveRecords"
+        @save-profile="updateUserProfile"
       />
 
       <div class="main-section">
@@ -28,7 +29,11 @@
               </p>
             </template>
             <!-- 🔹 activeTab이 1이면 MatchRecordList 보여주기 -->
-            <MatchRecordList v-if="activeTab === 1" />
+            <MatchRecordList 
+              v-if="activeTab === 1"
+              :records="matchRecords"
+              @update-records="matchRecords = $event"
+            />
           </div>
         </div>
       </div>
@@ -38,7 +43,7 @@
 
 <script setup>
 import { computed, defineProps, ref, onMounted } from 'vue';
-import axios from 'axios';
+import api from '@/utils/api'; 
 
 import UserProfile from './UserProfile.vue';
 import PerformanceCharts from './PerformanceCharts.vue';
@@ -46,7 +51,6 @@ import MatchRecordList from './MatchRecordList.vue';
 
 const props = defineProps({
   activeTab: Number, // 부모(App.vue)에서 내려받는 activeTab 값
-  performanceData: Array, // 부모(App.vue)에서 내려받는 performanceData 값
 });
 
 const pageTitles = ['체력측정분석', '경기기록'];
@@ -54,6 +58,7 @@ const pageTitle = computed(() => pageTitles[props.activeTab]);
 
 // 모달에서 입력한 데이터를 저장하는 상태
 const performanceData = ref([]); // 데이터 리스트라고 가정
+const matchRecords = ref([]); // 경기 기록 리스트
 
 //  데이터 유무 판단
 const hasPerformanceData = computed(() => performanceData.value.length > 0);
@@ -61,6 +66,18 @@ const hasPerformanceData = computed(() => performanceData.value.length > 0);
 // ✅ 모달에서 저장 이벤트로 받은 데이터 처리
 const updatePerformanceData = (data) => {
   performanceData.value = data;
+};
+
+const updateMatchRecords = (data) => {
+  matchRecords.value = data;
+};
+
+const handleSaveRecords = (records) => {
+  if (props.activeTab === 0) {
+    updatePerformanceData(records);
+  } else {
+    updateMatchRecords(records);
+  }
 };
 
 // ✅ 사용자 프로필 데이터 상태
@@ -72,21 +89,50 @@ const userProfile = ref({
   weight: 0,
 });
 
+// 저장된 프로필로 갱신
+const updateUserProfile = (updated) => {
+  userProfile.value = {
+    userName: updated.name,
+    birthdate: updated.birthDate,
+    gender: updated.gender === 'male' ? '남자' : '여자',
+    sport: updated.event,
+    height: updated.height,
+    weight: updated.weight,
+  };
+};
+
 onMounted(async () => {
   try {
-    const userId = localStorage.getItem('userId');
-    if (!userId) return;
+    // const userId = localStorage.getItem('userId');
+    // if (!userId) return;
 
-    const res = await axios.get(`http://localhost:8080/api/profiles/user/${userId}`);
+    const res = await api.get("/api/profiles/me", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
     const profile = res.data;
+
+    console.log('👀 프로필 불러옴:', profile);
 
     userProfile.value = {
       userName: profile.name,
-      gender: profile.gender === 'male' ? '남자' : '여자',
+      birthdate: profile.birthDate,
+      gender: profile.gender,
       sport: profile.event,
       height: profile.height,
       weight: profile.weight,
     };
+
+    // ✅ 여기 추가! 저장된 기록 불러오기
+    const recordRes = await api.get("/api/athlete-records", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
+    performanceData.value = recordRes.data;
+    console.log("🔥 기록 불러오기 완료:", recordRes.data);
+
   } catch (err) {
     console.error('❌ 프로필 데이터 불러오기 실패:', err);
   }
@@ -97,7 +143,7 @@ onMounted(async () => {
 .elite-content {
     /* position: absolute; */
     width: 100%;
-    height: 160vh;
+    height: 170vh;
     min-height: 100vh;
     top: 40vh;
     left: 0;

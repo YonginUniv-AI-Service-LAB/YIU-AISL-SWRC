@@ -141,7 +141,7 @@
 <script>
 import MainHeader from "@/components/layout/MainHeader.vue";
 import MainFooter from "@/components/layout/MainFooter.vue";
-import axios from "axios";
+import api from "@/utils/api";
   
 export default {
   components: {
@@ -173,8 +173,8 @@ export default {
     },
     async save() {
       try {
-        const userId = localStorage.getItem("userId");
-        if (!userId || userId === "undefined" || isNaN(userId)) {
+        const token = localStorage.getItem("accessToken");
+        if (!token) {
           alert("로그인 정보가 없습니다.");
           return;
         }
@@ -186,16 +186,18 @@ export default {
           height: parseFloat(this.formData.height),
           weight: parseFloat(this.formData.weight),
           event: this.formData.sport,
-          unit: "kg",
-          user: {
-            id: Number(userId)
-          }
+          unit: "kg"
         };
 
-        const response = await axios.post("http://localhost:8080/api/profiles", payload);
+        const response = await api.post("/api/profiles", payload,{
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
         console.log("✅ 프로필 저장 완료:", response.data);
         alert("프로필이 저장되었습니다.");
-
         this.$router.push("/elite-player");
 
       } catch (error) {
