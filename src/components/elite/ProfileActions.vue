@@ -44,7 +44,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import axios from 'axios';
+import api from '@/utils/api'; 
 
 import EliteModal from './EliteModal.vue';
 import MatchRecordModal from './MatchRecordModal.vue';
@@ -80,7 +80,7 @@ const handleUpdateRecords = (records) => {
 // 프로필 저장 이벤트
 const handleProfileSave = async (updatedProfile) => {
   try {
-    const response = await axios.put("http://localhost:8080/api/profiles/me", {
+    const response = await api.put("/api/profiles/me", {
       name: updatedProfile.name,
       birthDate: updatedProfile.birthdate,
       gender: updatedProfile.gender,

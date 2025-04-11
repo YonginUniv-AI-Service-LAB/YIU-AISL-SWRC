@@ -117,7 +117,7 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import axios from "axios";
+import api from '@/utils/api'; 
 import EliteSelect from "@/components/layout/EliteSelect.vue";
 
 export default defineComponent({
@@ -171,7 +171,7 @@ export default defineComponent({
             unit: selectedUnit.value,
           });
 
-          await axios.post("http://localhost:8080/api/athlete-records", {
+          await api.post("/api/athlete-records", {
             recordDate: toIsoDate(r.date),
             recordValue: parseFloat(r.record),
             etc: r.notes,
@@ -185,7 +185,7 @@ export default defineComponent({
         }
 
         // 2. 저장 후 전체 기록 조회 (GET)
-        const res = await axios.get("http://localhost:8080/api/athlete-records", {
+        const res = await api.get("/api/athlete-records", {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           }

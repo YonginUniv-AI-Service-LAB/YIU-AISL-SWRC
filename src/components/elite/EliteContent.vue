@@ -43,7 +43,7 @@
 
 <script setup>
 import { computed, defineProps, ref, onMounted } from 'vue';
-import axios from 'axios';
+import api from '@/utils/api'; 
 
 import UserProfile from './UserProfile.vue';
 import PerformanceCharts from './PerformanceCharts.vue';
@@ -106,7 +106,7 @@ onMounted(async () => {
     // const userId = localStorage.getItem('userId');
     // if (!userId) return;
 
-    const res = await axios.get("http://localhost:8080/api/profiles/me", {
+    const res = await api.get("/api/profiles/me", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
@@ -125,7 +125,7 @@ onMounted(async () => {
     };
 
     // ✅ 여기 추가! 저장된 기록 불러오기
-    const recordRes = await axios.get("http://localhost:8080/api/athlete-records", {
+    const recordRes = await api.get("/api/athlete-records", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },

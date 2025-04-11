@@ -141,7 +141,7 @@
 <script>
 import MainHeader from "@/components/layout/MainHeader.vue";
 import MainFooter from "@/components/layout/MainFooter.vue";
-import axios from "axios";
+import api from "@/utils/api";
   
 export default {
   components: {
@@ -189,10 +189,7 @@ export default {
           unit: "kg"
         };
 
-        const response = await axios.post(
-          "http://localhost:8080/api/profiles",
-          payload,
-          {
+        const response = await api.post("/api/profiles", payload,{
             headers: {
               Authorization: `Bearer ${token}`,
             },

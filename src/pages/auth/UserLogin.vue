@@ -94,7 +94,7 @@
 <script>
 import MainHeader from "@/components/layout/MainHeader.vue";
 import MainFooter from "@/components/layout/MainFooter.vue";
-import axios from "axios";
+import api from "@/utils/api";
 
 export default {
   components: {
@@ -123,7 +123,7 @@ export default {
     },
     async handleLogin() {
       try {
-        const response = await axios.post("http://localhost:8080/api/auth/login", null, {
+        const response = await api.post("/api/auth/login", null, {
           params: {
             email: this.formData.username,
             password: this.formData.password
