@@ -1,5 +1,6 @@
 // vue.config.js
 module.exports = {
+  publicPath: '/', // 👉 배포 시 경로 문제 해결 (nginx index.html 매핑)
   devServer: {
     proxy: {
       '/api': {
@@ -8,5 +9,6 @@ module.exports = {
         secure: false,
       },
     },
+    historyApiFallback: true, // 👉 vue-router history 모드에서 새로고침 이슈 해결
   },
 };
